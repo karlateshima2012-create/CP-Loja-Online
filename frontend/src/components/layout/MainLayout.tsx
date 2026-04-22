@@ -51,7 +51,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
   // Context Navigation Logic
   // Se estivermos em um parceiro, os links "Início" e "Produtos" mantêm o contexto
   const baseUrl = slug ? `/parceiro/${slug}` : '';
-  const homeLink = slug ? `/parceiro/${slug}` : '/inicio';
+  const homeLink = slug ? `/parceiro/${slug}` : '/';
   const productsLink = slug ? `/parceiro/${slug}/produtos` : '/produtos';
 
   const handleLogout = () => {
@@ -81,10 +81,10 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
             <NavLink to={productsLink} active={location.pathname === productsLink}>
               <T k="nav_shop" default="Loja" />
             </NavLink>
-            <NavLink to="/#destaques" active={location.hash === '#destaques'}>
+            <NavLink to="/" active={location.hash === '#destaques'}>
               <T k="footer_highlights" default="Destaques" />
             </NavLink>
-            <NavLink to="/#recomendados" active={location.hash === '#recomendados'}>
+            <NavLink to="/" active={location.hash === '#recomendados'}>
               <T k="footer_recommended" default="Recomendados" />
             </NavLink>
           </nav>
