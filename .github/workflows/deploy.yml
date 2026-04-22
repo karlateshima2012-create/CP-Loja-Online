@@ -79,6 +79,21 @@ jobs:
           echo "Conteúdo do pacote de deploy:"
           ls -R deploy_package | head -n 20
 
+      - name: Test SSH Connection
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            echo "--- Diagnóstico SSH ---"
+            echo "Usuário atual: $(whoami)"
+            echo "Diretório atual: $(pwd)"
+            echo "Listando domínios:"
+            ls -F domains/creativeprintjp.com/public_html/ | grep cp-loja-online || echo "Pasta cp-loja-online não vista via SSH"
+            echo "--- Fim Diagnóstico ---"
+
       - name: Deploy to Hostinger via SCP (Password)
         uses: appleboy/scp-action@v0.1.7
         with:
