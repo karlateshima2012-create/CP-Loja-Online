@@ -1,0 +1,19 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Large Magenta (Top Left) -->
+  <rect x="0" y="0" width="15" height="15" rx="2" fill="#E5157A"/>
+  
+  <!-- Small Yellow (Top Middle) -->
+  <rect x="17" y="0" width="7" height="7" rx="1" fill="#FFF200"/>
+  
+  <!-- Small Cyan (Below Small Yellow) -->
+  <rect x="17" y="8" width="7" height="7" rx="1" fill="#38B6FF"/>
+  
+  <!-- Small Magenta (Right of Small Cyan) -->
+  <rect x="25" y="8" width="7" height="7" rx="1" fill="#E5157A"/>
+  
+  <!-- Large Cyan (Bottom Left) -->
+  <rect x="0" y="17" width="15" height="15" rx="2" fill="#38B6FF"/>
+  
+  <!-- Large Yellow (Bottom Right) -->
+  <rect x="17" y="17" width="15" height="15" rx="2" fill="#FFF200"/>
+</svg>

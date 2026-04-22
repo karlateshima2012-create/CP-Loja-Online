@@ -1,0 +1,84 @@
+name: Deploy to Hostinger (Password)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Frontend Dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Create Production .env
+        working-directory: ./frontend
+        run: |
+          echo "VITE_API_BASE_URL=https://cp-loja-online.creativeprintjp.com/api" > .env.production
+
+      - name: Build Frontend
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, xml, sqlite3, curl
+
+      - name: Install Backend Dependencies
+        working-directory: ./backend
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Prepare Deployment Files
+        run: |
+          mkdir deploy_package
+          cp -r frontend/dist/* deploy_package/
+          cp -r backend deploy_package/
+          cp .htaccess deploy_package/
+          
+          # Remover banco local e cache
+          rm -f deploy_package/backend/database/database.sqlite
+          rm -f deploy_package/backend/.env
+          
+          # Criar o .env de produção do Backend
+          echo "APP_KEY=${{ secrets.APP_KEY }}" > deploy_package/backend/.env
+          echo "DB_HOST=${{ secrets.DB_HOST || '127.0.0.1' }}" >> deploy_package/backend/.env
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> deploy_package/backend/.env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> deploy_package/backend/.env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> deploy_package/backend/.env
+
+      - name: Deploy to Hostinger via SCP (Password)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: 65002
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          source: "deploy_package/*"
+          target: "domains/creativeprintjp.com/public_html/cp-loja-online/"
+          strip_components: 1
+          overwrite: true
+
+      - name: Backend Setup via SSH (Password)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: 65002
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          script: |
+            cd domains/creativeprintjp.com/public_html/cp-loja-online/backend
+            php artisan migrate --force

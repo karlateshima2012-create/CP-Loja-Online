@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 1. Redirecionar /api/* para o backend/public/index.php (Laravel)
+  RewriteRule ^api/(.*)$ backend/public/index.php [L,QSA]
+
+  # 2. Configuração para Single Page Application (React Router)
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Desativar listagem de diretórios por segurança
+Options -Indexes
