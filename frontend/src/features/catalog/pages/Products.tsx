@@ -130,14 +130,14 @@ export const Products: React.FC = () => {
                 {/* 1. Efeito de Estrelas (Starfield) */}
                 <Starfield />
 
-                {/* 2. Efeito de Luz Pulsante Azul (Canto Superior Esquerdo) */}
-                <div className="absolute -top-20 -left-20 w-[600px] h-[600px] bg-[#38b6ff] rounded-full blur-[130px] opacity-25 animate-pulse-slow -z-10 pointer-events-none"></div>
+                {/* 2. Efeito de Luz Pulsante Azul (Canto Superior Esquerdo) - Reduzido e Afastado */}
+                <div className="absolute -top-40 -left-40 w-[300px] h-[300px] bg-[#38b6ff] rounded-full blur-[100px] opacity-20 animate-pulse-slow -z-10 pointer-events-none"></div>
                 
                 {/* 3. Atmosfera Global (Gradiente Suave para o Fundo) */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617] -z-10"></div>
                 
-                {/* 4. Luz Sutil de Apoio no Centro/Esquerda */}
-                <div className="absolute top-[20%] left-[5%] w-[400px] h-[400px] bg-[#38b6ff]/5 rounded-full blur-[120px] -z-10"></div>
+                {/* 4. Luz Sutil de Apoio (Mais periférica) */}
+                <div className="absolute top-[10%] left-[2%] w-[200px] h-[200px] bg-[#38b6ff]/5 rounded-full blur-[80px] -z-10"></div>
 
                 {/* Conteúdo da Hero (z-10) */}
                 <div className="relative z-10 max-w-5xl mx-auto w-full">
