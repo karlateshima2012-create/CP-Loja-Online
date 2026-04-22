@@ -53,7 +53,7 @@ export const LandingPortal: React.FC = () => {
                 Navegue pelos produtos NFC e 3D. Visão padrão para qualquer visitante do site.
               </p>
               <button
-                onClick={() => navigate('/inicio')}
+                onClick={() => navigate('/')}
                 className="mt-auto w-full flex items-center justify-center gap-2 bg-slate-900 border border-slate-700 py-3 rounded-xl text-white font-bold hover:bg-brand-blue hover:border-brand-blue transition-all group/btn"
               >
                 Abrir Catálogo <ArrowRight size={18} className="text-brand-blue group-hover/btn:text-white group-hover/btn:translate-x-1 transition-all" />
@@ -71,7 +71,7 @@ export const LandingPortal: React.FC = () => {
               <h2 className="text-2xl font-bold text-white mb-2">Área do Cliente</h2>
               <span className="text-[10px] font-bold text-brand-yellow uppercase tracking-widest mb-4">Acesso Rápido</span>
               <p className="text-brand-gray text-sm mb-8 leading-relaxed">
-                Acompanhe seus pedidos, baixe comprovantes e gerencie suas páginas NFC/CreativeFlix.
+                Acompanhe seus pedidos, baixe comprovantes e gerencie seus produtos NFC.
               </p>
               <button
                 onClick={() => handleQuickAccess(UserRole.CUSTOMER, '/customer/dashboard')}
