@@ -80,7 +80,7 @@ jobs:
           echo "Conteúdo do pacote de deploy:"
           ls -R deploy_package | head -n 20
 
-      - name: Test SSH Connection
+      - name: Cleanup and Diagnostic via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -88,12 +88,14 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "--- Diagnóstico SSH ---"
-            echo "Usuário atual: $(whoami)"
             echo "Diretório atual: $(pwd)"
-            echo "Procurando pasta cp-loja-online..."
-            find /home/u176367625 -type d -name "cp-loja-online" 2>/dev/null || echo "Não encontrei a pasta via find"
-            echo "--- Fim Diagnóstico ---"
+            # Criar a pasta se não existir e limpar arquivos antigos para evitar conflitos
+            mkdir -p /home/u176367625/public_html/cp-loja-online
+            cd /home/u176367625/public_html/cp-loja-online
+            echo "Limpando arquivos antigos..."
+            # Mantém apenas a pasta backend se quiser preservar o banco, mas limpa o frontend
+            find . -maxdepth 1 ! -name 'backend' ! -name '.' ! -name '..' -exec rm -rf {} +
+            echo "Limpeza concluída."
 
       - name: Deploy to Hostinger via SCP (Password)
         uses: appleboy/scp-action@v0.1.7
@@ -102,7 +104,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "deploy_package/"
+          source: "deploy_package/*"
           target: "/home/u176367625/public_html/cp-loja-online/"
           strip_components: 1
           overwrite: true
