@@ -58,7 +58,6 @@ export const Products: React.FC = () => {
         setProducts(mockService.getProducts());
     }, []);
 
-    // Se houver termo de busca inicial, já começa expandido no mobile se necessário
     useEffect(() => {
         if (searchTerm) setIsSearchExpanded(true);
     }, []);
@@ -101,7 +100,6 @@ export const Products: React.FC = () => {
         setSearchParams(new URLSearchParams());
     };
 
-    // ---- Filtragem ----
     const filteredProducts = products.filter(p => {
         const matchesSearch = searchTerm
             ? p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -117,9 +115,7 @@ export const Products: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col">
-            {/* ============================================================
-                HERO SECTION
-            ============================================================ */}
+            {/* HERO SECTION */}
             <section
                 id="hero"
                 className="relative min-h-[50vh] flex flex-col items-center justify-center pt-28 pb-10 px-4 overflow-hidden text-center animate-fade-in bg-[#020617]"
@@ -142,30 +138,28 @@ export const Products: React.FC = () => {
 
             <div id="product-grid-anchor" className="h-0" />
 
-            {/* ============================================================
-                BARRA DE CATEGORIAS + BUSCA DINÂMICA
-            ============================================================ */}
+            {/* BARRA DE CATEGORIAS + BUSCA DINÂMICA (Ajustada) */}
             <div
-                className="sticky top-20 md:top-20 bottom-0 md:bottom-auto z-40 bg-[#020617]/95 backdrop-blur-xl border-y border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] md:shadow-[0_10px_40px_rgba(0,0,0,0.8)] mt-auto md:mt-0 order-last md:order-none"
+                className="sticky top-20 md:top-20 bottom-0 md:bottom-auto z-40 bg-[#020617]/98 backdrop-blur-2xl border-y border-brand-blue/30 shadow-[0_-15px_35px_rgba(0,0,0,0.9)] md:shadow-[0_15px_35px_rgba(0,0,0,0.9)] mt-auto md:mt-0 order-last md:order-none"
             >
-                <div className="container mx-auto px-2 py-3 md:py-4">
-                    <div className="relative h-11">
-                        {/* MODO NORMAL: MOSTRA CATEGORIAS */}
+                {/* Efeito de luz suave azul no background do menu */}
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/5 via-transparent to-brand-blue/5 pointer-events-none"></div>
+                
+                <div className="container mx-auto px-3 py-4 md:py-5 relative z-10">
+                    <div className="relative h-11 w-full">
                         {!isSearchExpanded ? (
-                            <div className="grid grid-cols-5 gap-2 animate-fade-in">
-                                {/* 1. TODOS OS PRODUTOS */}
+                            <div className="grid grid-cols-5 gap-2.5 animate-fade-in w-full h-full">
                                 <button
                                     onClick={() => handleCategoryChange('Todos')}
-                                    className={`h-11 flex items-center justify-center px-2 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-tighter md:tracking-widest transition-all border ${
+                                    className={`h-11 flex items-center justify-center px-1 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all border-2 ${
                                         catParam === 'Todos'
                                             ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
-                                            : 'bg-transparent border-white/5 text-slate-400 hover:border-white/20 hover:text-white'
+                                            : 'bg-slate-900/50 border-white/10 text-white hover:border-brand-blue/40'
                                     }`}
                                 >
-                                    <span className="text-center">Todos</span>
+                                    Todos
                                 </button>
 
-                                {/* 2-4. CATEGORIAS */}
                                 {CATEGORIES.map(cat => {
                                     const Icon = cat.icon;
                                     const isActive = catParam === cat.id;
@@ -178,57 +172,55 @@ export const Products: React.FC = () => {
                                         <button
                                             key={cat.id}
                                             onClick={() => handleCategoryChange(cat.id)}
-                                            className={`h-11 flex flex-col md:flex-row items-center justify-center gap-1 px-1 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-tighter md:tracking-widest transition-all border ${
+                                            className={`h-11 flex flex-col md:flex-row items-center justify-center gap-1.5 px-1 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all border-2 ${
                                                 isActive
                                                     ? colorMap[cat.color]
-                                                    : 'bg-transparent border-white/5 text-slate-400 hover:border-white/20 hover:text-white'
+                                                    : 'bg-slate-900/50 border-white/10 text-white hover:border-brand-blue/40'
                                             }`}
                                         >
-                                            <Icon size={14} className="flex-shrink-0" />
+                                            <Icon size={16} className="flex-shrink-0" />
                                             <span className="hidden md:inline">{cat.label}</span>
-                                            <span className="md:hidden text-[8px] text-center">{cat.label.split(' ')[0]}</span>
+                                            <span className="md:hidden text-[9px] text-center">{cat.label.split(' ')[0]}</span>
                                         </button>
                                     );
                                 })}
 
-                                {/* 5. BOTÃO PARA EXPANDIR BUSCA */}
                                 <button
                                     onClick={() => setIsSearchExpanded(true)}
-                                    className="h-11 flex items-center justify-center bg-slate-900/40 border border-white/5 text-slate-500 rounded-xl hover:text-brand-blue transition-all"
+                                    className="h-11 flex items-center justify-center bg-slate-900/60 border-2 border-brand-blue/20 text-white rounded-xl hover:border-brand-blue transition-all"
                                 >
-                                    <Search size={18} />
+                                    <Search size={20} />
                                 </button>
                             </div>
                         ) : (
-                            /* MODO BUSCA: CAMPO OCUPA TUDO */
-                            <div className="flex items-center gap-2 animate-fade-in w-full h-full">
+                            <div className="flex items-center gap-3 animate-fade-in w-full h-full">
                                 <button 
                                     onClick={() => {
                                         setIsSearchExpanded(false);
                                         if (!searchTerm) resetFilters();
                                     }}
-                                    className="h-11 w-11 flex items-center justify-center bg-slate-900/60 text-slate-400 rounded-xl border border-white/10 hover:text-white"
+                                    className="h-11 w-11 flex items-center justify-center bg-slate-900/80 text-white rounded-xl border-2 border-brand-blue/30 hover:border-brand-blue transition-all"
                                 >
-                                    <ArrowLeft size={20} />
+                                    <ArrowLeft size={22} />
                                 </button>
                                 <div className="relative flex-1 h-full">
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-blue" size={16} />
+                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-blue" size={18} />
                                     <input
                                         autoFocus
                                         type="text"
-                                        placeholder="O que você procura?"
+                                        placeholder="O QUE VOCÊ PROCURA?"
                                         value={searchTerm}
                                         onChange={e => handleSearch(e.target.value)}
                                         onFocus={() => setIsSearchFocused(true)}
                                         onBlur={() => setIsSearchFocused(false)}
-                                        className="w-full h-full bg-slate-900/60 text-white text-xs pl-10 pr-10 border border-brand-blue/30 rounded-xl outline-none focus:border-brand-blue shadow-[0_0_15px_rgba(56,182,255,0.1)] font-bold uppercase tracking-widest placeholder-slate-600"
+                                        className="w-full h-full bg-slate-900/80 text-white text-sm pl-11 pr-11 border-2 border-brand-blue/40 rounded-xl outline-none focus:border-brand-blue shadow-[0_0_20px_rgba(56,182,255,0.2)] font-bold uppercase tracking-widest placeholder-slate-600"
                                     />
                                     {searchTerm && (
                                         <button
                                             onClick={() => handleSearch('')}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white bg-slate-800 p-1 rounded-full"
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-slate-800 p-1.5 rounded-full"
                                         >
-                                            <X size={12} />
+                                            <X size={14} />
                                         </button>
                                     )}
                                 </div>
@@ -236,17 +228,20 @@ export const Products: React.FC = () => {
                         )}
                     </div>
 
-                    {/* Subcategorias */}
+                    {/* Subcategorias (Ajustadas com Glow e Letras Maiores) */}
                     {!isSearchExpanded && activeCategoryData && activeCategoryData.subcategories.length > 0 && (
-                        <div className="flex flex-wrap items-center justify-center gap-1.5 mt-3 pt-3 border-t border-white/5 animate-fade-in">
+                        <div className="flex flex-wrap items-center justify-center gap-2 mt-5 pt-5 border-t border-brand-blue/20 animate-fade-in relative">
+                            {/* Brilho suave nas subcategorias */}
+                            <div className="absolute inset-0 bg-brand-blue/5 blur-xl pointer-events-none"></div>
+                            
                             {activeCategoryData.subcategories.map(sub => (
                                 <button
                                     key={sub}
                                     onClick={() => handleSubcategoryChange(sub)}
-                                    className={`px-3 py-1.5 rounded-lg text-[9px] font-bold whitespace-nowrap border transition-all ${
+                                    className={`px-4 py-2 rounded-xl text-[11px] md:text-sm font-black whitespace-nowrap border-2 transition-all relative z-10 ${
                                         subParam === sub
-                                            ? 'bg-brand-blue/20 border-brand-blue text-brand-blue'
-                                            : 'bg-slate-900/40 border-white/5 text-slate-500 hover:text-slate-300'
+                                            ? 'bg-brand-blue/30 border-brand-blue text-white shadow-[0_0_15px_rgba(56,182,255,0.3)]'
+                                            : 'bg-slate-900/60 border-white/10 text-white hover:border-brand-blue/30'
                                     }`}
                                 >
                                     {sub}
@@ -257,29 +252,27 @@ export const Products: React.FC = () => {
                 </div>
             </div>
 
-            {/* ============================================================
-                GRID DE PRODUTOS
-            ============================================================ */}
+            {/* GRID DE PRODUTOS */}
             <div className="container mx-auto px-4 py-8 md:py-12 pb-24 flex-grow">
                 {isFiltering && (
-                    <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 border-l-4 border-brand-blue pl-4 py-1">
+                    <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-4 border-l-4 border-brand-blue pl-5 py-2">
                         <div>
-                            <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight">
+                            <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">
                                 {catParam !== 'Todos' ? activeCategoryData?.label || catParam : 'Todos os Produtos'}
-                                {subParam && <span className="text-brand-pink ml-2">/ {subParam}</span>}
+                                {subParam && <span className="text-brand-pink ml-3">/ {subParam}</span>}
                             </h2>
                         </div>
                         <button
                             onClick={resetFilters}
-                            className="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-500 hover:text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 transition-all"
+                            className="px-4 py-2 rounded-xl bg-slate-800 text-white hover:bg-brand-blue/20 text-xs font-black uppercase tracking-widest flex items-center gap-2 transition-all border border-white/10"
                         >
-                            <X size={12} /> Limpar
+                            <X size={14} /> Limpar Filtros
                         </button>
                     </div>
                 )}
 
                 {filteredProducts.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8">
                         {filteredProducts.map(product => (
                             <ProductCard
                                 key={product.id}
@@ -296,14 +289,14 @@ export const Products: React.FC = () => {
 };
 
 const EmptyState: React.FC<{ onReset: () => void }> = ({ onReset }) => (
-    <div className="text-center py-20 w-full animate-fade-in">
-        <div className="w-16 h-16 rounded-2xl bg-slate-800/30 border border-white/5 flex items-center justify-center mx-auto mb-6">
-            <Filter className="opacity-20 text-brand-blue" size={32} />
+    <div className="text-center py-24 w-full animate-fade-in">
+        <div className="w-20 h-20 rounded-3xl bg-slate-800/30 border-2 border-brand-blue/20 flex items-center justify-center mx-auto mb-8">
+            <Filter className="opacity-20 text-brand-blue" size={40} />
         </div>
-        <h3 className="text-lg font-black text-white mb-2 uppercase tracking-tight">Nenhum resultado</h3>
+        <h3 className="text-xl font-black text-white mb-3 uppercase tracking-tight">Nenhum resultado</h3>
         <button
             onClick={onReset}
-            className="px-6 py-3 rounded-xl bg-brand-blue text-slate-950 font-black uppercase tracking-widest text-[10px] hover:scale-105 transition-all"
+            className="px-8 py-4 rounded-2xl bg-brand-blue text-slate-950 font-black uppercase tracking-widest text-xs hover:scale-105 transition-all shadow-[0_0_25px_rgba(56,182,255,0.4)]"
         >
             Ver tudo
         </button>
