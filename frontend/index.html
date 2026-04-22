@@ -50,20 +50,14 @@
   </script>
   <style>
     .animate-twinkle {
-        animation: twinkle var(--twinkle-duration) linear infinite;
-        animation-delay: var(--twinkle-delay);
-    }
-    .gradient-text {
-        background: linear-gradient(90deg, #38b6ff 0%, #E5157A 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
+        animation: twinkle var(--duration, 3s) linear infinite !important;
+        animation-delay: var(--delay, 0s) !important;
     }
     @keyframes twinkle {
-        0% { opacity: 0; transform: scale(0.5); }
-        50% { opacity: 0.8; transform: scale(1.2); }
-        100% { opacity: 0; transform: scale(0.5); }
+        0%, 100% { opacity: 0; transform: scale(0.5); }
+        50% { opacity: 1; transform: scale(1.2); }
     }
+    .bg-slate-950 { background-color: #020617 !important; }
     /* Utility to hide scrollbar */
     .scrollbar-hide::-webkit-scrollbar {
         display: none;

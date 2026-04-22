@@ -27,10 +27,10 @@ export const Starfield = () => {
                         width: `${star.size}px`,
                         height: `${star.size}px`,
                         boxShadow: '0 0 4px rgba(255, 255, 255, 0.8)',
-                        // Using CSS variables to match the class logic or inline styles
-                        animationDelay: `${star.delay}s`,
-                        animationDuration: `${star.duration}s`,
-                    }}
+                        // Match the variables defined in index.html
+                        '--delay': `${star.delay}s`,
+                        '--duration': `${star.duration}s`,
+                    } as React.CSSProperties}
                 />
             ))}
         </div>
