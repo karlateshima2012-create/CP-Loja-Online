@@ -121,23 +121,27 @@ export const Products: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#020617]">
             {/* ============================================================
-                HERO SECTION — Animação Starfield + Gradiente
+                HERO SECTION — Atmosfera CP GESTÃO (Alta Fidelidade)
             ============================================================ */}
             <section
                 id="hero"
-                className="relative min-h-[70vh] flex flex-col items-center justify-center pt-28 pb-20 px-4 overflow-hidden text-center"
+                className="relative min-h-[75vh] flex flex-col items-center justify-center pt-28 pb-20 px-4 overflow-hidden text-center animate-fade-in bg-[#020617]"
             >
-                {/* Stars */}
+                {/* 1. Efeito de Estrelas (Starfield) */}
                 <Starfield />
 
-                {/* Luzes de fundo pulsantes */}
-                <div className="absolute -top-32 -left-32 w-[700px] h-[700px] bg-[#38b6ff] rounded-full blur-[150px] opacity-[0.12] animate-pulse-slow -z-10 pointer-events-none" />
-                <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-[#E5157A] rounded-full blur-[150px] opacity-[0.08] animate-pulse-slow -z-10 pointer-events-none" style={{ animationDelay: '2s' }} />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#020617]/40 to-[#020617] -z-10" />
+                {/* 2. Efeito de Luz Pulsante Azul (Canto Superior Esquerdo) */}
+                <div className="absolute -top-20 -left-20 w-[600px] h-[600px] bg-[#38b6ff] rounded-full blur-[130px] opacity-25 animate-pulse-slow -z-10 pointer-events-none"></div>
+                
+                {/* 3. Atmosfera Global (Gradiente Suave para o Fundo) */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617] -z-10"></div>
+                
+                {/* 4. Luz Sutil de Apoio no Centro/Esquerda */}
+                <div className="absolute top-[20%] left-[5%] w-[400px] h-[400px] bg-[#38b6ff]/5 rounded-full blur-[120px] -z-10"></div>
 
-                {/* Conteúdo */}
+                {/* Conteúdo da Hero (z-10) */}
                 <div className="relative z-10 max-w-5xl mx-auto w-full">
-                    {/* Badge */}
+                    {/* Badge Animado */}
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue text-xs font-bold uppercase tracking-widest mb-8 animate-fade-in-up">
                         <Sparkles size={13} />
                         <span className="relative flex h-1.5 w-1.5">
@@ -147,20 +151,19 @@ export const Products: React.FC = () => {
                         Tecnologia • NFC • 3D
                     </div>
 
-                    {/* Título */}
+                    {/* Título com Gradiente Oficial */}
                     <h1 className="text-5xl md:text-8xl font-black text-white mb-6 leading-[1.05] tracking-tight animate-fade-in-up">
-                        <span className="bg-gradient-to-r from-brand-blue via-blue-400 to-brand-pink bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(56,182,255,0.25)]">
+                        <span className="bg-gradient-to-r from-[#38b6ff] to-[#E5157A] bg-clip-text text-transparent filter drop-shadow-[0_0_30px_rgba(56,182,255,0.3)]">
                             Catálogo Oficial
                         </span>
                     </h1>
 
-                    {/* Subtítulo */}
+                    {/* Subtítulo Premium */}
                     <p className="text-xl md:text-2xl text-slate-400 font-light leading-relaxed max-w-3xl mx-auto mb-12 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
-                        Impressão 3D personalizada, Tecnologia NFC e Sistemas digitais
-                        para transformar o seu negócio.
+                        Encontre a solução digital perfeita para o seu negócio com tecnologia NFC e Impressão 3D.
                     </p>
 
-                    {/* Botões de categoria rápidos */}
+                    {/* Botões de Categoria Rápidos */}
                     <div className="flex flex-wrap gap-3 justify-center animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                         {CATEGORIES.map(cat => {
                             const Icon = cat.icon;
@@ -168,7 +171,7 @@ export const Products: React.FC = () => {
                                 <button
                                     key={cat.id}
                                     onClick={() => handleCategoryChange(cat.id)}
-                                    className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-800/60 border border-white/10 text-slate-300 hover:text-white hover:border-brand-blue/50 hover:bg-slate-700/60 transition-all text-sm font-semibold backdrop-blur-sm"
+                                    className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-800/40 border border-white/5 text-slate-400 hover:text-white hover:border-brand-blue/30 hover:bg-slate-700/40 transition-all text-sm font-semibold backdrop-blur-sm"
                                 >
                                     <Icon size={15} />
                                     {cat.label}

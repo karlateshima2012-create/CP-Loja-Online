@@ -16,7 +16,7 @@ export const Starfield = () => {
     }, []);
 
     return (
-        <div className="absolute inset-0 pointer-events-none -z-20">
+        <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
             {stars.map((star, i) => (
                 <div
                     key={i}
@@ -27,7 +27,6 @@ export const Starfield = () => {
                         width: `${star.size}px`,
                         height: `${star.size}px`,
                         boxShadow: '0 0 4px rgba(255, 255, 255, 0.8)',
-                        // Match the variables defined in index.html
                         '--delay': `${star.delay}s`,
                         '--duration': `${star.duration}s`,
                     } as React.CSSProperties}
