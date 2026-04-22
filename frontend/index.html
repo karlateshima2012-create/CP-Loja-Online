@@ -13,20 +13,20 @@
         extend: {
           colors: {
             brand: {
-              blue: '#38b6ff',   /* Azul Principal Atualizado */
-              yellow: '#FFF200', /* Amarelo Vibrante */
-              pink: '#E5157A',   /* Rosa Vibrante */
-              gray: '#B3B3B3',   /* Cinza Médio */
+              blue: '#38b6ff',
+              yellow: '#FFF200',
+              pink: '#E5157A',
+              gray: '#B3B3B3',
+            },
+            slate: {
+              950: '#020617',
+              900: '#0f172a',
+              800: '#1e293b',
             }
-          },
-          fontFamily: {
-            sans: ['ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
           },
           animation: {
             'fade-in': 'fadeIn 1s ease-out forwards',
-            'fade-in-up': 'fadeInUp 0.3s ease-out',
-            'bounce-slow': 'bounce 3s infinite',
-            'float': 'float 6s ease-in-out infinite',
+            'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
             'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             'twinkle': 'twinkle var(--duration, 3s) linear infinite',
           },
@@ -36,12 +36,8 @@
               '100%': { opacity: '1' },
             },
             fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
               '100%': { opacity: '1', transform: 'translateY(0)' },
-            },
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-20px)' },
             },
             twinkle: {
               '0%, 100%': { opacity: '0', transform: 'scale(0.5)' },
@@ -56,6 +52,17 @@
     .animate-twinkle {
         animation: twinkle var(--twinkle-duration) linear infinite;
         animation-delay: var(--twinkle-delay);
+    }
+    .gradient-text {
+        background: linear-gradient(90deg, #38b6ff 0%, #E5157A 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    @keyframes twinkle {
+        0% { opacity: 0; transform: scale(0.5); }
+        50% { opacity: 0.8; transform: scale(1.2); }
+        100% { opacity: 0; transform: scale(0.5); }
     }
     /* Utility to hide scrollbar */
     .scrollbar-hide::-webkit-scrollbar {

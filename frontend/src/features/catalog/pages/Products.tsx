@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { mockService } from '@/src/services/mockData';
@@ -52,19 +51,12 @@ export const Products: React.FC = () => {
 
     return (
         <div className="animate-fade-in">
-            {/* --- FULL WIDTH HERO BANNER --- */}
-            <div className="relative min-h-[50vh] overflow-hidden bg-[#020617] animate-fade-in flex flex-col items-center justify-center border-b border-white/5">
-                {/* 1. Efeito de Estrelas */}
+            {/* --- CP GESTÃO STYLE HERO --- */}
+            <section id="hero" className="relative min-h-[80vh] flex flex-col items-center justify-center pt-32 pb-20 px-4 md:px-8 lg:px-12 overflow-hidden bg-slate-950 animate-fade-in text-center">
                 <Starfield />
-
-                {/* 2. Efeito de Luz Pulsante Azul */}
-                <div className="absolute -top-20 -right-20 w-[500px] h-[500px] bg-[#38b6ff] rounded-full blur-[120px] opacity-20 animate-pulse-slow -z-10 pointer-events-none"></div>
-
-                {/* 3. Atmosfera Global */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617] -z-10"></div>
-
-                <div className="container mx-auto px-4 text-center relative z-10">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue text-xs font-bold uppercase tracking-wider mb-4">
+                
+                <div className="w-[90%] md:w-full max-w-5xl mx-auto relative z-10">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in-up mx-auto">
                         <Sparkles size={14} />
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
@@ -73,17 +65,22 @@ export const Products: React.FC = () => {
                         <T k="products_hero_tag" default="Tecnologia •NFC• 3D" />
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-black text-white mb-6">
-                        <span className="bg-gradient-to-r from-[#38b6ff] to-[#E5157A] bg-clip-text text-transparent filter drop-shadow-[0_0_30px_rgba(36,155,203,0.3)]">
-                            <T k="products_hero_title" default="Catálogo Oficial" />
-                        </span>
+                    <h1 className="text-4xl md:text-7xl font-black text-white mb-8 leading-[1.1] tracking-tighter max-w-5xl mx-auto animate-fade-in-up">
+                        Sua marca está <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">conectada ao futuro</span> ou perdendo espaço?
                     </h1>
-
-                    <p className="text-brand-gray max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-medium">
-                        <T k="products_hero_desc" default="Encontre a solução digital perfeita para o seu negócio com tecnologia NFC e Impressão 3D." />
+                    
+                    <p className="text-lg md:text-2xl text-brand-gray/90 font-light leading-relaxed max-w-4xl mx-auto mb-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                        <T k="products_hero_desc" default="Encontre a solução digital perfeita para o seu negócio com tecnologia NFC e Impressão 3D de alta performance." />
                     </p>
                 </div>
-            </div>
+
+                {/* Efeito de Luz Pulsante - Top Left */}
+                <div className="absolute -top-20 -left-20 w-[400px] h-[400px] bg-[#38b6ff] rounded-full blur-[120px] opacity-25 animate-pulse-slow -z-10 pointer-events-none"></div>
+                
+                {/* Atmosfera Global e Degradê de Fundo */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950 -z-10"></div>
+                <div className="absolute top-[20%] left-[5%] w-[400px] h-[400px] bg-brand-blue/5 rounded-full blur-[120px] -z-10"></div>
+            </section>
 
             {/* --- SEÇÕES DE DESTAQUE E RECOMENDADOS (ADICIONADAS) --- */}
             <div className="bg-slate-950 pt-12">

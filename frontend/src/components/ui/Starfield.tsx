@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export const Starfield: React.FC = () => {
+export const Starfield = () => {
     const [stars, setStars] = useState<{ x: number, y: number, size: number, delay: number, duration: number }[]>([]);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export const Starfield: React.FC = () => {
     }, []);
 
     return (
-        <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none -z-20">
             {stars.map((star, i) => (
                 <div
                     key={i}
@@ -27,10 +27,10 @@ export const Starfield: React.FC = () => {
                         width: `${star.size}px`,
                         height: `${star.size}px`,
                         boxShadow: '0 0 4px rgba(255, 255, 255, 0.8)',
-                        // Using CSS variables for the dynamic values
-                        '--twinkle-delay': `${star.delay}s`,
-                        '--twinkle-duration': `${star.duration}s`,
-                    } as React.CSSProperties}
+                        // Using CSS variables to match the class logic or inline styles
+                        animationDelay: `${star.delay}s`,
+                        animationDuration: `${star.duration}s`,
+                    }}
                 />
             ))}
         </div>
