@@ -1,16 +1,29 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # 1. Redirecionar /api/* para o backend/public/index.php (Laravel)
+  # 1. API routes → Laravel backend
   RewriteRule ^api/(.*)$ backend/public/index.php [L,QSA]
 
-  # 2. Configuração para Single Page Application (React Router)
-  RewriteBase /
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  # 2. Static assets (js, css, images, fonts) → serve as-is
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # 3. SPA fallback → always serve index.html (React HashRouter)
+  RewriteRule ^ index.html [L]
 </IfModule>
 
-# Desativar listagem de diretórios por segurança
+# Force index.html as the default document (not default.php)
+DirectoryIndex index.html
+
+# Security: disable directory listing
 Options -Indexes
+
+# Cache control for assets
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css)$">
+    Header set Cache-Control "max-age=31536000, public, immutable"
+  </FilesMatch>
+  <FilesMatch "index\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+</IfModule>

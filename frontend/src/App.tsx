@@ -14,6 +14,7 @@ import { LoginPage } from './features/auth/pages/LoginPage';
 import { RegisterPage } from './features/auth/pages/RegisterPage';
 import { CustomerDashboard } from './features/clients/pages/CustomerDashboard';
 import { AdminDashboard } from './features/admin/pages/AdminDashboard';
+import { LandingPortal } from './features/public-pages/pages/LandingPortal';
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
   <MainLayout>{children}</MainLayout>
@@ -28,11 +29,13 @@ function App() {
             <Routes>
               {/* ================================================
                   LOJA ONLINE - PÁGINA PRINCIPAL
-                  Todas as rotas antigas redirecionam para cá
               ================================================ */}
               <Route path="/" element={<Layout><Products /></Layout>} />
               <Route path="/produto/:id" element={<Layout><ProductDetail /></Layout>} />
               <Route path="/cart" element={<Layout><CartPage /></Layout>} />
+
+              {/* Portal de acesso rápido (dev/admin entry point) */}
+              <Route path="/portal" element={<LandingPortal />} />
 
               {/* Auth */}
               <Route path="/login" element={<LoginPage />} />
@@ -42,7 +45,7 @@ function App() {
               <Route path="/customer/dashboard" element={<Layout><CustomerDashboard /></Layout>} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-              {/* Redirecionamentos de rotas legadas */}
+              {/* Redirecionamentos de rotas legadas → Loja */}
               <Route path="/produtos" element={<Navigate to="/" replace />} />
               <Route path="/home" element={<Navigate to="/" replace />} />
               <Route path="/inicio" element={<Navigate to="/" replace />} />
