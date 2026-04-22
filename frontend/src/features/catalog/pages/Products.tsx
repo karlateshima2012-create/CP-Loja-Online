@@ -4,7 +4,7 @@ import { mockService } from '@/src/services/mockData';
 import { Product } from '@/src/types';
 import {
     Search, X, Sparkles, Filter, ChevronDown,
-    Box, Cpu, Monitor, ArrowRight, Zap, Flame, Layers
+    Box, Cpu, Monitor, ArrowRight, Zap, Flame, Layers, ArrowLeft
 } from 'lucide-react';
 import { ProductCard } from './components/ProductCard';
 import { Starfield } from '../../../components/ui/Starfield';
@@ -16,7 +16,7 @@ const CATEGORIES = [
     {
         id: 'Impressão 3D',
         label: 'Impressão 3D',
-        icon: Box, // Ícone trocado para representar 3D (objeto/caixa)
+        icon: Box,
         color: 'brand-pink',
         emoji: '🔥',
         subcategories: ['Chaveiros 3D', 'Displays / Suportes', 'Letreiros personalizados', 'Outros acessórios 3D'],
@@ -51,16 +51,23 @@ export const Products: React.FC = () => {
     const subParam = searchParams.get('sub') || '';
     const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
     const [isSearchFocused, setIsSearchFocused] = useState(false);
+    const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
     }, []);
 
+    // Se houver termo de busca inicial, já começa expandido no mobile se necessário
+    useEffect(() => {
+        if (searchTerm) setIsSearchExpanded(true);
+    }, []);
+
     const handleCategoryChange = (cat: string) => {
         const p = new URLSearchParams();
         if (cat !== 'Todos') p.set('cat', cat);
         setSearchTerm('');
+        setIsSearchExpanded(false);
         setSearchParams(p);
         document.getElementById('product-grid-anchor')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
@@ -90,6 +97,7 @@ export const Products: React.FC = () => {
 
     const resetFilters = () => {
         setSearchTerm('');
+        setIsSearchExpanded(false);
         setSearchParams(new URLSearchParams());
     };
 
@@ -135,73 +143,101 @@ export const Products: React.FC = () => {
             <div id="product-grid-anchor" className="h-0" />
 
             {/* ============================================================
-                BARRA DE CATEGORIAS + BUSCA
-                (Sticky Top no Desktop, Sticky Bottom no Mobile)
+                BARRA DE CATEGORIAS + BUSCA DINÂMICA
             ============================================================ */}
             <div
                 className="sticky top-20 md:top-20 bottom-0 md:bottom-auto z-40 bg-[#020617]/95 backdrop-blur-xl border-y border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] md:shadow-[0_10px_40px_rgba(0,0,0,0.8)] mt-auto md:mt-0 order-last md:order-none"
             >
                 <div className="container mx-auto px-2 py-3 md:py-4">
-                    <div className="grid grid-cols-5 gap-2">
-                        {/* 1. TODOS OS PRODUTOS */}
-                        <button
-                            onClick={() => handleCategoryChange('Todos')}
-                            className={`h-11 flex items-center justify-center px-2 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-tighter md:tracking-widest transition-all border ${
-                                catParam === 'Todos'
-                                    ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
-                                    : 'bg-transparent border-white/5 text-slate-400 hover:border-white/20 hover:text-white'
-                            }`}
-                        >
-                            <span className="text-center">Todos os produtos</span>
-                        </button>
-
-                        {/* 2-4. CATEGORIAS */}
-                        {CATEGORIES.map(cat => {
-                            const Icon = cat.icon;
-                            const isActive = catParam === cat.id;
-                            const colorMap: Record<string, string> = {
-                                'brand-blue': 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]',
-                                'brand-pink': 'bg-brand-pink border-brand-pink text-white shadow-[0_0_15px_rgba(229,21,122,0.4)]',
-                                'brand-yellow': 'bg-brand-yellow border-brand-yellow text-slate-950 shadow-[0_0_15px_rgba(255,242,0,0.4)]',
-                            };
-                            return (
+                    <div className="relative h-11">
+                        {/* MODO NORMAL: MOSTRA CATEGORIAS */}
+                        {!isSearchExpanded ? (
+                            <div className="grid grid-cols-5 gap-2 animate-fade-in">
+                                {/* 1. TODOS OS PRODUTOS */}
                                 <button
-                                    key={cat.id}
-                                    onClick={() => handleCategoryChange(cat.id)}
-                                    className={`h-11 flex flex-col md:flex-row items-center justify-center gap-1 px-1 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-tighter md:tracking-widest transition-all border ${
-                                        isActive
-                                            ? colorMap[cat.color]
+                                    onClick={() => handleCategoryChange('Todos')}
+                                    className={`h-11 flex items-center justify-center px-2 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-tighter md:tracking-widest transition-all border ${
+                                        catParam === 'Todos'
+                                            ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
                                             : 'bg-transparent border-white/5 text-slate-400 hover:border-white/20 hover:text-white'
                                     }`}
                                 >
-                                    <Icon size={14} className="flex-shrink-0" />
-                                    <span className="hidden md:inline">{cat.label}</span>
-                                    <span className="md:hidden text-[8px] text-center">{cat.label.split(' ')[0]}</span>
+                                    <span className="text-center">Todos</span>
                                 </button>
-                            );
-                        })}
 
-                        {/* 5. BUSCA */}
-                        <div className="relative h-11 group">
-                            <Search className={`absolute left-2.5 top-1/2 -translate-y-1/2 transition-colors ${isSearchFocused ? 'text-brand-blue' : 'text-slate-500'}`} size={14} />
-                            <input
-                                type="text"
-                                placeholder="Buscar..."
-                                value={searchTerm}
-                                onChange={e => handleSearch(e.target.value)}
-                                onFocus={() => setIsSearchFocused(true)}
-                                onBlur={() => setIsSearchFocused(false)}
-                                className={`w-full h-full bg-slate-900/40 text-white text-[10px] pl-8 pr-2 border rounded-xl outline-none transition-all placeholder-slate-600 font-bold uppercase tracking-widest ${
-                                    isSearchFocused || searchTerm
-                                    ? 'border-brand-blue/50 bg-slate-900/60'
-                                    : 'border-white/5'
-                                }`}
-                            />
-                        </div>
+                                {/* 2-4. CATEGORIAS */}
+                                {CATEGORIES.map(cat => {
+                                    const Icon = cat.icon;
+                                    const isActive = catParam === cat.id;
+                                    const colorMap: Record<string, string> = {
+                                        'brand-blue': 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]',
+                                        'brand-pink': 'bg-brand-pink border-brand-pink text-white shadow-[0_0_15px_rgba(229,21,122,0.4)]',
+                                        'brand-yellow': 'bg-brand-yellow border-brand-yellow text-slate-950 shadow-[0_0_15px_rgba(255,242,0,0.4)]',
+                                    };
+                                    return (
+                                        <button
+                                            key={cat.id}
+                                            onClick={() => handleCategoryChange(cat.id)}
+                                            className={`h-11 flex flex-col md:flex-row items-center justify-center gap-1 px-1 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-tighter md:tracking-widest transition-all border ${
+                                                isActive
+                                                    ? colorMap[cat.color]
+                                                    : 'bg-transparent border-white/5 text-slate-400 hover:border-white/20 hover:text-white'
+                                            }`}
+                                        >
+                                            <Icon size={14} className="flex-shrink-0" />
+                                            <span className="hidden md:inline">{cat.label}</span>
+                                            <span className="md:hidden text-[8px] text-center">{cat.label.split(' ')[0]}</span>
+                                        </button>
+                                    );
+                                })}
+
+                                {/* 5. BOTÃO PARA EXPANDIR BUSCA */}
+                                <button
+                                    onClick={() => setIsSearchExpanded(true)}
+                                    className="h-11 flex items-center justify-center bg-slate-900/40 border border-white/5 text-slate-500 rounded-xl hover:text-brand-blue transition-all"
+                                >
+                                    <Search size={18} />
+                                </button>
+                            </div>
+                        ) : (
+                            /* MODO BUSCA: CAMPO OCUPA TUDO */
+                            <div className="flex items-center gap-2 animate-fade-in w-full h-full">
+                                <button 
+                                    onClick={() => {
+                                        setIsSearchExpanded(false);
+                                        if (!searchTerm) resetFilters();
+                                    }}
+                                    className="h-11 w-11 flex items-center justify-center bg-slate-900/60 text-slate-400 rounded-xl border border-white/10 hover:text-white"
+                                >
+                                    <ArrowLeft size={20} />
+                                </button>
+                                <div className="relative flex-1 h-full">
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-blue" size={16} />
+                                    <input
+                                        autoFocus
+                                        type="text"
+                                        placeholder="O que você procura?"
+                                        value={searchTerm}
+                                        onChange={e => handleSearch(e.target.value)}
+                                        onFocus={() => setIsSearchFocused(true)}
+                                        onBlur={() => setIsSearchFocused(false)}
+                                        className="w-full h-full bg-slate-900/60 text-white text-xs pl-10 pr-10 border border-brand-blue/30 rounded-xl outline-none focus:border-brand-blue shadow-[0_0_15px_rgba(56,182,255,0.1)] font-bold uppercase tracking-widest placeholder-slate-600"
+                                    />
+                                    {searchTerm && (
+                                        <button
+                                            onClick={() => handleSearch('')}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white bg-slate-800 p-1 rounded-full"
+                                        >
+                                            <X size={12} />
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {/* Subcategorias */}
-                    {activeCategoryData && activeCategoryData.subcategories.length > 0 && (
+                    {!isSearchExpanded && activeCategoryData && activeCategoryData.subcategories.length > 0 && (
                         <div className="flex flex-wrap items-center justify-center gap-1.5 mt-3 pt-3 border-t border-white/5 animate-fade-in">
                             {activeCategoryData.subcategories.map(sub => (
                                 <button
