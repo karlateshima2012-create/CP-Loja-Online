@@ -45,10 +45,10 @@ function App() {
               <Route path="/customer/dashboard" element={<Layout><CustomerDashboard /></Layout>} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-              {/* Redirecionamentos de rotas legadas → Loja */}
-              <Route path="/produtos" element={<Navigate to="/" replace />} />
-              <Route path="/home" element={<Navigate to="/" replace />} />
-              <Route path="/inicio" element={<Navigate to="/" replace />} />
+              {/* Redirecionamentos de rotas legadas e atalhos diretos para a Loja */}
+              <Route path="/produtos" element={<Layout><Products /></Layout>} />
+              <Route path="/home" element={<Layout><Products /></Layout>} />
+              <Route path="/inicio" element={<Layout><Products /></Layout>} />
               <Route path="/flix" element={<Navigate to="/" replace />} />
               <Route path="/flix/*" element={<Navigate to="/" replace />} />
 

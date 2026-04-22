@@ -48,11 +48,9 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
   // Efeito de neon para os botões usando Azul Principal
   const glowBorder = "border border-brand-blue/30 hover:border-brand-blue shadow-[0_0_15px_rgba(36,155,203,0.15)] hover:shadow-[0_0_20px_rgba(36,155,203,0.4)]";
 
-  // Context Navigation Logic
-  // Se estivermos em um parceiro, os links "Início" e "Produtos" mantêm o contexto
-  const baseUrl = slug ? `/parceiro/${slug}` : '';
-  const homeLink = slug ? `/parceiro/${slug}` : '/';
-  const productsLink = slug ? `/parceiro/${slug}/produtos` : '/';
+  // Context Navigation Logic - UNIFICADO PARA LOJA
+  const homeLink = '/';
+  const productsLink = '/';
 
   const handleLogout = () => {
     logout();
