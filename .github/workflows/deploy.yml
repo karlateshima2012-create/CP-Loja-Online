@@ -102,7 +102,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           source: "deploy_package/*"
-          target: "domains/creativeprintjp.com/public_html/cp-loja-online/"
+          target: "/home/u176367625/domains/creativeprintjp.com/public_html/cp-loja-online/"
           strip_components: 1
           overwrite: true
 
@@ -114,5 +114,5 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd domains/creativeprintjp.com/public_html/cp-loja-online/backend
+            cd /home/u176367625/domains/creativeprintjp.com/public_html/cp-loja-online/backend
             php artisan migrate --force
