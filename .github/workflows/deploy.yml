@@ -91,8 +91,8 @@ jobs:
             echo "--- Diagnóstico SSH ---"
             echo "Usuário atual: $(whoami)"
             echo "Diretório atual: $(pwd)"
-            echo "Listando domínios:"
-            ls -F domains/creativeprintjp.com/public_html/ | grep cp-loja-online || echo "Pasta cp-loja-online não vista via SSH"
+            echo "Procurando pasta cp-loja-online..."
+            find /home/u176367625 -type d -name "cp-loja-online" 2>/dev/null || echo "Não encontrei a pasta via find"
             echo "--- Fim Diagnóstico ---"
 
       - name: Deploy to Hostinger via SCP (Password)
@@ -103,7 +103,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           source: "deploy_package/"
-          target: "/home/u176367625/domains/creativeprintjp.com/public_html/cp-loja-online/"
+          target: "/home/u176367625/public_html/cp-loja-online/"
           strip_components: 1
           overwrite: true
 
@@ -116,6 +116,6 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             echo "Acessando pasta do backend..."
-            cd /home/u176367625/domains/creativeprintjp.com/public_html/cp-loja-online/backend
+            cd /home/u176367625/public_html/cp-loja-online/backend
             echo "Rodando migrações..."
             php artisan migrate --force

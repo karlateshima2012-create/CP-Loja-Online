@@ -9,7 +9,7 @@ Este documento contém todas as informações necessárias para configurar e man
 ## 🛠️ Ambiente de Hospedagem (Hostinger)
 O projeto está configurado para rodar em um subdomínio na Hostinger via SSH/SCP.
 
-- **Caminho Absoluto no Servidor:** `/home/u176367625/domains/creativeprintjp.com/public_html/cp-loja-online/`
+- **Caminho Absoluto no Servidor:** `/home/u176367625/public_html/cp-loja-online/`
 - **Usuário SSH:** `u176367625`
 - **Porta SSH:** `65002`
 
