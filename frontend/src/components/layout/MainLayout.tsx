@@ -52,7 +52,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
   // Se estivermos em um parceiro, os links "Início" e "Produtos" mantêm o contexto
   const baseUrl = slug ? `/parceiro/${slug}` : '';
   const homeLink = slug ? `/parceiro/${slug}` : '/';
-  const productsLink = slug ? `/parceiro/${slug}/produtos` : '/produtos';
+  const productsLink = slug ? `/parceiro/${slug}/produtos` : '/';
 
   const handleLogout = () => {
     logout();

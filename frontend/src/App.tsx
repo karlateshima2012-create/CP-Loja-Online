@@ -37,15 +37,10 @@ const InnerApp: React.FC = () => {
 
       <Routes>
         {/* =======================================================
-            0. HUB CENTRAL (LANDING)
+            PÁGINA PRINCIPAL: LOJA ONLINE (CATÁLOGO)
         ======================================================= */}
-        <Route path="/" element={<LandingPortal />} />
-
-        {/* =======================================================
-            1. TELAS PÚBLICAS (CLIENTE FINAL) - MODULARIZADAS
-        ======================================================= */}
-        {/* MODO GLOBAL */}
-        <Route path="/produtos" element={<Layout><Products /></Layout>} />
+        <Route path="/" element={<Layout><Products /></Layout>} />
+        <Route path="/produtos" element={<Navigate to="/" replace />} />
 
 
         {/* OUTRAS PÁGINAS */}
