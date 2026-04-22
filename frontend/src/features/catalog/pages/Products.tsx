@@ -113,11 +113,11 @@ export const Products: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#020617]">
             {/* ============================================================
-                HERO SECTION — Com Busca Centralizada
+                HERO SECTION — Limpa (Título e Subtítulo)
             ============================================================ */}
             <section
                 id="hero"
-                className="relative min-h-[70vh] flex flex-col items-center justify-center pt-28 pb-10 px-4 overflow-hidden text-center animate-fade-in bg-[#020617]"
+                className="relative min-h-[55vh] flex flex-col items-center justify-center pt-28 pb-10 px-4 overflow-hidden text-center animate-fade-in bg-[#020617]"
             >
                 <Starfield />
 
@@ -133,49 +133,25 @@ export const Products: React.FC = () => {
                         </span>
                     </h1>
 
-                    <p className="text-xl md:text-2xl text-slate-400 font-light leading-relaxed max-w-3xl mx-auto mb-12 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                    <p className="text-xl md:text-2xl text-slate-400 font-light leading-relaxed max-w-3xl mx-auto mb-10 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                         Encontre a solução digital perfeita para o seu negócio com tecnologia NFC e Impressão 3D.
                     </p>
-
-                    {/* BARRA DE BUSCA NA HERO */}
-                    <div className="max-w-2xl mx-auto w-full mb-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                        <div className={`relative transition-all duration-500 transform ${isSearchFocused ? 'scale-105' : 'scale-100'}`}>
-                            <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-blue" size={24} />
-                            <input
-                                type="text"
-                                placeholder="O que você está procurando hoje?"
-                                value={searchTerm}
-                                onChange={e => handleSearch(e.target.value)}
-                                onFocus={() => setIsSearchFocused(true)}
-                                onBlur={() => setIsSearchFocused(false)}
-                                className="w-full bg-slate-900/60 text-white text-lg pl-14 pr-12 py-5 border-2 border-white/5 rounded-3xl focus:border-brand-blue/50 outline-none transition-all placeholder-slate-600 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-sm"
-                            />
-                            {searchTerm && (
-                                <button
-                                    onClick={() => handleSearch('')}
-                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white bg-slate-800 p-2 rounded-full transition-colors"
-                                >
-                                    <X size={16} />
-                                </button>
-                            )}
-                        </div>
-                    </div>
                 </div>
             </section>
 
             {/* ============================================================
-                MENU DE CATEGORIAS (Sticky - Linha Única Uniforme)
+                MENU DE CATEGORIAS + BUSCA (5 Colunas em Linha Única)
             ============================================================ */}
             <div
                 id="product-grid"
                 className="sticky top-20 z-40 bg-[#020617]/95 backdrop-blur-xl border-y border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.8)]"
             >
                 <div className="container mx-auto px-4 py-4">
-                    {/* Botões em Linha Única e Tamanhos Iguais */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    {/* Grade de 5 Colunas (no Desktop) */}
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                         <button
                             onClick={() => handleCategoryChange('Todos')}
-                            className={`h-14 flex items-center justify-center px-4 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] transition-all border-2 ${
+                            className={`h-14 flex items-center justify-center px-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2 ${
                                 catParam === 'Todos'
                                     ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
                                     : 'bg-transparent border-white/10 text-slate-400 hover:border-white/30 hover:text-white hover:bg-white/5'
@@ -196,20 +172,46 @@ export const Products: React.FC = () => {
                                 <button
                                     key={cat.id}
                                     onClick={() => handleCategoryChange(cat.id)}
-                                    className={`h-14 flex items-center justify-center gap-2 px-4 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] transition-all border-2 ${
+                                    className={`h-14 flex items-center justify-center gap-2 px-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2 ${
                                         isActive
                                             ? colorMap[cat.color]
                                             : 'bg-transparent border-white/10 text-slate-400 hover:border-white/30 hover:text-white hover:bg-white/5'
                                     }`}
                                 >
-                                    <Icon size={16} />
+                                    <Icon size={14} />
                                     {cat.id === 'Sistemas' ? 'Soluções Digitais' : cat.label}
                                 </button>
                             );
                         })}
+
+                        {/* QUINTO "BOTÃO" — CAMPO DE PESQUISA ESTILIZADO */}
+                        <div className={`relative h-14 transition-all duration-300 group`}>
+                            <Search className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${isSearchFocused ? 'text-brand-blue' : 'text-slate-500'}`} size={18} />
+                            <input
+                                type="text"
+                                placeholder="Buscar..."
+                                value={searchTerm}
+                                onChange={e => handleSearch(e.target.value)}
+                                onFocus={() => setIsSearchFocused(true)}
+                                onBlur={() => setIsSearchFocused(false)}
+                                className={`w-full h-full bg-slate-900/40 text-white text-[11px] pl-11 pr-10 border-2 rounded-2xl outline-none transition-all placeholder-slate-600 font-bold uppercase tracking-widest ${
+                                    isSearchFocused || searchTerm
+                                    ? 'border-brand-blue/50 bg-slate-900/60'
+                                    : 'border-white/5 hover:border-white/20'
+                                }`}
+                            />
+                            {searchTerm && (
+                                <button
+                                    onClick={() => handleSearch('')}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white bg-slate-800 p-1 rounded-full transition-colors"
+                                >
+                                    <X size={12} />
+                                </button>
+                            )}
+                        </div>
                     </div>
 
-                    {/* Subcategorias (Destaque quando ativo) */}
+                    {/* Subcategorias */}
                     {activeCategoryData && activeCategoryData.subcategories.length > 0 && (
                         <div className="flex flex-wrap items-center justify-center gap-2 mt-4 pt-4 border-t border-white/5 animate-fade-in">
                             {activeCategoryData.subcategories.map(sub => (
