@@ -88,14 +88,26 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "Diretório atual: $(pwd)"
-            # Criar a pasta se não existir e limpar arquivos antigos para evitar conflitos
-            mkdir -p /home/u176367625/public_html/cp-loja-online
-            cd /home/u176367625/public_html/cp-loja-online
-            echo "Limpando arquivos antigos..."
-            # Mantém apenas a pasta backend se quiser preservar o banco, mas limpa o frontend
+            echo "--- INÍCIO DIAGNÓSTICO ---"
+            echo "Diretório Inicial SSH: $(pwd)"
+            
+            # Tentar encontrar a pasta correta
+            TARGET_DIR="public_html/cp-loja-online"
+            
+            if [ -d "$TARGET_DIR" ]; then
+              echo "✅ Pasta encontrada em: $(pwd)/$TARGET_DIR"
+            else
+              echo "❌ ERRO: Pasta $TARGET_DIR não encontrada em $(pwd)"
+              echo "Conteúdo de $(pwd):"
+              ls -F
+              exit 1
+            fi
+            
+            cd "$TARGET_DIR"
+            echo "Limpando arquivos antigos em $(pwd)..."
+            # Limpar tudo exceto a pasta backend
             find . -maxdepth 1 ! -name 'backend' ! -name '.' ! -name '..' -exec rm -rf {} +
-            echo "Limpeza concluída."
+            echo "--- FIM DIAGNÓSTICO ---"
 
       - name: Deploy to Hostinger via SCP (Password)
         uses: appleboy/scp-action@v0.1.7
@@ -105,7 +117,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           source: "deploy_package/*"
-          target: "/home/u176367625/public_html/cp-loja-online/"
+          target: "public_html/cp-loja-online/"
           strip_components: 1
           overwrite: true
 
@@ -117,7 +129,6 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "Acessando pasta do backend..."
-            cd /home/u176367625/public_html/cp-loja-online/backend
-            echo "Rodando migrações..."
+            cd public_html/cp-loja-online/backend
+            echo "Rodando migrações em $(pwd)..."
             php artisan migrate --force
