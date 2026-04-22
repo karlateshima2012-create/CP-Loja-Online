@@ -69,16 +69,15 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
       <header className="bg-slate-900/80 backdrop-blur-md border-b border-brand-blue/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
 
-          {/* Logo Area */}
+          {/* Logo Area - Aumentada para h-16 */}
           <Link to={homeLink} className="flex items-center gap-3 group hover:opacity-90 transition-opacity">
-            <Logo className="h-10" withText={true} />
+            <Logo className="h-16" withText={true} />
           </Link>
 
-          {/* Desktop Nav - MENU ATUALIZADO */}
           <nav className="hidden md:flex items-center gap-8">
-            <NavLink to="/?cat=Impressão 3D">Impressão 3D</NavLink>
-            <NavLink to="/?cat=Tecnologia NFC">Tecnologia NFC</NavLink>
-            <NavLink to="/?cat=Sistemas">Sistemas</NavLink>
+            <NavLink to="/?cat=Impressão 3D" active={location.search.includes('Impressão%203D')}>Impressão 3D</NavLink>
+            <NavLink to="/?cat=Tecnologia NFC" active={location.search.includes('Tecnologia%20NFC')}>Tecnologia NFC</NavLink>
+            <NavLink to="/?cat=Sistemas" active={location.search.includes('Sistemas')}>SOLUÇÕES DIGITAIS</NavLink>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -128,7 +127,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
           <div className="md:hidden bg-slate-900 border-t border-brand-blue/30 p-4 space-y-4 shadow-2xl absolute w-full z-50">
             <MobileNavLink to="/?cat=Impressão 3D" onClick={() => setIsMenuOpen(false)}>Impressão 3D</MobileNavLink>
             <MobileNavLink to="/?cat=Tecnologia NFC" onClick={() => setIsMenuOpen(false)}>Tecnologia NFC</MobileNavLink>
-            <MobileNavLink to="/?cat=Sistemas" onClick={() => setIsMenuOpen(false)}>Sistemas</MobileNavLink>
+            <MobileNavLink to="/?cat=Sistemas" onClick={() => setIsMenuOpen(false)}>SOLUÇÕES DIGITAIS</MobileNavLink>
 
             <div className="border-t border-slate-800 pt-2">
               {user ? (
