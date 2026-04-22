@@ -142,7 +142,30 @@ let PRODUCTS: Product[] = [
         isExclusive: false,
         allowAffiliate: true,
         isCustomizable: true,
+        isFeatured: true,
+        isRecommended: true
+    },
+    {
+        id: 'prod-nfc-keychain',
+        name: 'Chaveiro Smart NFC',
+        description: 'Leve seus contatos no bolso. Compacto, resistente e ultra moderno.',
+        price: 2500,
+        imageUrl: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=500',
+        category: 'Tecnologia NFC',
+        isExclusive: false,
+        allowAffiliate: true,
         isFeatured: true
+    },
+    {
+        id: 'prod-3d-logo',
+        name: 'Logo 3D de Bancada',
+        description: 'Sua marca em relevo para decorar seu escritório ou balcão.',
+        price: 5500,
+        imageUrl: 'https://images.unsplash.com/photo-1611095773767-114b51a671f1?w=500',
+        category: 'Impressão 3D',
+        isExclusive: false,
+        allowAffiliate: true,
+        isRecommended: true
     }
 ];
 
