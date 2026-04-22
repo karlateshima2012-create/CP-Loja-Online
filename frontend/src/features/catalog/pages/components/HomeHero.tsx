@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShoppingBag } from 'lucide-react';
 import { T } from '@/src/contexts/TextContext';
-import { Starfield } from '../../../components/ui/Starfield';
+import { Starfield } from '../../../../components/ui/Starfield';
 
 interface HomeHeroProps {
     onScrollToGrid: () => void;

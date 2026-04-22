@@ -6,7 +6,7 @@ import { Product } from '@/src/types';
 import { Search, Grid, Star, BadgeCheck, X, Sparkles, Filter } from 'lucide-react';
 import { ProductCard } from './components/ProductCard';
 import { T } from '@/src/contexts/TextContext';
-import { Starfield } from '../../ui/Starfield';
+import { Starfield } from '../../../components/ui/Starfield';
 import { ProductSlider } from './components/ProductSlider';
 
 export const Products: React.FC = () => {
