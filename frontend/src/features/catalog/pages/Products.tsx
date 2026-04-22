@@ -248,37 +248,6 @@ export const Products: React.FC = () => {
             </div>
 
             {/* ============================================================
-                VITRINES (SÓ APARECEM QUANDO NÃO FILTRADO)
-            ============================================================ */}
-            {!isFiltering && (
-                <div className="pb-8 pt-8">
-                    {CATEGORIES.map(cat => {
-                        const catProducts = products.filter(p => p.category === cat.id);
-                        const featured = catProducts.filter(p => p.isFeatured || p.isRecommended);
-                        const displayProducts = featured.length > 0 ? featured : catProducts;
-                        if (displayProducts.length === 0) return null;
-
-                        return (
-                            <div key={cat.id} className="mb-4">
-                                <ProductSlider
-                                    title={`${cat.emoji} ${cat.sliderTitle}`}
-                                    subtitle={cat.sliderSubtitle}
-                                    products={displayProducts}
-                                    accentColor={
-                                        cat.color === 'brand-pink' ? 'pink'
-                                        : cat.color === 'brand-yellow' ? 'yellow'
-                                        : 'blue'
-                                    }
-                                    onViewAll={() => handleCategoryChange(cat.id)}
-                                    viewAllLabel={cat.sliderLabel}
-                                />
-                            </div>
-                        );
-                    })}
-                </div>
-            )}
-
-            {/* ============================================================
                 GRID DE PRODUTOS
             ============================================================ */}
             <div className="container mx-auto px-4 py-12 pb-24">
