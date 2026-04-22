@@ -30,7 +30,9 @@ jobs:
 
       - name: Build Frontend
         working-directory: ./frontend
-        run: npm run build
+        run: |
+          npm run build
+          ls -la dist/ # Verificar se a pasta dist foi criada
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -44,9 +46,23 @@ jobs:
 
       - name: Prepare Deployment Files
         run: |
-          mkdir deploy_package
-          cp -r frontend/dist/* deploy_package/
-          cp -r backend deploy_package/
+          echo "Gerando pacote de deploy..."
+          mkdir -p deploy_package
+          
+          if [ -d "frontend/dist" ]; then
+            cp -r frontend/dist/* deploy_package/
+          else
+            echo "ERRO: Pasta frontend/dist não encontrada!"
+            exit 1
+          fi
+          
+          if [ -d "backend" ]; then
+            cp -r backend deploy_package/
+          else
+            echo "ERRO: Pasta backend não encontrada!"
+            exit 1
+          fi
+          
           cp .htaccess deploy_package/
           
           # Remover banco local e cache
@@ -59,6 +75,9 @@ jobs:
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> deploy_package/backend/.env
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> deploy_package/backend/.env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> deploy_package/backend/.env
+          
+          echo "Conteúdo do pacote de deploy:"
+          ls -R deploy_package | head -n 20
 
       - name: Deploy to Hostinger via SCP (Password)
         uses: appleboy/scp-action@v0.1.7
