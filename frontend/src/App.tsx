@@ -45,7 +45,6 @@ const InnerApp: React.FC = () => {
             1. TELAS PÚBLICAS (CLIENTE FINAL) - MODULARIZADAS
         ======================================================= */}
         {/* MODO GLOBAL */}
-        <Route path="/inicio" element={<Layout><Home /></Layout>} />
         <Route path="/produtos" element={<Layout><Products /></Layout>} />
 
 
@@ -54,18 +53,16 @@ const InnerApp: React.FC = () => {
         <Route path="/cart" element={<Layout><Cart /></Layout>} />
 
         <Route path="/connect" element={<Layout><Connect /></Layout>} />
-        <Route path="/planos" element={<Layout><Plans /></Layout>} />
         <Route path="/register" element={<Layout><Register /></Layout>} />
 
         <Route path="/legal" element={<Layout><LegalDocs /></Layout>} />
 
         {/* REDIRECT LEGACY */}
-        <Route path="/shop" element={<Navigate to="/inicio" replace />} />
+        <Route path="/shop" element={<Navigate to="/produtos" replace />} />
 
         {/* =======================================================
             2. CREATIVE FLIX (NEW ECOSYSTEM)
         ======================================================= */}
-        <Route path="/flix" element={<FlixHome />} />
         <Route path="/p/:slug" element={<FlixProfileView />} /> {/* URL DO NFC */}
 
         {/* =======================================================

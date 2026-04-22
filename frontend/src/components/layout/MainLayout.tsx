@@ -78,17 +78,8 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
           {/* Desktop Nav - MENU ATUALIZADO */}
           <nav className="hidden md:flex items-center gap-8">
-            <NavLink to={homeLink} active={location.pathname === homeLink || location.pathname === '/shop'}>
-              <T k="nav_home" default="Início" />
-            </NavLink>
             <NavLink to={productsLink} active={location.pathname === productsLink}>
               <T k="nav_shop" default="Loja" />
-            </NavLink>
-            <NavLink to="/planos" active={location.pathname === '/planos'}>
-              <T k="nav_plans" default="Planos" />
-            </NavLink>
-            <NavLink to="/flix" active={location.pathname === '/flix'}>
-              <span className="flex items-center gap-1"><Clapperboard size={14} className="text-brand-pink" /> Creativeflix</span>
             </NavLink>
           </nav>
 
@@ -111,8 +102,8 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="hidden lg:flex items-center gap-2 text-xs text-brand-gray hover:text-brand-blue transition-colors uppercase tracking-wider font-bold border border-slate-800 hover:border-brand-blue/30 px-3 py-2 rounded-lg">
-                <User size={14} /> <T k="nav_login" default="Entrar" />
+              <Link to="/login" className="hidden lg:flex items-center gap-2 text-xs text-white bg-brand-blue hover:bg-brand-blue/80 transition-all uppercase tracking-wider font-bold px-6 py-2.5 rounded-lg shadow-[0_0_15px_rgba(36,155,203,0.5)] hover:shadow-[0_0_25px_rgba(36,155,203,0.8)] border border-brand-blue">
+                <T k="nav_login" default="ENTRAR" />
               </Link>
             )}
 
@@ -137,10 +128,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden bg-slate-900 border-t border-brand-blue/30 p-4 space-y-4 shadow-2xl absolute w-full z-50">
-            <MobileNavLink to={homeLink} onClick={() => setIsMenuOpen(false)}><T k="nav_home" default="Início" /></MobileNavLink>
             <MobileNavLink to={productsLink} onClick={() => setIsMenuOpen(false)}><T k="nav_shop" default="Loja" /></MobileNavLink>
-            <MobileNavLink to="/planos" onClick={() => setIsMenuOpen(false)}><T k="nav_plans" default="Planos" /></MobileNavLink>
-            <MobileNavLink to="/flix" onClick={() => setIsMenuOpen(false)}>🎬 Creativeflix</MobileNavLink>
 
             <div className="border-t border-slate-800 pt-2">
               {user ? (
@@ -151,7 +139,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
                   </button>
                 </>
               ) : (
-                <MobileNavLink to="/login" onClick={() => setIsMenuOpen(false)}><T k="nav_login" default="Entrar / Cadastro" /></MobileNavLink>
+                <MobileNavLink to="/login" onClick={() => setIsMenuOpen(false)}><T k="nav_login" default="ENTRAR" /></MobileNavLink>
               )}
             </div>
           </div>
