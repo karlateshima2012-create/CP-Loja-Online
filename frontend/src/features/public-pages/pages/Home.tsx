@@ -188,9 +188,6 @@ export const Home: React.FC = () => {
                    MODO HOME PADRÃO (Sem Parceiro)
                    ===================================================================================== */
                 <>
-                    {/* --- INFORMATIVE ANCHOR CARDS ISOLADOS --- */}
-                    <HomeSegments scrollToSection={scrollToSection} />
-
                     {/* --- FEATURED SLIDER (DESTAQUES CP) --- */}
                     {featuredCPProducts.length > 0 && (
                         <div id="destaques">
@@ -219,6 +216,9 @@ export const Home: React.FC = () => {
                             />
                         </div>
                     )}
+
+                    {/* --- INFORMATIVE ANCHOR CARDS ISOLADOS --- */}
+                    <HomeSegments scrollToSection={scrollToSection} />
                 </>
             )}
 

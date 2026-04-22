@@ -7,7 +7,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
         'nav_home': 'Início',
         'nav_shop': 'Loja',
         'nav_plans': 'Planos',
-        'nav_login': 'Entrar / Cadastro',
+        'nav_login': 'ENTRAR',
         'nav_logout': 'Sair',
         'nav_dashboard': 'Minha Conta',
 
