@@ -30,7 +30,7 @@ const CATEGORIES = [
         subcategories: ['Chaveiros com NFC', 'Displays com NFC'],
     },
     {
-        id: 'Sistemas',
+        id: 'Soluções Digitais',
         label: 'Soluções Digitais',
         icon: Monitor,
         color: 'brand-yellow',
