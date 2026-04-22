@@ -37,9 +37,9 @@ export const Products: React.FC = () => {
     // CATEGORY TABS CONFIG
     const categoryTabs = [
         { label: 'Todos', value: 'Todos' },
-        { label: 'Smart NFC', value: 'Tecnologia NFC' },
         { label: 'Impressão 3D', value: 'Impressão 3D' },
-        { label: 'Serviços Digitais', value: 'Serviços Digitais' },
+        { label: 'Tecnologia NFC', value: 'Tecnologia NFC' },
+        { label: 'Sistemas', value: 'Sistemas' },
     ];
 
     // Filtering Logic

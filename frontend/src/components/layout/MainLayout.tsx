@@ -78,15 +78,9 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
           {/* Desktop Nav - MENU ATUALIZADO */}
           <nav className="hidden md:flex items-center gap-8">
-            <NavLink to={productsLink} active={location.pathname === productsLink}>
-              <T k="nav_shop" default="Loja" />
-            </NavLink>
-            <NavLink to="/" active={location.hash === '#destaques'}>
-              <T k="footer_highlights" default="Destaques" />
-            </NavLink>
-            <NavLink to="/" active={location.hash === '#recomendados'}>
-              <T k="footer_recommended" default="Recomendados" />
-            </NavLink>
+            <NavLink to="/?cat=Impressão 3D">Impressão 3D</NavLink>
+            <NavLink to="/?cat=Tecnologia NFC">Tecnologia NFC</NavLink>
+            <NavLink to="/?cat=Sistemas">Sistemas</NavLink>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -134,9 +128,9 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden bg-slate-900 border-t border-brand-blue/30 p-4 space-y-4 shadow-2xl absolute w-full z-50">
-            <MobileNavLink to={productsLink} onClick={() => setIsMenuOpen(false)}><T k="nav_shop" default="Loja" /></MobileNavLink>
-            <MobileNavLink to="/#destaques" onClick={() => setIsMenuOpen(false)}><T k="footer_highlights" default="Destaques" /></MobileNavLink>
-            <MobileNavLink to="/#recomendados" onClick={() => setIsMenuOpen(false)}><T k="footer_recommended" default="Recomendados" /></MobileNavLink>
+            <MobileNavLink to="/?cat=Impressão 3D" onClick={() => setIsMenuOpen(false)}>Impressão 3D</MobileNavLink>
+            <MobileNavLink to="/?cat=Tecnologia NFC" onClick={() => setIsMenuOpen(false)}>Tecnologia NFC</MobileNavLink>
+            <MobileNavLink to="/?cat=Sistemas" onClick={() => setIsMenuOpen(false)}>Sistemas</MobileNavLink>
 
             <div className="border-t border-slate-800 pt-2">
               {user ? (
