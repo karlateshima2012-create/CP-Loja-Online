@@ -8,10 +8,11 @@ interface ProductSliderProps {
     title: string;
     subtitle: string;
     products: Product[];
-    partnerSlug: string | null;
-    partnersList: Partner[];
+    partnerSlug?: string | null;
+    partnersList?: Partner[];
     accentColor: 'blue' | 'yellow' | 'pink';
     onViewAll?: () => void;
+    viewAllLabel?: string;
 }
 
 export const ProductSlider: React.FC<ProductSliderProps> = ({ title, subtitle, products, partnerSlug, partnersList, accentColor, onViewAll }) => {

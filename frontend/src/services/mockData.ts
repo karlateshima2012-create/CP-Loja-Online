@@ -95,74 +95,137 @@ let FLIX_PROFILES: FlixProfile[] = [
 ];
 
 let PRODUCTS: Product[] = [
+    // =============================================
+    // IMPRESSÃO 3D
+    // =============================================
     {
-        id: 'prod-1',
-        name: 'Cartão NFC Black Premium',
-        description: 'Cartão de visita digital com chip NFC. Compartilhe contatos e portfólio instantaneamente.',
-        price: 3500,
-        imageUrl: 'https://images.unsplash.com/photo-1616423640778-28d1b53229bd?w=500',
-        category: 'Tecnologia NFC',
-        subcategory: 'Displays com NFC',
-        isFeatured: true
+        id: 'p3d-chaveiro-1',
+        name: 'Chaveiro Personalizado 3D',
+        description: 'Chaveiro impresso em 3D com seu nome, logo ou design exclusivo. Disponível em diversas cores de filamento.',
+        price: 1500,
+        imageUrl: 'https://images.unsplash.com/photo-1576158113928-4c240eaaf360?w=500',
+        category: 'Impressão 3D',
+        subcategory: 'Chaveiros 3D',
+        isFeatured: true,
+        isCustomizable: true,
     },
     {
-        id: 'prod-2',
-        name: 'Display Pix 3D',
-        description: 'Display de balcão impresso em 3D. Ideal para pagamentos rápidos.',
+        id: 'p3d-chaveiro-2',
+        name: 'Chaveiro Inicial 3D',
+        description: 'Chaveiro com a inicial do seu nome em relevo. Elegante e resistente.',
+        price: 1200,
+        imageUrl: 'https://images.unsplash.com/photo-1621609764547-c2f8e9dce6c5?w=500',
+        category: 'Impressão 3D',
+        subcategory: 'Chaveiros 3D',
+        isCustomizable: true,
+    },
+    {
+        id: 'p3d-display-pix',
+        name: 'Display Pix / QR Code 3D',
+        description: 'Display de balcão impresso em 3D com suporte para QR Code do Pix. Aceita personalização de cor e logo.',
         price: 4500,
         imageUrl: 'https://images.unsplash.com/photo-1622675363311-ac6016d97a96?w=500',
         category: 'Impressão 3D',
         subcategory: 'Displays / Suportes',
-        isRecommended: true
+        isFeatured: true,
+        isRecommended: true,
+        isCustomizable: true,
     },
     {
-        id: 'prod-nfc-keychain',
-        name: 'Chaveiro Smart NFC',
-        description: 'Seus dados sempre com você em um chaveiro tecnológico.',
-        price: 2500,
-        imageUrl: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=500',
-        category: 'Tecnologia NFC',
-        subcategory: 'Chaveiros com NFC',
-        isFeatured: true
-    },
-    {
-        id: 'prod-3d-keychain',
-        name: 'Chaveiro Personalizado 3D',
-        description: 'Chaveiros físicos com design exclusivo impresso em 3D.',
-        price: 1500,
-        imageUrl: 'https://images.unsplash.com/photo-1576158113928-4c240eaaf360?w=500',
+        id: 'p3d-suporte-cel',
+        name: 'Suporte de Celular 3D',
+        description: 'Suporte para smartphone com design personalizável. Ideal para balcões de atendimento.',
+        price: 2800,
+        imageUrl: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500',
         category: 'Impressão 3D',
-        subcategory: 'Chaveiros 3D'
+        subcategory: 'Displays / Suportes',
+        isCustomizable: true,
     },
     {
-        id: 'prod-3d-sign',
+        id: 'p3d-letreiro-mesa',
         name: 'Letreiro de Mesa 3D',
-        description: 'Sua marca ou nome em um letreiro 3D personalizado.',
+        description: 'Seu nome ou marca em relevo 3D para decorar mesa, bancada ou escritório. Produção sob demanda.',
         price: 6500,
         imageUrl: 'https://images.unsplash.com/photo-1611095773767-114b51a671f1?w=500',
         category: 'Impressão 3D',
         subcategory: 'Letreiros personalizados',
-        isRecommended: true
+        isFeatured: true,
+        isCustomizable: true,
     },
     {
-        id: 'prod-digital-lp',
+        id: 'p3d-letreiro-parede',
+        name: 'Letreiro de Parede 3D',
+        description: 'Logo ou texto em 3D para fixação na parede. Perfeito para lojas, escritórios e estúdios.',
+        price: 12000,
+        imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500',
+        category: 'Impressão 3D',
+        subcategory: 'Letreiros personalizados',
+        isCustomizable: true,
+    },
+    // =============================================
+    // TECNOLOGIA NFC
+    // =============================================
+    {
+        id: 'pnfc-chaveiro',
+        name: 'Chaveiro Smart NFC',
+        description: 'Chaveiro com chip NFC embutido. Um toque do celular abre seu WhatsApp, portfólio ou qualquer link. Inclui configuração.',
+        price: 3500,
+        imageUrl: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=500',
+        category: 'Tecnologia NFC',
+        subcategory: 'Chaveiros com NFC',
+        isFeatured: true,
+        isRecommended: true,
+        includesFreePage: true,
+        isCustomizable: true,
+    },
+    {
+        id: 'pnfc-cartao-black',
+        name: 'Cartão NFC Black Premium',
+        description: 'Cartão de visita digital com chip NFC e acabamento fosco premium. Compartilhe contatos e portfólio com um toque.',
+        price: 4500,
+        imageUrl: 'https://images.unsplash.com/photo-1616423640778-28d1b53229bd?w=500',
+        category: 'Tecnologia NFC',
+        subcategory: 'Displays com NFC',
+        isFeatured: true,
+        includesFreePage: true,
+        isCustomizable: true,
+    },
+    {
+        id: 'pnfc-display-portfolio',
+        name: 'Display NFC — Portfólio Interativo',
+        description: 'Display de bancada com NFC que abre automaticamente seu portfólio digital. Impressione clientes na primeira reunião.',
+        price: 6500,
+        imageUrl: 'https://images.unsplash.com/photo-1542744094-3a31f272c490?w=500',
+        category: 'Tecnologia NFC',
+        subcategory: 'Displays com NFC',
+        isRecommended: true,
+        includesFreePage: true,
+        isCustomizable: true,
+    },
+    // =============================================
+    // SISTEMAS / SAAS
+    // =============================================
+    {
+        id: 'sys-landing-page',
         name: 'Landing Page Profissional',
-        description: 'Página de alta conversão para seus serviços digitais.',
+        description: 'Página de alta conversão para o seu negócio ou serviço. Design responsivo, SEO otimizado e integração com WhatsApp. Entrega em até 7 dias.',
         price: 9800,
         imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500',
         category: 'Sistemas',
-        isFeatured: true
+        isFeatured: true,
+        isRecommended: true,
+        isCustomizable: true,
     },
     {
-        id: 'prod-digital-crm',
+        id: 'sys-crm-fidelidade',
         name: 'Sistema CRM & Fidelidade',
-        description: 'Gestão completa e automatizada de clientes.',
+        description: 'Plataforma SaaS completa para gestão de clientes e programa de pontos. Fidelize seu público de forma automatizada. Assine e acesse hoje mesmo.',
         price: 15000,
         imageUrl: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=500',
         category: 'Sistemas',
         isFeatured: true,
-        isRecommended: true
-    }
+        isRecommended: true,
+    },
 ];
 
 let ORDERS: Order[] = [
