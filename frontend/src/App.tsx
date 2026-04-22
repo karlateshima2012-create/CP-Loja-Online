@@ -27,32 +27,31 @@ function App() {
         <AuthProvider>
           <CartProvider>
             <Routes>
-              {/* ================================================
-                  LOJA ONLINE - PÁGINA PRINCIPAL
-              ================================================ */}
+              {/* 
+                  ESTRUTURA DEFINITIVA:
+                  1. LOJA (RAIZ)
+                  2. PORTAL (ACESSO RÁPIDO)
+              */}
+              
+              {/* Rota Principal: Loja Online */}
               <Route path="/" element={<Layout><Products /></Layout>} />
               <Route path="/produto/:id" element={<Layout><ProductDetail /></Layout>} />
               <Route path="/cart" element={<Layout><CartPage /></Layout>} />
 
-              {/* Portal de acesso rápido (dev/admin entry point) */}
+              {/* Rota de Suporte: Portal de Acesso Rápido */}
               <Route path="/portal" element={<LandingPortal />} />
 
-              {/* Auth */}
+              {/* Área Autenticada e Dashboards */}
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-
-              {/* Dashboards */}
               <Route path="/customer/dashboard" element={<Layout><CustomerDashboard /></Layout>} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-              {/* Redirecionamentos de rotas legadas e atalhos diretos para a Loja */}
-              <Route path="/produtos" element={<Layout><Products /></Layout>} />
-              <Route path="/home" element={<Layout><Products /></Layout>} />
-              <Route path="/inicio" element={<Layout><Products /></Layout>} />
-              <Route path="/flix" element={<Navigate to="/" replace />} />
-              <Route path="/flix/*" element={<Navigate to="/" replace />} />
-
-              {/* Fallback */}
+              {/* 
+                  LIMPEZA TOTAL: 
+                  Qualquer outra rota (inicio, produtos, flix, etc) 
+                  agora é redirecionada para a Loja principal.
+              */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </CartProvider>
