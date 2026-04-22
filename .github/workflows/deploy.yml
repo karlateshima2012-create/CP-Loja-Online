@@ -80,7 +80,7 @@ jobs:
           echo "Conteúdo do pacote de deploy:"
           ls -R deploy_package | head -n 20
 
-      - name: Deep Path Search via SSH
+      - name: Cleanup and Diagnostic via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -88,18 +88,43 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "--- BUSCA PROFUNDA DE DIRETÓRIO ---"
-            echo "Eu sou o usuário: $(whoami)"
-            echo "Meu diretório HOME real é: $HOME"
-            echo "Procurando todas as pastas chamadas 'cp-loja-online'..."
-            find $HOME -type d -name "cp-loja-online" 2>/dev/null
-            echo "----------------------------------"
-            echo "Procurando onde está o seu public_html..."
-            find $HOME -type d -name "public_html" 2>/dev/null
-            echo "----------------------------------"
-            # Vou forçar um erro aqui para eu poder ler o log no GitHub Actions
-            echo "POR FAVOR, LEIA O LOG ACIMA PARA VER OS CAMINHOS ENCONTRADOS"
-            exit 1
+            echo "--- INÍCIO LIMPEZA ---"
+            TARGET_DIR="/home/u176367625/domains/creativeprintjp.com/public_html/cp-loja-online"
+            
+            if [ -d "$TARGET_DIR" ]; then
+              cd "$TARGET_DIR"
+              echo "Limpando arquivos antigos em $(pwd)..."
+              # Limpar tudo exceto a pasta backend
+              find . -maxdepth 1 ! -name 'backend' ! -name '.' ! -name '..' -exec rm -rf {} +
+            else
+              echo "Pasta não encontrada, criando: $TARGET_DIR"
+              mkdir -p "$TARGET_DIR"
+            fi
+            echo "--- FIM LIMPEZA ---"
+
+      - name: Deploy to Hostinger via SCP (Password)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: "deploy_package/*"
+          target: "/home/u176367625/domains/creativeprintjp.com/public_html/cp-loja-online/"
+          strip_components: 1
+          overwrite: true
+
+      - name: Backend Setup via SSH (Password)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /home/u176367625/domains/creativeprintjp.com/public_html/cp-loja-online/backend
+            echo "Rodando migrações em $(pwd)..."
+            php artisan migrate --force
 
       - name: Backend Setup via SSH (Password)
         uses: appleboy/ssh-action@v1.0.3
