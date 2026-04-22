@@ -1,95 +1,53 @@
 
-import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { MainLayout as Layout } from './components/layout/MainLayout';
-import { AdminLayout } from './components/layout/AdminLayout';
-import { DevRoleSwitcher } from './features/admin/components/DevRoleSwitcher';
-import { LandingPortal } from './features/public-pages/pages/LandingPortal';
-// Modular Public Pages
-import { Home } from './features/public-pages/pages/Home';
+import React from 'react';
+import { Routes, Route, Navigate, HashRouter } from 'react-router-dom';
+import { MainLayout } from './components/layout/MainLayout';
 import { Products } from './features/catalog/pages/Products';
-import { ProductDetail } from './features/catalog/pages/ProductDetail';
-import { CartPage as Cart } from './features/cart/pages/CartPage';
-import { ConnectPage as Connect } from './features/clients/pages/ConnectPage';
-import { PlansPage as Plans } from './features/clients/pages/PlansPage';
-import { RegisterPage as Register } from './features/auth/pages/RegisterPage';
-import { LegalDocs } from './features/public-pages/pages/LegalDocs';
+import { Cart } from './features/cart/pages/Cart';
+import { Checkout } from './features/checkout/pages/Checkout';
+import { Login } from './features/auth/pages/Login';
+import { Register } from './features/auth/pages/Register';
+import { AuthProvider } from './contexts/AuthContext';
+import { CartProvider } from './contexts/CartContext';
+import { TextProvider } from './contexts/TextContext';
 
-// FLIX PAGES (NEW)
-import { FlixHome } from './features/flix/FlixHome';
-import { FlixProfileView } from './features/flix/FlixProfileView';
+// Layout wrapper simplificado
+const Layout = ({ children }: { children: React.ReactNode }) => (
+  <MainLayout>{children}</MainLayout>
+);
 
-import { LoginPage as Login } from './features/auth/pages/LoginPage';
-import { AdminDashboard } from './features/admin/pages/AdminDashboard';
-import { CustomerDashboard } from './features/clients/pages/CustomerDashboard';
-import { UserRole } from '@/src/types';
-import { AuthProvider } from '@/src/features/auth/context/AuthContext';
-import { TextProvider } from '@/src/contexts/TextContext';
-import { CartProvider } from './features/cart/CartContext';
-import { mockService } from '@/src/services/mockData';
-
-// --- INNER APP FOR ROUTING ---
-const InnerApp: React.FC = () => {
+function App() {
   return (
     <HashRouter>
-      {/* BOTÃO FLUTUANTE PARA TESTES (TROCA DE SESSÃO) */}
-      <DevRoleSwitcher />
+      <TextProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Routes>
+              {/* 
+                  ESTRUTURA SIMPLIFICADA: 
+                  A LOJA É A PÁGINA PRINCIPAL E ÚNICA 
+              */}
+              <Route path="/" element={<Layout><Products /></Layout>} />
+              
+              {/* Redirecionamentos para evitar erros e telas brancas */}
+              <Route path="/produtos" element={<Navigate to="/" replace />} />
+              <Route path="/home" element={<Navigate to="/" replace />} />
+              <Route path="/inicio" element={<Navigate to="/" replace />} />
 
-      <Routes>
-        {/* =======================================================
-            PÁGINA PRINCIPAL: LOJA ONLINE (CATÁLOGO)
-        ======================================================= */}
-        <Route path="/" element={<Layout><Products /></Layout>} />
-        <Route path="/produtos" element={<Navigate to="/" replace />} />
+              {/* Demais rotas funcionais da loja */}
+              <Route path="/cart" element={<Layout><Cart /></Layout>} />
+              <Route path="/checkout" element={<Layout><Checkout /></Layout>} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-
-        {/* OUTRAS PÁGINAS */}
-        <Route path="/product/:id" element={<Layout><ProductDetail /></Layout>} />
-        <Route path="/cart" element={<Layout><Cart /></Layout>} />
-
-        <Route path="/connect" element={<Layout><Connect /></Layout>} />
-        <Route path="/register" element={<Layout><Register /></Layout>} />
-
-        <Route path="/legal" element={<Layout><LegalDocs /></Layout>} />
-
-        {/* REDIRECT LEGACY */}
-        <Route path="/shop" element={<Navigate to="/produtos" replace />} />
-
-        {/* =======================================================
-            2. CREATIVE FLIX (NEW ECOSYSTEM)
-        ======================================================= */}
-        <Route path="/p/:slug" element={<FlixProfileView />} /> {/* URL DO NFC */}
-
-        {/* =======================================================
-            3. AUTH & DASHBOARDS
-        ======================================================= */}
-        <Route path="/login" element={<Login />} />
-
-
-        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-        <Route path="/admin/dashboard/*" element={
-          <AdminLayout role={UserRole.ADMIN}>
-            <AdminDashboard />
-          </AdminLayout>
-        } />
-
-        <Route path="/customer/dashboard" element={<Layout><CustomerDashboard /></Layout>} />
-
-      </Routes>
+              {/* Fallback para qualquer rota inexistente */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </CartProvider>
+        </AuthProvider>
+      </TextProvider>
     </HashRouter>
   );
 }
-
-const App: React.FC = () => {
-  return (
-    <AuthProvider>
-      <TextProvider>
-        <CartProvider>
-          <InnerApp />
-        </CartProvider>
-      </TextProvider>
-    </AuthProvider>
-  );
-};
 
 export default App;

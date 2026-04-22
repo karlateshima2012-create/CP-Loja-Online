@@ -50,9 +50,9 @@ export const Products: React.FC = () => {
     });
 
     return (
-        <div className="animate-fade-in">
+        <div className="animate-fade-in bg-[#020617] min-h-screen">
             {/* --- CP GESTÃO STYLE HERO --- */}
-            <section id="hero" className="relative min-h-[80vh] flex flex-col items-center justify-center pt-32 pb-20 px-4 md:px-8 lg:px-12 overflow-hidden bg-slate-950 animate-fade-in text-center">
+            <section id="hero" className="relative min-h-[75vh] flex flex-col items-center justify-center pt-32 pb-20 px-4 md:px-8 lg:px-12 overflow-hidden text-center">
                 <Starfield />
                 
                 <div className="w-[90%] md:w-full max-w-5xl mx-auto relative z-10">
@@ -62,28 +62,27 @@ export const Products: React.FC = () => {
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-blue"></span>
                         </span>
-                        <T k="products_hero_tag" default="Tecnologia •NFC• 3D" />
+                        Tecnologia • NFC • 3D
                     </div>
 
-                    <h1 className="text-4xl md:text-7xl font-black text-white mb-8 leading-[1.1] tracking-tighter max-w-5xl mx-auto animate-fade-in-up">
-                        Sua marca está <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">conectada ao futuro</span> ou perdendo espaço?
+                    <h1 className="text-5xl md:text-8xl font-black text-white mb-8 leading-[1.1] tracking-tighter max-w-5xl mx-auto animate-fade-in-up">
+                        <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent filter drop-shadow-[0_0_30px_rgba(56,182,255,0.3)]">
+                            Catálogo Oficial
+                        </span>
                     </h1>
                     
-                    <p className="text-lg md:text-2xl text-brand-gray/90 font-light leading-relaxed max-w-4xl mx-auto mb-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                        <T k="products_hero_desc" default="Encontre a solução digital perfeita para o seu negócio com tecnologia NFC e Impressão 3D de alta performance." />
+                    <p className="text-lg md:text-2xl text-brand-gray/90 font-medium leading-relaxed max-w-4xl mx-auto mb-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                        Encontre a solução digital perfeita para o seu negócio com tecnologia NFC e Impressão 3D.
                     </p>
                 </div>
 
-                {/* Efeito de Luz Pulsante - Top Left */}
-                <div className="absolute -top-20 -left-20 w-[400px] h-[400px] bg-[#38b6ff] rounded-full blur-[120px] opacity-25 animate-pulse-slow -z-10 pointer-events-none"></div>
-                
-                {/* Atmosfera Global e Degradê de Fundo */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950 -z-10"></div>
-                <div className="absolute top-[20%] left-[5%] w-[400px] h-[400px] bg-brand-blue/5 rounded-full blur-[120px] -z-10"></div>
+                {/* Efeitos de Luz Pulsante */}
+                <div className="absolute -top-20 -left-20 w-[600px] h-[600px] bg-[#38b6ff] rounded-full blur-[130px] opacity-20 animate-pulse-slow -z-10 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617] -z-10"></div>
             </section>
 
             {/* --- SEÇÕES DE DESTAQUE E RECOMENDADOS (ADICIONADAS) --- */}
-            <div className="bg-slate-950 pt-12">
+            <div className="bg-[#020617] pt-12">
                 {products.filter(p => p.isFeatured).length > 0 && (
                     <ProductSlider
                         title="Destaques CP"
@@ -106,14 +105,14 @@ export const Products: React.FC = () => {
             {/* --- MAIN CONTENT CONTAINER --- */}
             <div className="container mx-auto px-4 py-12 pb-20">
                 {/* --- FILTER BAR --- */}
-                <div className="flex flex-col gap-6 mb-12 sticky top-24 z-30 bg-slate-950/90 backdrop-blur py-4 border-b border-slate-800 shadow-xl rounded-xl px-4 -mx-4 md:mx-0">
+                <div className="flex flex-col gap-6 mb-12 sticky top-24 z-30 bg-[#020617]/90 backdrop-blur py-4 border-b border-white/10 shadow-xl rounded-xl px-4 -mx-4 md:mx-0">
                     <div className="flex w-full items-center">
                         <div className="relative w-full group">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-brand-blue transition-colors" size={20} />
                             <input
                                 type="text"
                                 placeholder="Buscar produtos..."
-                                className="w-full bg-slate-900 text-white pl-10 pr-4 py-3 border border-slate-800 rounded-xl focus:ring-2 focus:ring-brand-blue/50 focus:border-brand-blue outline-none transition-all placeholder-slate-600"
+                                className="w-full bg-slate-900/50 text-white pl-10 pr-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-brand-blue/50 focus:border-brand-blue outline-none transition-all placeholder-slate-600"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
@@ -128,7 +127,7 @@ export const Products: React.FC = () => {
                                 onClick={() => handleCategoryChange(tab.value)}
                                 className={`px-5 py-2.5 rounded-xl whitespace-nowrap text-sm font-bold transition-all border ${catParam === tab.value
                                     ? 'bg-brand-blue border-brand-blue text-white shadow-[0_0_15px_rgba(36,155,203,0.4)]'
-                                    : 'bg-slate-900 border-slate-800 text-brand-gray hover:border-slate-600 hover:text-white'
+                                    : 'bg-slate-900/50 border-white/10 text-brand-gray hover:border-white/30 hover:text-white'
                                     }`}
                             >
                                 {tab.label}
@@ -154,7 +153,7 @@ export const Products: React.FC = () => {
 };
 
 const EmptyState: React.FC<{ onReset: () => void }> = ({ onReset }) => (
-    <div className="text-center py-32 text-slate-600 bg-slate-900/50 rounded-3xl border border-slate-800/50 border-dashed w-full">
+    <div className="text-center py-32 text-slate-600 bg-slate-900/50 rounded-3xl border border-white/5 border-dashed w-full">
         <Filter className="mx-auto mb-6 opacity-30" size={64} />
         <h3 className="text-xl font-bold text-white mb-2">Nenhum produto encontrado</h3>
         <p className="text-sm">Tente ajustar seus filtros de busca ou categoria.</p>
