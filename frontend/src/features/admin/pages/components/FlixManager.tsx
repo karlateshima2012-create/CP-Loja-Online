@@ -426,7 +426,7 @@ export const FlixManager: React.FC = () => {
                                             onChange={e => setEditForm(prev => ({ ...prev, customerId: e.target.value }))}
                                         >
                                             <option value="">Nenhum Cliente Vinculado</option>
-                                            {mockService.getCustomers().map(c => (
+                                            {mockService.getCustomers()?.map(c => (
                                                 <option key={c.id} value={c.id}>{c.name} ({c.email})</option>
                                             ))}
                                         </select>
