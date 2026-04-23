@@ -14,7 +14,10 @@ import {
   ChevronRight,
   ChevronLeft,
   Monitor,
-  FileText
+  FileText,
+  Globe,
+  Layers,
+  X
 } from 'lucide-react';
 import { AdminOverview } from './components/AdminOverview';
 import { OrdersManager } from './components/OrdersManager';
