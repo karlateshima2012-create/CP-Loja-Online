@@ -160,6 +160,21 @@ const SectionHeader = ({ icon: Icon, title, extra }: { icon: any, title: string,
     </div>
 );
 
+const TemplateButton = ({ id, label, desc, active, onClick, color }: any) => (
+    <button
+        onClick={onClick}
+        className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${active ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
+    >
+        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${active ? 'border-brand-blue' : 'border-slate-300'}`}>
+            {active && <div className="w-2.5 h-2.5 bg-brand-blue rounded-full"></div>}
+        </div>
+        <div>
+            <div className={`font-bold text-[11px] text-slate-800 uppercase tracking-wider ${active ? 'text-brand-blue' : ''}`}>{label}</div>
+            <div className="text-[9px] text-slate-500 leading-tight mt-0.5">{desc}</div>
+        </div>
+    </button>
+);
+
 export const FlixManager: React.FC = () => {
     const { role } = useAuth();
     const [profiles, setProfiles] = useState<FlixProfile[]>([]);
@@ -433,112 +448,82 @@ export const FlixManager: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                                    <SectionHeader icon={Layout} title="Template de Layout" />
+                                    <SectionHeader icon={Layout} title="Template de Layout Profissional" />
                                     <div className="p-4 space-y-4">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                            <button
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'links_clean' }))}
-                                                className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${editForm.template_key === 'links_clean' || !editForm.template_key ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
-                                            >
-                                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${editForm.template_key === 'links_clean' || !editForm.template_key ? 'border-brand-blue' : 'border-slate-300'}`}>
-                                                    {(editForm.template_key === 'links_clean' || !editForm.template_key) && <div className="w-2 h-2 bg-brand-blue rounded-full"></div>}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-[11px] text-slate-800 uppercase tracking-wider">Links Clean (Free)</div>
-                                                    <div className="text-[9px] text-slate-500">Layout mobile-first para links.</div>
-                                                </div>
-                                            </button>
-
-                                            <button
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'landing_page' }))}
-                                                className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${editForm.template_key === 'landing_page' ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
-                                            >
-                                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${editForm.template_key === 'landing_page' ? 'border-brand-blue' : 'border-slate-300'}`}>
-                                                    {editForm.template_key === 'landing_page' && <div className="w-2 h-2 bg-brand-blue rounded-full"></div>}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-[11px] text-slate-800 uppercase tracking-wider underline decoration-brand-blue">Landing Page</div>
-                                                    <div className="text-[9px] text-slate-500">Páginas de marketing de alta conversão.</div>
-                                                </div>
-                                            </button>
-
-                                            <button
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'mini_store' }))}
-                                                className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${editForm.template_key === 'mini_store' ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
-                                            >
-                                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${editForm.template_key === 'mini_store' ? 'border-brand-blue' : 'border-slate-300'}`}>
-                                                    {editForm.template_key === 'mini_store' && <div className="w-2 h-2 bg-brand-blue rounded-full"></div>}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-[11px] text-slate-800 uppercase tracking-wider underline decoration-brand-pink">Mini Loja</div>
-                                                    <div className="text-[9px] text-slate-500">Catálogo com pedidos via WhatsApp.</div>
-                                                </div>
-                                            </button>
-
-                                            <button
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'services' }))}
-                                                className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${editForm.template_key === 'services' ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
-                                            >
-                                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${editForm.template_key === 'services' ? 'border-brand-blue' : 'border-slate-300'}`}>
-                                                    {editForm.template_key === 'services' && <div className="w-2 h-2 bg-brand-blue rounded-full"></div>}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-[11px] text-slate-800 uppercase tracking-wider underline decoration-brand-blue">Serviços</div>
-                                                    <div className="text-[9px] text-slate-500">Listagem de serviços profissionais.</div>
-                                                </div>
-                                            </button>
-
-                                            <button
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'jobs_board' }))}
-                                                className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${editForm.template_key === 'jobs_board' ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
-                                            >
-                                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${editForm.template_key === 'jobs_board' ? 'border-brand-blue' : 'border-slate-300'}`}>
-                                                    {editForm.template_key === 'jobs_board' && <div className="w-2 h-2 bg-brand-blue rounded-full"></div>}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-[11px] text-slate-800 uppercase tracking-wider underline decoration-slate-900">Mural de Vagas</div>
-                                                    <div className="text-[9px] text-slate-500">Portal para recrutamento e RH.</div>
-                                                </div>
-                                            </button>
-
-                                            <button
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'portfolio' }))}
-                                                className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${editForm.template_key === 'portfolio' ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
-                                            >
-                                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${editForm.template_key === 'portfolio' ? 'border-brand-blue' : 'border-slate-300'}`}>
-                                                    {editForm.template_key === 'portfolio' && <div className="w-2 h-2 bg-brand-blue rounded-full"></div>}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-[11px] text-slate-800 uppercase tracking-wider underline decoration-brand-blue">Portfólio</div>
-                                                    <div className="text-[9px] text-slate-500">Ideal para fotógrafos e artistas.</div>
-                                                </div>
-                                            </button>
-
-                                            <button
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'interactive_menu' }))}
-                                                className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${editForm.template_key === 'interactive_menu' ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
-                                            >
-                                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${editForm.template_key === 'interactive_menu' ? 'border-brand-blue' : 'border-slate-300'}`}>
-                                                    {editForm.template_key === 'interactive_menu' && <div className="w-2 h-2 bg-brand-blue rounded-full"></div>}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-[11px] text-slate-800 uppercase tracking-wider underline decoration-red-500">Cardápio Digital</div>
-                                                    <div className="text-[9px] text-slate-500">Menu interativo para restaurantes.</div>
-                                                </div>
-                                            </button>
-
-                                            <button
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'business_card' }))}
-                                                className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${editForm.template_key === 'business_card' ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
-                                            >
-                                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${editForm.template_key === 'business_card' ? 'border-brand-blue' : 'border-slate-300'}`}>
-                                                    {editForm.template_key === 'business_card' && <div className="w-2 h-2 bg-brand-blue rounded-full"></div>}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-[11px] text-slate-800 uppercase tracking-wider">Business Card</div>
-                                                    <div className="text-[9px] text-slate-500">Layout focado em Bio e Contato.</div>
-                                                </div>
-                                            </button>
+                                            {/* LINHAS DE TEMPLATES */}
+                                            <TemplateButton 
+                                                id="links_clean" 
+                                                label="Links Clean" 
+                                                desc="Layout mobile-first padrão para links e redes sociais." 
+                                                color="bg-brand-blue" 
+                                                active={editForm.template_key === 'links_clean' || !editForm.template_key} 
+                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'links_clean' }))} 
+                                            />
+                                            <TemplateButton 
+                                                id="landing_page" 
+                                                label="Landing Page" 
+                                                desc="Páginas de marketing premium para alta conversão." 
+                                                color="bg-brand-blue" 
+                                                active={editForm.template_key === 'landing_page'} 
+                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'landing_page' }))} 
+                                            />
+                                            <TemplateButton 
+                                                id="portfolio" 
+                                                label="Portfólio" 
+                                                desc="Focado em exposição visual para artistas e fotógrafos." 
+                                                color="bg-purple-500" 
+                                                active={editForm.template_key === 'portfolio'} 
+                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'portfolio' }))} 
+                                            />
+                                            <TemplateButton 
+                                                id="interactive_menu" 
+                                                label="Cardápio Digital" 
+                                                desc="Menu interativo ideal para gastronomia e eventos." 
+                                                color="bg-red-500" 
+                                                active={editForm.template_key === 'interactive_menu'} 
+                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'interactive_menu' }))} 
+                                            />
+                                            <TemplateButton 
+                                                id="business_card" 
+                                                label="Business Card" 
+                                                desc="Cartão de visitas digital minimalista e profissional." 
+                                                color="bg-slate-700" 
+                                                active={editForm.template_key === 'business_card'} 
+                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'business_card' }))} 
+                                            />
+                                            <TemplateButton 
+                                                id="storefront" 
+                                                label="Storefront" 
+                                                desc="Vitrine completa de produtos com catálogo ativo." 
+                                                color="bg-brand-pink" 
+                                                active={editForm.template_key === 'storefront'} 
+                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'storefront' }))} 
+                                            />
+                                            <TemplateButton 
+                                                id="mini_store" 
+                                                label="Mini Loja" 
+                                                desc="Ideal para vendas rápidas via WhatsApp." 
+                                                color="bg-green-500" 
+                                                active={editForm.template_key === 'mini_store'} 
+                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'mini_store' }))} 
+                                            />
+                                            <TemplateButton 
+                                                id="services" 
+                                                label="Página de Serviços" 
+                                                desc="Listagem profissional para consultores e empresas." 
+                                                color="bg-blue-600" 
+                                                active={editForm.template_key === 'services'} 
+                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'services' }))} 
+                                            />
+                                            <TemplateButton 
+                                                id="jobs_board" 
+                                                label="Mural de Vagas" 
+                                                desc="Portal especializado para agências de recrutamento." 
+                                                color="bg-slate-900" 
+                                                active={editForm.template_key === 'jobs_board'} 
+                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'jobs_board' }))} 
+                                            />
                                         </div>
                                     </div>
                                 </div>
