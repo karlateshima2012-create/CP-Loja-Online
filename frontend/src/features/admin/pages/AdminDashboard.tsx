@@ -30,7 +30,7 @@ import { FlixManager } from './components/FlixManager';
 import { ContentManager } from './components/ContentManager';
 import { useNavigate } from 'react-router-dom';
 
-type TabType = 'overview' | 'orders' | 'customers' | 'flix' | 'products' | 'materials' | 'testimonials' | 'coupons' | 'settings' | 'content';
+type TabType = 'overview' | 'orders' | 'customers' | 'flix' | 'products' | 'stock' | 'testimonials' | 'coupons' | 'settings';
 
 export const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
@@ -43,10 +43,9 @@ export const AdminDashboard: React.FC = () => {
     { id: 'customers', label: 'Clientes', icon: Users },
     { id: 'flix', label: 'Páginas Flix', icon: Globe },
     { id: 'products', label: 'Produtos', icon: Package },
-    { id: 'materials', label: 'Matéria-Prima', icon: Layers },
+    { id: 'stock', label: 'Estoque', icon: Layers },
     { id: 'testimonials', label: 'Depoimentos', icon: Star },
     { id: 'coupons', label: 'Cupons', icon: Ticket },
-    { id: 'content', label: 'Conteúdo Site', icon: FileText },
     { id: 'settings', label: 'Configurações', icon: Settings },
   ];
 
@@ -57,10 +56,9 @@ export const AdminDashboard: React.FC = () => {
       case 'customers': return <CustomersManager />;
       case 'flix': return <FlixManager />;
       case 'products': return <ProductsManager />;
-      case 'materials': return <MaterialsManager />;
+      case 'stock': return <MaterialsManager />;
       case 'testimonials': return <TestimonialsManager />;
       case 'coupons': return <CouponsManager />;
-      case 'content': return <ContentManager />;
       case 'settings': return <SettingsManager />;
       default: return <AdminOverview />;
     }
