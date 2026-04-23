@@ -154,7 +154,6 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ isOpen, onClose, onSave, as
 
 export const FlixManager: React.FC = () => {
     const { role } = useAuth();
-    const PLAN_LIMITS = { FREE: { maxLinks: 5 }, PREMIUM: { maxLinks: 50 } };
     const [profiles, setProfiles] = useState<FlixProfile[]>([]);
     const [viewMode, setViewMode] = useState<'LIST' | 'BUILDER'>('LIST');
     const [editForm, setEditForm] = useState<Partial<FlixProfile>>({});
@@ -234,21 +233,11 @@ export const FlixManager: React.FC = () => {
     };
 
     const handleAddLink = () => {
-        const limit = editForm.planType === 'PREMIUM' ? PLAN_LIMITS.PREMIUM.maxLinks : PLAN_LIMITS.FREE.maxLinks;
-        if ((editForm.links?.length || 0) >= limit) {
-            alert(`Limite de ${limit} seções atingido no Plano ${editForm.planType}!`);
-            return;
-        }
         const newLink: FlixLink = { id: `lnk-${Date.now()}`, type: 'link', label: 'Novo Link', url: 'https://', active: true, order: (editForm.links?.length || 0) + 1 };
         setEditForm(prev => ({ ...prev, links: [...(prev.links || []), newLink] }));
     };
 
     const handleAddHeader = () => {
-        const limit = editForm.planType === 'PREMIUM' ? PLAN_LIMITS.PREMIUM.maxLinks : PLAN_LIMITS.FREE.maxLinks;
-        if ((editForm.links?.length || 0) >= limit) {
-            alert(`Limite de ${limit} seções atingido no Plano ${editForm.planType}!`);
-            return;
-        }
         const newHeader: FlixLink = { id: `hdr-${Date.now()}`, type: 'header', label: 'Nova Seção', active: true, order: (editForm.links?.length || 0) + 1 };
         setEditForm(prev => ({ ...prev, links: [...(prev.links || []), newHeader] }));
     };
@@ -373,13 +362,8 @@ export const FlixManager: React.FC = () => {
                                 <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
                                     <SectionHeader icon={Link2} title="Gerenciar Conteúdo" />
                                     <div className="p-4 space-y-3">
-                                        {(editForm.links?.length || 0) >= (editForm.planType === 'PREMIUM' ? PLAN_LIMITS.PREMIUM.maxLinks : PLAN_LIMITS.FREE.maxLinks) && (
-                                            <div className="bg-yellow-50 border border-yellow-100 p-3 rounded-lg flex items-center gap-2 text-yellow-700 text-[10px] font-bold uppercase mb-2">
-                                                <AlertCircle size={14} /> Limite de {editForm.planType === 'PREMIUM' ? PLAN_LIMITS.PREMIUM.maxLinks : PLAN_LIMITS.FREE.maxLinks} seções atingido!
-                                            </div>
-                                        )}
-                                        <button onClick={handleAddLink} className="w-full bg-brand-blue text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled={(editForm.links?.length || 0) >= (editForm.planType === 'PREMIUM' ? PLAN_LIMITS.PREMIUM.maxLinks : PLAN_LIMITS.FREE.maxLinks)}><Plus size={18} /> Novo Link</button>
-                                        <button onClick={handleAddHeader} className="w-full bg-slate-100 text-slate-600 py-3 rounded-xl font-bold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled={(editForm.links?.length || 0) >= (editForm.planType === 'PREMIUM' ? PLAN_LIMITS.PREMIUM.maxLinks : PLAN_LIMITS.FREE.maxLinks)}><Plus size={18} /> Nova Seção</button>
+                                        <button onClick={handleAddLink} className="w-full bg-brand-blue text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2"><Plus size={18} /> Novo Link</button>
+                                        <button onClick={handleAddHeader} className="w-full bg-slate-100 text-slate-600 py-3 rounded-xl font-bold flex items-center justify-center gap-2"><Plus size={18} /> Nova Seção</button>
                                     </div>
                                 </div>
                                 <div className="space-y-3">
