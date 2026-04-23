@@ -142,13 +142,13 @@ export const Products: React.FC = () => {
 
                 <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-8">
                     <div className="text-center animate-fade-in-up">
-                        <h1 className="text-4xl md:text-8xl font-black text-white leading-[1.1] tracking-tighter drop-shadow-[0_10px_50px_rgba(0,0,0,1)] drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
+                        <h1 className="text-4xl md:text-8xl font-black text-white leading-[1.1] tracking-tighter drop-shadow-[0_2px_10px_rgba(0,0,0,1)] drop-shadow-[0_5px_30px_rgba(0,0,0,1)] md:drop-shadow-[0_10px_50px_rgba(0,0,0,1)]">
                             Encontre a solução<br/>
                             <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">
                                 ideal para o seu negócio.
                             </span>
                         </h1>
-                        <p className="text-lg md:text-3xl font-semibold text-slate-200 mt-6 md:mt-10 max-w-[320px] md:max-w-4xl mx-auto leading-relaxed drop-shadow-[0_10px_30px_rgba(0,0,0,1)] opacity-100">
+                        <p className="text-lg md:text-3xl font-semibold text-slate-200 mt-6 md:mt-10 max-w-[320px] md:max-w-4xl mx-auto leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,1)] drop-shadow-[0_5px_20px_rgba(0,0,0,1)] md:drop-shadow-[0_10px_30px_rgba(0,0,0,1)] opacity-100">
                             Crie presença digital, conecte clientes com NFC e automatize seu atendimento.
                         </p>
                     </div>
