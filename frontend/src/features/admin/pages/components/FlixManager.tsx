@@ -13,6 +13,28 @@ import {
     Mail, Facebook, DollarSign, Users
 } from 'lucide-react';
 
+const SectionHeader: React.FC<{ icon: any, title: string }> = ({ icon: Icon, title }) => (
+    <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
+        <div className="p-2 bg-white rounded-lg border border-slate-200 text-brand-blue shadow-sm">
+            <Icon size={18} />
+        </div>
+        <h3 className="font-bold text-slate-800 text-sm">{title}</h3>
+    </div>
+);
+
+const TemplateButton: React.FC<{ id: string, label: string, desc: string, active: boolean, onClick: () => void }> = ({ label, desc, active, onClick }) => (
+    <button 
+        onClick={onClick}
+        className={`p-4 rounded-2xl border-2 text-left transition-all ${active ? 'border-brand-blue bg-brand-blue/5 ring-4 ring-brand-blue/10' : 'border-slate-100 bg-white hover:border-slate-200'}`}
+    >
+        <div className="flex justify-between items-start mb-2">
+            <span className={`text-xs font-black uppercase ${active ? 'text-brand-blue' : 'text-slate-400'}`}>{label}</span>
+            {active && <div className="w-4 h-4 bg-brand-blue rounded-full flex items-center justify-center text-white"><Check size={10} strokeWidth={4} /></div>}
+        </div>
+        <p className="text-[10px] text-slate-500 leading-tight">{desc}</p>
+    </button>
+);
+
 const DEFAULT_STYLE: FlixStyleConfig = {
     backgroundType: 'color',
     backgroundColor: '#ffffff',
@@ -1051,52 +1073,3 @@ const PreviewFrame: React.FC<{ profile: FlixProfile }> = ({ profile }) => {
     );
 };
 
-// --- HELPER COMPONENTS DEFINITIONS (Moved for safety) ---
-
-const SectionHeader = ({ icon: Icon, title, extra }: { icon: any, title: string, extra?: React.ReactNode }) => (
-    <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-            <Icon size={16} className="text-slate-500" />
-            <h4 className="font-bold text-xs text-slate-700 uppercase tracking-wider">{title}</h4>
-        </div>
-        {extra}
-    </div>
-);
-
-const TemplateButton = ({ id, label, desc, active, onClick }: { id: string, label: string, desc: string, active: boolean, onClick: () => void }) => (
-    <button
-        onClick={onClick}
-        type="button"
-        className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 w-full ${active ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
-    >
-        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${active ? 'border-brand-blue' : 'border-slate-300'}`}>
-            {active && <div className="w-2.5 h-2.5 bg-brand-blue rounded-full"></div>}
-        </div>
-        <div className="min-w-0 flex-1">
-            <div className={`font-bold text-[11px] uppercase tracking-wider truncate ${active ? 'text-brand-blue' : 'text-slate-800'}`}>{label}</div>
-            <div className="text-[9px] text-slate-500 leading-tight mt-0.5 line-clamp-2">{desc}</div>
-        </div>
-    </button>
-);
-
-const SectionHeader: React.FC<{ icon: any, title: string }> = ({ icon: Icon, title }) => (
-    <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
-        <div className="p-2 bg-white rounded-lg border border-slate-200 text-brand-blue shadow-sm">
-            <Icon size={18} />
-        </div>
-        <h3 className="font-bold text-slate-800 text-sm">{title}</h3>
-    </div>
-);
-
-const TemplateButton: React.FC<{ id: string, label: string, desc: string, active: boolean, onClick: () => void }> = ({ label, desc, active, onClick }) => (
-    <button 
-        onClick={onClick}
-        className={`p-4 rounded-2xl border-2 text-left transition-all ${active ? 'border-brand-blue bg-brand-blue/5 ring-4 ring-brand-blue/10' : 'border-slate-100 bg-white hover:border-slate-200'}`}
-    >
-        <div className="flex justify-between items-start mb-2">
-            <span className={`text-xs font-black uppercase ${active ? 'text-brand-blue' : 'text-slate-400'}`}>{label}</span>
-            {active && <div className="w-4 h-4 bg-brand-blue rounded-full flex items-center justify-center text-white"><Check size={10} strokeWidth={4} /></div>}
-        </div>
-        <p className="text-[10px] text-slate-500 leading-tight">{desc}</p>
-    </button>
-);
