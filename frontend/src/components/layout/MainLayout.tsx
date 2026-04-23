@@ -32,9 +32,13 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
   const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
+  // Efeito de neon para os botões usando Azul Principal
   const glowBorder = "border border-brand-blue/30 hover:border-brand-blue shadow-[0_0_15px_rgba(36,155,203,0.15)] hover:shadow-[0_0_20px_rgba(36,155,203,0.4)]";
+  
+  // Hover permanente para mobile
   const mobileGlow = "border-brand-blue/50 shadow-[0_0_20px_rgba(36,155,203,0.4)] bg-brand-blue/10";
 
+  // Context Navigation Logic
   const homeLink = '/';
 
   const handleLogout = () => {
@@ -50,29 +54,8 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-gray-100 font-sans selection:bg-brand-blue/30">
-      {/* ANNOUNCEMENT BAR */}
-      <div className="bg-[#020617] border-b border-white/5 py-2 overflow-hidden relative z-[100]">
-          <div className="animate-marquee whitespace-nowrap flex items-center w-max">
-              {[1, 2, 3].map((i) => (
-                  <div key={i} className="flex items-center gap-10 px-4">
-                      <div className="flex items-center gap-2 text-brand-blue text-[8px] font-black uppercase tracking-widest opacity-80">
-                          <Truck size={10} /> Envio para todo Japão
-                      </div>
-                      <div className="flex items-center gap-2 text-brand-pink text-[8px] font-black uppercase tracking-widest opacity-80">
-                          <ShieldCheck size={10} /> Tecnologia NFC 2.0
-                      </div>
-                      <div className="flex items-center gap-2 text-brand-yellow text-[8px] font-black uppercase tracking-widest opacity-80">
-                          <Box size={10} /> Impressão 3D Premium
-                      </div>
-                      <div className="flex items-center gap-2 text-white/40 text-[8px] font-black uppercase tracking-widest">
-                          <Clock size={10} /> Suporte Rápido - WhatsApp
-                      </div>
-                  </div>
-              ))}
-          </div>
-      </div>
-
-      {/* Header */}
+      
+      {/* Header (Agora como elemento principal do topo) */}
       <header className="bg-slate-900/80 backdrop-blur-md border-b border-brand-blue/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
 
@@ -102,7 +85,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
               </Link>
             ) : (
               <>
-                {/* Botão Entrar Mobile (Branco e com Gap maior) */}
+                {/* Botão Entrar Mobile */}
                 <Link to="/login" className="flex md:hidden flex-col items-center gap-0.5 text-white transition-opacity">
                    <User size={20} fill="currentColor" className="text-white" />
                    <span className="text-[8px] font-black uppercase tracking-tighter">Entrar</span>
