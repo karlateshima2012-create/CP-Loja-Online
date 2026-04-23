@@ -455,13 +455,7 @@ export const FlixManager: React.FC = () => {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                             <TemplateButton id="links_clean" label="Links Clean" desc="Layout padrão para links." active={editForm.template_key === 'links_clean' || !editForm.template_key} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'links_clean' }))} />
                                             <TemplateButton id="landing_page" label="Landing Page" desc="Páginas de marketing premium." active={editForm.template_key === 'landing_page'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'landing_page' }))} />
-                                            <TemplateButton id="portfolio" label="Portfólio" desc="Focado em exposição visual." active={editForm.template_key === 'portfolio'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'portfolio' }))} />
-                                            <TemplateButton id="interactive_menu" label="Cardápio Digital" desc="Ideal para gastronomia." active={editForm.template_key === 'interactive_menu'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'interactive_menu' }))} />
                                             <TemplateButton id="business_card" label="Business Card" desc="Cartão de visitas digital." active={editForm.template_key === 'business_card'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'business_card' }))} />
-                                            <TemplateButton id="storefront" label="Storefront" desc="Vitrine de produtos." active={editForm.template_key === 'storefront'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'storefront' }))} />
-                                            <TemplateButton id="mini_store" label="Mini Loja" desc="Vendas rápidas via WhatsApp." active={editForm.template_key === 'mini_store'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'mini_store' }))} />
-                                            <TemplateButton id="services" label="Serviços" desc="Listagem profissional." active={editForm.template_key === 'services'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'services' }))} />
-                                            <TemplateButton id="jobs_board" label="Vagas" desc="Portal de recrutamento." active={editForm.template_key === 'jobs_board'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'jobs_board' }))} />
                                         </div>
                                     </div>
                                 </div>
