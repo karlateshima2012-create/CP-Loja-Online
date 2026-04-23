@@ -189,7 +189,7 @@ export const Footer: React.FC = () => {
                                         <h4 className="text-white font-black uppercase tracking-widest text-sm mb-4">Nossos Valores</h4>
                                         <ul className="space-y-3 text-sm">
                                             <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-brand-blue"></div> Inovação Constante</li>
-                                            <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-brand-pink"></div> Qualidade Japonesa</li>
+                                            <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-brand-pink"></div> Alto padrão de qualidade</li>
                                             <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-brand-yellow"></div> Foco no Empreendedor</li>
                                         </ul>
                                     </div>
