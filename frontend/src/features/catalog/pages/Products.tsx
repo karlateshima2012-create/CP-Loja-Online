@@ -123,18 +123,15 @@ export const Products: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col overflow-x-hidden">
             
-            {/* HERO SECTION — CORREÇÃO DE ESTRELAS E BORDER RADIUS */}
+            {/* HERO SECTION */}
             <section
                 id="hero"
-                className="relative min-h-[80vh] flex items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-transparent"
+                className="relative min-h-[75vh] flex items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-transparent"
             >
-                {/* O Starfield deve ficar aqui, no fundo de tudo */}
                 <div className="absolute inset-0 bg-[#020617] -z-20" />
                 <div className="absolute inset-0 -z-10 opacity-70">
                     <Starfield />
                 </div>
-                
-                {/* Luz Pulsante no Canto Esquerdo */}
                 <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-brand-blue/10 rounded-full blur-[150px] animate-pulse -z-10 pointer-events-none"></div>
 
                 <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
@@ -150,7 +147,6 @@ export const Products: React.FC = () => {
                         </p>
                     </div>
 
-                    {/* GALERIA CACHOEIRA — BORDER RADIUS REDUZIDO */}
                     <div className="hidden md:block relative h-[550px] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
                         <div className="grid grid-cols-3 gap-5 h-full">
                             {[1, 2, 3].map((col) => (
@@ -169,6 +165,88 @@ export const Products: React.FC = () => {
 
             <div id="product-grid-anchor" className="h-0" />
 
+            {/* ============================================================
+                DOCK SECTION (CONFORME IMAGEM DE REFERÊNCIA)
+            ============================================================ */}
+            <div className="relative w-full bg-[#020617] pt-1 pb-10">
+                {/* Linha Gradiente Split (Azul-Rosa) */}
+                <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8 shadow-[0_0_15px_rgba(56,182,255,0.3)]"></div>
+
+                <div className="container mx-auto px-6">
+                    <div className="flex flex-col gap-6 max-w-6xl mx-auto">
+                        
+                        {/* Linha 1: Categorias Estilo Pílula */}
+                        <div className="flex flex-wrap items-center gap-3">
+                            <button
+                                onClick={() => handleCategoryChange('Todos')}
+                                className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${
+                                    catParam === 'Todos'
+                                        ? 'bg-brand-blue text-slate-950 shadow-[0_0_20px_rgba(56,182,255,0.4)]'
+                                        : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'
+                                }`}
+                            >
+                                Todos
+                            </button>
+
+                            {CATEGORIES.map(cat => {
+                                const isActive = catParam === cat.id;
+                                return (
+                                    <button
+                                        key={cat.id}
+                                        onClick={() => handleCategoryChange(cat.id)}
+                                        className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${
+                                            isActive
+                                                ? 'bg-white text-slate-950 shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                                                : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'
+                                        }`}
+                                    >
+                                        {cat.label}
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        {/* Linha 2: Barra de Busca Estilo Imagem */}
+                        <div className="relative group">
+                            <div className="absolute left-6 top-1/2 -translate-y-1/2">
+                                <div className="w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center group-focus-within:border-brand-blue transition-colors">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-transparent"></div>
+                                </div>
+                            </div>
+                            <input
+                                type="text"
+                                placeholder="Buscar produtos, chaveiros, sistemas..."
+                                value={searchTerm}
+                                onChange={e => handleSearch(e.target.value)}
+                                className="w-full h-14 bg-slate-900/40 text-white text-sm pl-16 pr-12 border border-white/10 rounded-xl outline-none focus:border-brand-blue/50 transition-all placeholder-slate-500"
+                            />
+                            {searchTerm && (
+                                <button onClick={() => handleSearch('')} className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white">
+                                    <X size={18} />
+                                </button>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Subcategorias (Mantendo a funcionalidade) */}
+                    {activeCategoryData && activeCategoryData.subcategories.length > 0 && (
+                        <div className="flex flex-wrap items-center gap-3 mt-6 animate-fade-in max-w-6xl mx-auto">
+                            {activeCategoryData.subcategories.map(sub => (
+                                <button
+                                    key={sub}
+                                    onClick={() => handleSubcategoryChange(sub)}
+                                    className={`px-5 py-2 rounded-xl text-[11px] font-black border transition-all ${
+                                        subParam === sub ? 'bg-brand-blue/20 border-brand-blue text-white' : 'bg-transparent border-white/5 text-white/40'
+                                    }`}
+                                >
+                                    {sub}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+
             {/* CATALOGO */}
             <div className="container mx-auto px-4 py-16 pb-48 flex-grow">
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-10">
@@ -180,39 +258,28 @@ export const Products: React.FC = () => {
 
             <div ref={footerSensorRef} className="h-1 w-full -mt-20 pointer-events-none" />
 
-            {/* DOCK MENU */}
+            {/* MANTENDO O DOCK MOBILE FLUTUANTE (Para não quebrar a UX Mobile que você amou) */}
             <div
                 style={{ 
                     transform: `translateY(${isVisible ? (keyboardOffset > 0 ? -keyboardOffset + 10 : 0) : '100%'}px)`,
                     opacity: isVisible ? 1 : 0
                 }}
-                className={`fixed md:relative bottom-0 md:bottom-auto left-0 right-0 md:w-full z-50 md:z-40 bg-[#03081a]/98 backdrop-blur-3xl border-t border-brand-blue/60 md:border-t-0 md:border-b md:border-white/5 shadow-[0_-20px_60px_rgba(0,0,0,0.9)] md:shadow-none rounded-t-[2.5rem] md:rounded-none transition-all duration-300 ease-out`}
+                className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#03081a]/98 backdrop-blur-3xl border-t border-brand-blue/60 rounded-t-[2.5rem] transition-all duration-300 ease-out"
             >
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/10 via-transparent to-brand-blue/5 pointer-events-none rounded-t-[2.5rem] md:rounded-none md:hidden"></div>
-                <div className="container mx-auto px-4 py-6 md:py-10 relative z-10 pb-[env(safe-area-inset-bottom,20px)]">
-                    <div className="flex flex-col gap-6 max-w-5xl mx-auto">
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full">
-                            <button onClick={() => handleCategoryChange('Todos')} className={`h-14 flex items-center justify-center rounded-2xl text-[10px] md:text-sm font-black uppercase tracking-widest transition-all border-2 ${catParam === 'Todos' ? 'bg-white text-slate-950 border-white shadow-xl' : 'bg-slate-900/60 border-white/10 text-white/80 hover:border-brand-blue/40'}`}>Todos</button>
+                <div className="container mx-auto px-4 py-6 pb-[env(safe-area-inset-bottom,20px)]">
+                    <div className="flex flex-col gap-4">
+                        <div className="grid grid-cols-5 gap-2">
+                            <button onClick={() => handleCategoryChange('Todos')} className={`h-11 flex items-center justify-center rounded-xl text-[9px] font-black border ${catParam === 'Todos' ? 'bg-brand-blue text-slate-950 border-brand-blue' : 'bg-slate-900 border-white/10 text-white'}`}>Todos</button>
                             {CATEGORIES.map(cat => (
-                                <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={`h-14 flex flex-col md:flex-row items-center justify-center gap-2 rounded-2xl text-[9px] md:text-sm font-black uppercase tracking-widest transition-all border-2 ${catParam === cat.id ? 'bg-brand-blue border-brand-blue text-slate-950 shadow-xl' : 'bg-slate-900/60 border-white/10 text-white/80 hover:border-brand-blue/40'}`}>
-                                    <cat.icon size={20} /><span>{cat.label}</span>
+                                <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={`h-11 flex items-center justify-center rounded-xl text-[9px] font-black border ${catParam === cat.id ? 'bg-brand-blue text-slate-950 border-brand-blue' : 'bg-slate-900 border-white/10 text-white'}`}>
+                                    <cat.icon size={16} />
                                 </button>
                             ))}
+                            <button onClick={() => setIsSearchExpanded(!isSearchExpanded)} className="h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-brand-blue/40 text-brand-blue"><Search size={20} /></button>
                         </div>
-                        <div className="w-full">
-                            <div className="md:hidden flex justify-center mb-2">
-                                <button onClick={() => setIsSearchExpanded(!isSearchExpanded)} className={`h-12 w-full flex items-center justify-center rounded-2xl border-2 ${isSearchExpanded ? 'bg-brand-blue border-brand-blue text-slate-950' : 'bg-slate-900/80 border-brand-blue/40 text-brand-blue'}`}><Search size={22} className="mr-2" /> {isSearchExpanded ? 'Fechar Busca' : 'Buscar Produtos'}</button>
-                            </div>
-                            {(isSearchExpanded || window.innerWidth > 768) && (
-                                <div className="animate-fade-in-up w-full">
-                                    <div className="relative group">
-                                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-blue" size={20} />
-                                        <input autoFocus={isSearchExpanded} type="text" placeholder="BUSCAR PRODUTOS, CHAVEIROS, SISTEMAS..." value={searchTerm} onChange={e => handleSearch(e.target.value)} className="w-full h-16 bg-slate-900/40 text-white text-sm pl-16 pr-12 border-2 border-white/10 rounded-2xl outline-none focus:border-brand-blue font-black uppercase tracking-widest placeholder-slate-600 transition-all" />
-                                        {searchTerm && <button onClick={() => handleSearch('')} className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400"><X size={18} /></button>}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                        {isSearchExpanded && (
+                            <input type="text" placeholder="BUSCAR..." value={searchTerm} onChange={e => handleSearch(e.target.value)} className="w-full h-12 bg-slate-900 text-white text-xs px-4 border border-brand-blue/50 rounded-xl outline-none" />
+                        )}
                     </div>
                 </div>
             </div>
