@@ -49,34 +49,38 @@ export const Products: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#020617] text-white font-sans selection:bg-brand-blue/30">
+        <div className="min-h-screen flex flex-col bg-black text-white font-sans selection:bg-brand-blue/30">
             <Starfield />
+            
+            {/* STRATEGIC LIGHT POINTS */}
+            <div className="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/15 rounded-full blur-[150px] pointer-events-none z-0"></div>
+            <div className="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-pink/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
 
-            {/* CATEGORY DOCK + SEARCH */}
-            <nav className="bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40 border-b border-white/5 shadow-2xl">
+            {/* Header (High Contrast) */}
+            <header className="bg-slate-900/90 backdrop-blur-2xl border-b border-brand-blue/40 sticky top-0 z-50 shadow-[0_4px_30px_rgba(36,155,203,0.15)]">
                 <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-6 overflow-hidden py-2">
+                    <div className="flex items-center gap-8 overflow-hidden py-2">
                         {CATEGORIES.map(cat => (
                             <button 
                                 key={cat.id} 
                                 onClick={() => handleCategoryChange(cat.id)}
-                                className={`text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-all whitespace-nowrap pb-1 border-b-2 ${catParam === cat.id ? 'text-brand-blue border-brand-blue' : 'text-white/30 border-transparent hover:text-white'}`}
+                                className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap pb-1 border-b-2 ${catParam === cat.id ? 'text-brand-blue border-brand-blue drop-shadow-[0_0_8px_rgba(56,182,255,0.5)]' : 'text-slate-100/50 border-transparent hover:text-white'}`}
                             >
                                 {cat.label}
                             </button>
                         ))}
                     </div>
-                    <div className="flex items-center gap-4 border-l border-white/10 pl-6 ml-2">
-                        <div className="hidden lg:flex items-center bg-slate-900 border border-white/10 rounded-2xl px-4 py-2 focus-within:border-brand-blue/50 focus-within:ring-4 focus-within:ring-brand-blue/10 transition-all w-64">
-                            <Search size={16} className="text-slate-500" />
+                    <div className="flex items-center gap-4 border-l border-white/20 pl-6 ml-2">
+                        <div className="hidden lg:flex items-center bg-black border-2 border-brand-blue/50 rounded-2xl px-4 py-2 focus-within:border-brand-blue focus-within:ring-4 focus-within:ring-brand-blue/20 transition-all w-72 shadow-[0_0_15px_rgba(56,182,255,0.2)]">
+                            <Search size={18} className="text-brand-blue" />
                             <input 
-                                className="bg-transparent border-none text-[10px] text-white outline-none pl-2 w-full font-bold placeholder:text-slate-600" 
+                                className="bg-transparent border-none text-[11px] text-white outline-none pl-3 w-full font-black placeholder:text-slate-700 uppercase tracking-widest" 
                                 placeholder="BUSCAR PRODUTOS..." 
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
                             />
                         </div>
-                        <button className="text-white/40 hover:text-brand-blue lg:hidden p-2"><Search size={20} /></button>
+                        <button className="text-white hover:text-brand-blue lg:hidden p-2"><Search size={24} /></button>
                     </div>
                 </div>
             </nav>
@@ -117,10 +121,13 @@ export const Products: React.FC = () => {
                 ))}
             </section>
 
-            {/* PRODUCT GRID - DEEP LAYER CONTRAST */}
-            <section className="relative z-20 mt-12">
+            {/* PRODUCT GRID - DEEP LAYER CONTRAST (High Contrast Version) */}
+            <section className="relative z-20 mt-20">
+                {/* STRATEGIC LIGHT POINT BEHIND TRAY */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-40 bg-brand-blue/20 blur-[100px] -z-10"></div>
+                
                 {/* The 'Tray' Layer */}
-                <div className="bg-slate-900/40 backdrop-blur-sm rounded-t-[4rem] border-t border-white/5 shadow-[0_-20px_50px_rgba(0,0,0,0.5)] pt-20 pb-32 px-6">
+                <div className="bg-slate-900/60 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,0.9)] pt-24 pb-32 px-6">
                     <div className="container mx-auto">
                         <div className="flex flex-col items-center text-center mb-16 animate-fade-in">
                             <div className="w-12 h-1 bg-brand-blue rounded-full mb-6 opacity-50"></div>

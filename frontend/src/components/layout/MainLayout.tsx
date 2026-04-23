@@ -52,10 +52,10 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-gray-100 font-sans selection:bg-brand-blue/30">
+    <div className="min-h-screen flex flex-col bg-black text-white font-sans selection:bg-brand-blue/30">
       
-      {/* Header (Agora como elemento principal do topo) */}
-      <header className="bg-slate-900/80 backdrop-blur-md border-b border-brand-blue/20 sticky top-0 z-50">
+      {/* Header (High Contrast) */}
+      <header className="bg-slate-900/90 backdrop-blur-2xl border-b border-brand-blue/40 sticky top-0 z-50 shadow-[0_4px_30px_rgba(36,155,203,0.15)]">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
 
           {/* Logo Area */}
