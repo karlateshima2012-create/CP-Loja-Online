@@ -307,18 +307,14 @@ export const FlixManager: React.FC = () => {
 
             <div className="flex-1 flex overflow-hidden">
                 <div className="w-full md:w-[450px] bg-white border-r border-slate-200 flex flex-col shadow-xl z-10">
-                    <div className="flex gap-2 p-2 bg-slate-100 border-b border-slate-200">
                         {['SETTINGS', 'CONTENT', 'DESIGN', 'ADMIN'].map((tab) => (
-                            role === UserRole.ADMIN || tab !== 'ADMIN' ? (
-                                <button key={tab} onClick={() => setActiveTab(tab as any)} className={`flex-1 py-3 rounded-lg text-xs font-bold uppercase tracking-wider flex justify-center items-center gap-2 transition-all ${activeTab === tab ? 'bg-slate-800 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
-                                    {tab === 'SETTINGS' && <><Layout size={18} /> Perfil</>}
-                                    {tab === 'CONTENT' && <><Link2 size={18} /> Links</>}
-                                    {tab === 'DESIGN' && <><Palette size={18} /> Visual</>}
-                                    {tab === 'ADMIN' && <><ShieldCheck size={18} /> Admin</>}
-                                </button>
-                            ) : null
+                            <button key={tab} onClick={() => setActiveTab(tab as any)} className={`flex-1 py-3 rounded-lg text-xs font-bold uppercase tracking-wider flex justify-center items-center gap-2 transition-all ${activeTab === tab ? 'bg-slate-800 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
+                                {tab === 'SETTINGS' && <><Layout size={18} /> Perfil</>}
+                                {tab === 'CONTENT' && <><Link2 size={18} /> Links</>}
+                                {tab === 'DESIGN' && <><Palette size={18} /> Visual</>}
+                                {tab === 'ADMIN' && <><ShieldCheck size={18} /> Admin</>}
+                            </button>
                         ))}
-                    </div>
 
                     <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
                         {activeTab === 'SETTINGS' && (
@@ -418,6 +414,23 @@ export const FlixManager: React.FC = () => {
                         {activeTab === 'ADMIN' && (
                             <div className="space-y-6 animate-fade-in">
                                 <div className="bg-red-50 border border-red-100 p-4 rounded-xl flex items-start gap-3"><ShieldCheck className="text-red-500 shrink-0" size={24} /><div><h4 className="text-sm font-black text-red-600 uppercase">Acesso Restrito ao Admin</h4><p className="text-xs text-red-500">Configurações de SEO e Faturamento.</p></div></div>
+                                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                                    <SectionHeader icon={Users} title="Vincular ao Cliente" />
+                                    <div className="p-4 space-y-4">
+                                        <p className="text-[10px] text-slate-500 mb-2">Selecione o cliente que terá acesso para editar esta página no painel dele.</p>
+                                        <select 
+                                            className="w-full bg-slate-50 border border-slate-200 rounded px-3 py-2 text-sm outline-none focus:border-brand-blue"
+                                            value={editForm.customerId || ''}
+                                            onChange={e => setEditForm(prev => ({ ...prev, customerId: e.target.value }))}
+                                        >
+                                            <option value="">Nenhum Cliente Vinculado</option>
+                                            {mockService.getCustomers().map(c => (
+                                                <option key={c.id} value={c.id}>{c.name} ({c.email})</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
                                     <SectionHeader icon={Clapperboard} title="Poster CreativeFlix" />
                                     <div className="p-4 flex flex-col items-center gap-4">
