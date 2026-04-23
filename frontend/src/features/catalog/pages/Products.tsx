@@ -4,7 +4,7 @@ import { mockService } from '@/src/services/mockData';
 import { Product } from '@/src/types';
 import {
     Search, X, Box, Cpu, Monitor, ArrowLeft,
-    Truck, ShieldCheck, Clock, Award
+    Truck, ShieldCheck, Clock, Award, Filter
 } from 'lucide-react';
 import { ProductCard } from './components/ProductCard';
 import { Starfield } from '../../../components/ui/Starfield';
@@ -32,7 +32,6 @@ export const Products: React.FC = () => {
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [keyboardOffset, setKeyboardOffset] = useState(0);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     
     const footerSensorRef = useRef<HTMLDivElement>(null);
 
@@ -44,6 +43,7 @@ export const Products: React.FC = () => {
             ([entry]) => setIsVisible(!entry.isIntersecting),
             { threshold: 0.1 }
         );
+
         if (footerSensorRef.current) observer.observe(footerSensorRef.current);
 
         const handleViewportChange = () => {
@@ -66,14 +66,6 @@ export const Products: React.FC = () => {
             }
         };
     }, []);
-
-    // Efeito de Parallax no Mouse
-    const handleMouseMove = (e: React.MouseEvent) => {
-        const { clientX, clientY } = e;
-        const moveX = (clientX - window.innerWidth / 2) / 50;
-        const moveY = (clientY - window.innerHeight / 2) / 50;
-        setMousePos({ x: moveX, y: moveY });
-    };
 
     useEffect(() => {
         const anchor = document.getElementById('product-grid-anchor');
@@ -132,46 +124,34 @@ export const Products: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col overflow-x-hidden">
             
-            {/* HERO SECTION — REFINAMENTO SENIOR */}
+            {/* HERO SECTION — VOLTANDO PARA A ANIMAÇÃO ESTÁVEL */}
             <section
                 id="hero"
-                onMouseMove={handleMouseMove}
-                className="relative min-h-[85vh] flex items-center justify-center pt-24 pb-20 px-8 md:px-16 overflow-hidden bg-[#020617]"
+                className="relative min-h-[75vh] flex items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-[#020617]"
             >
                 <Starfield />
-                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-brand-blue/5 rounded-full blur-[180px] -z-10 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-brand-blue/5 rounded-full blur-[150px] -z-10 pointer-events-none"></div>
 
-                <div className="container mx-auto grid md:grid-cols-[1.2fr_0.8fr] gap-20 md:gap-32 items-center relative z-10">
-                    
-                    {/* COLUNA ESQUERDA: HIERRARQUIA DE TEXTO REFINADA */}
-                    <div className="text-left">
-                        <h1 className="text-5xl md:text-8xl font-black text-white mb-8 leading-[1.1] tracking-tighter animate-fade-in-up max-w-xl">
+                <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+                    <div className="text-left animate-fade-in-up">
+                        <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight tracking-tighter">
                             Encontre a solução<br/>
-                            <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent filter drop-shadow-[0_0_15px_rgba(56,182,255,0.2)]">
+                            <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">
                                 ideal para o seu negócio.
                             </span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-slate-400 font-medium max-w-md leading-relaxed animate-fade-in-up [animation-delay:200ms]">
+                        <p className="text-lg md:text-xl text-slate-400 font-medium max-w-lg leading-relaxed">
                             Crie presença digital, conecte clientes com NFC e automatize seu atendimento.
                         </p>
                     </div>
 
-                    {/* COLUNA DIREITA: GALERIA COM PARALLAX E STAGGER */}
-                    <div 
-                        className="hidden md:block relative h-[600px] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] transition-transform duration-500 ease-out"
-                        style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }}
-                    >
-                        <div className="grid grid-cols-3 gap-6 h-full">
-                            {[0, 1, 2].map((col) => (
-                                <div 
-                                    key={col} 
-                                    className={`flex flex-col gap-6 animate-[marquee-vertical_${35 + col * 15}s_linear_infinite] animate-fade-in-up ${col === 1 ? 'mt-[-100px] [animation-direction:reverse]' : ''}`}
-                                    style={{ animationDelay: `${col * 300}ms` }}
-                                >
+                    <div className="hidden md:block relative h-[500px] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
+                        <div className="grid grid-cols-3 gap-4 h-full">
+                            {[1, 2, 3].map((col) => (
+                                <div key={col} className={`flex flex-col gap-4 animate-[marquee-vertical_${30 + col * 10}s_linear_infinite] ${col === 2 ? 'mt-[-50px] [animation-direction:reverse]' : ''}`}>
                                     {[...galleryImages, ...galleryImages].map((img, i) => (
-                                        <div key={i} className="aspect-[4/5] bg-slate-900/50 rounded-[2rem] overflow-hidden border border-white/5 hover:border-brand-blue/40 transition-all duration-500 hover:scale-105 group cursor-pointer shadow-2xl">
-                                            <img src={img} className="w-full h-full object-cover opacity-50 group-hover:opacity-100 group-hover:brightness-110 transition-all" />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                        <div key={i} className="aspect-[4/5] bg-slate-900 rounded-2xl overflow-hidden border border-white/5">
+                                            <img src={img} className="w-full h-full object-cover opacity-40 hover:opacity-100 transition-opacity" />
                                         </div>
                                     ))}
                                 </div>
@@ -182,6 +162,17 @@ export const Products: React.FC = () => {
             </section>
 
             <div id="product-grid-anchor" className="h-0" />
+
+            {/* CATALOGO */}
+            <div className="container mx-auto px-4 py-16 pb-48 flex-grow">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-10">
+                    {filteredProducts.map(product => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
+            </div>
+
+            <div ref={footerSensorRef} className="h-1 w-full -mt-20 pointer-events-none" />
 
             {/* DOCK MENU */}
             <div
@@ -219,16 +210,6 @@ export const Products: React.FC = () => {
                     </div>
                 </div>
             </div>
-
-            {/* CATALOGO */}
-            <div className="container mx-auto px-4 py-16 pb-48 flex-grow">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-10">
-                    {filteredProducts.map(product => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
-            </div>
-            <div ref={footerSensorRef} className="h-1 w-full -mt-20 pointer-events-none" />
         </div>
     );
 };
