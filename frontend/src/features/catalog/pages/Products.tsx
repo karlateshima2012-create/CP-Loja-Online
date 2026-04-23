@@ -248,7 +248,16 @@ export const Products: React.FC = () => {
             </div>
 
             {/* CATALOGO */}
-            <div className="container mx-auto px-4 py-16 pb-48 flex-grow">
+            <div className="container mx-auto px-6 py-16 pb-48 flex-grow">
+                
+                {/* Título da Seção (Conforme Imagem) */}
+                <div className="flex items-center gap-3 mb-10 animate-fade-in">
+                    <div className="w-2 h-2 rounded-full bg-brand-blue shadow-[0_0_10px_rgba(56,182,255,0.8)]"></div>
+                    <h2 className="text-sm font-black uppercase tracking-[0.2em] text-white/50">
+                        Nossos Produtos
+                    </h2>
+                </div>
+
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-10">
                     {filteredProducts.map(product => (
                         <ProductCard key={product.id} product={product} />
