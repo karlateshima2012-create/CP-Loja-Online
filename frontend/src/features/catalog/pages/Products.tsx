@@ -227,10 +227,10 @@ export const Products: React.FC = () => {
                                 <ShieldCheck size={12} /> Tecnologia NFC 2.0
                             </div>
                             <div className="flex items-center gap-2 text-brand-yellow text-[9px] font-black uppercase tracking-widest opacity-80">
-                                <Box size={12} /> Impressão 3D PLA+
+                                <Box size={12} /> Impressão 3D Premium
                             </div>
                             <div className="flex items-center gap-2 text-white/40 text-[9px] font-black uppercase tracking-widest">
-                                <Clock size={12} /> Suporte 24/7
+                                <Clock size={12} /> Suporte Rápido - WhatsApp
                             </div>
                             <div className="flex items-center gap-2 text-brand-blue text-[9px] font-black uppercase tracking-widest opacity-80">
                                 <Award size={12} /> Qualidade Garantida
