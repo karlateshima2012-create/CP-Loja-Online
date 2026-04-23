@@ -119,54 +119,64 @@ export const Products: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col">
-            {/* HERO SECTION */}
+            {/* HERO SECTION — COM FUNDO CLARO E ESTRELAS */}
             <section
                 id="hero"
-                className="relative min-h-[55vh] flex flex-col items-center justify-center pt-28 pb-10 px-4 overflow-hidden text-center animate-fade-in bg-[#020617]"
+                className="relative min-h-[60vh] flex flex-col items-center justify-center pt-28 pb-10 px-4 overflow-hidden text-center animate-fade-in"
             >
+                {/* Imagem de Fundo Clara (com overlay para ler o texto) */}
+                <div 
+                    className="absolute inset-0 bg-cover bg-center -z-20 opacity-40 mix-blend-overlay"
+                    style={{ backgroundImage: 'url(/hero_banner_light_tech_1776904747906.png)' }}
+                ></div>
+                
+                {/* Starfield por cima da imagem */}
                 <Starfield />
-                <div className="absolute -top-40 -left-40 w-[300px] h-[300px] bg-[#38b6ff] rounded-full blur-[100px] opacity-20 animate-pulse-slow -z-10 pointer-events-none"></div>
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617] -z-10"></div>
+
+                {/* Efeitos de Luz Blue/Pink */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-b from-[#020617]/40 via-transparent to-[#020617] -z-10"></div>
+                <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-[#38b6ff] rounded-full blur-[120px] opacity-10 animate-pulse-slow -z-10 pointer-events-none"></div>
 
                 <div className="relative z-10 max-w-5xl mx-auto w-full">
                     <h1 className="text-5xl md:text-8xl font-black text-white mb-6 leading-[1.05] tracking-tight animate-fade-in-up">
-                        <span className="bg-gradient-to-r from-[#38b6ff] to-[#E5157A] bg-clip-text text-transparent filter drop-shadow-[0_0_30px_rgba(56,182,255,0.3)]">
+                        <span className="bg-gradient-to-r from-[#38b6ff] to-[#E5157A] bg-clip-text text-transparent filter drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
                             Conheça nossos produtos
                         </span>
                     </h1>
-                    <p className="text-lg md:text-xl text-slate-400 font-light max-w-2xl mx-auto animate-fade-in-up">
+                    <p className="text-xl md:text-2xl text-slate-200 font-bold max-w-2xl mx-auto drop-shadow-md animate-fade-in-up">
                         Soluções digitais, NFC e Impressão 3D com tecnologia de ponta.
                     </p>
                 </div>
             </section>
 
             {/* ============================================================
-                DIVISOR UI/UX: VALUE BAR (Marquee de Diferenciais)
+                DIVISOR UI/UX: VALUE BAR (Marquee Corrigido e Animado)
             ============================================================ */}
-            <div className="bg-slate-900/50 border-y border-white/5 py-4 overflow-hidden relative">
-                <div className="flex animate-[marquee_30s_linear_infinite] whitespace-nowrap gap-12 items-center">
-                    {[1, 2, 3].map((n) => (
-                        <React.Fragment key={n}>
-                            <div className="flex items-center gap-3 text-brand-blue/80 text-[10px] font-black uppercase tracking-widest">
-                                <Truck size={14} /> Envio para todo Japão
+            <div className="bg-slate-900 border-y border-white/10 py-5 overflow-hidden relative z-20">
+                <div className="animate-marquee whitespace-nowrap flex items-center w-max">
+                    {/* Lista Duplicada para o Loop Infinito */}
+                    {[1, 2].map((i) => (
+                        <div key={i} className="flex items-center gap-16 px-8">
+                            <div className="flex items-center gap-3 text-brand-blue text-[11px] font-black uppercase tracking-[0.2em]">
+                                <Truck size={16} /> Envio para todo Japão
                             </div>
-                            <div className="flex items-center gap-3 text-brand-pink/80 text-[10px] font-black uppercase tracking-widest">
-                                <ShieldCheck size={14} /> Tecnologia NFC 2.0
+                            <div className="flex items-center gap-3 text-brand-pink text-[11px] font-black uppercase tracking-[0.2em]">
+                                <ShieldCheck size={16} /> Tecnologia NFC 2.0
                             </div>
-                            <div className="flex items-center gap-3 text-brand-yellow/80 text-[10px] font-black uppercase tracking-widest">
-                                <Box size={14} /> Impressão 3D PLA+ Premium
+                            <div className="flex items-center gap-3 text-brand-yellow text-[11px] font-black uppercase tracking-[0.2em]">
+                                <Box size={16} /> Impressão 3D PLA+ Premium
                             </div>
-                            <div className="flex items-center gap-3 text-white/40 text-[10px] font-black uppercase tracking-widest">
-                                <Clock size={14} /> Suporte 24/7
+                            <div className="flex items-center gap-3 text-white/60 text-[11px] font-black uppercase tracking-[0.2em]">
+                                <Clock size={16} /> Suporte 24/7
                             </div>
-                            <div className="flex items-center gap-3 text-brand-blue/80 text-[10px] font-black uppercase tracking-widest">
-                                <Award size={14} /> Qualidade Garantida
+                            <div className="flex items-center gap-3 text-brand-blue text-[11px] font-black uppercase tracking-[0.2em]">
+                                <Award size={16} /> Qualidade Garantida
                             </div>
-                        </React.Fragment>
+                        </div>
                     ))}
                 </div>
-                {/* Linha Neon de separação final */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-[1px] bg-gradient-to-r from-transparent via-brand-blue to-transparent blur-[1px]"></div>
+                {/* Linha Neon centralizada */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/4 h-[2px] bg-brand-blue shadow-[0_0_10px_#38b6ff] z-30"></div>
             </div>
 
             <div id="product-grid-anchor" className="h-0" />
