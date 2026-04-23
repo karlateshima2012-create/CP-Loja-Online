@@ -123,134 +123,90 @@ export const Products: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col overflow-x-hidden">
             
-            {/* HERO SECTION */}
+            {/* HERO SECTION — MOBILE OPTIMIZED */}
             <section
                 id="hero"
-                className="relative min-h-[75vh] flex items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-transparent"
+                className="relative min-h-[70vh] md:min-h-[80vh] flex flex-col md:flex-row items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-transparent"
             >
                 <div className="absolute inset-0 bg-[#020617] -z-20" />
                 <div className="absolute inset-0 -z-10 opacity-70">
                     <Starfield />
                 </div>
-                <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-brand-blue/10 rounded-full blur-[150px] animate-pulse -z-10 pointer-events-none"></div>
+                
+                {/* LUZ PULSANTE MOBILE (Mais centralizada no topo) */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-[500px] h-[500px] bg-brand-blue/10 rounded-full blur-[150px] animate-pulse -z-10 pointer-events-none"></div>
 
-                <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
-                    <div className="text-left animate-fade-in-up">
-                        <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight tracking-tighter">
+                <div className="container mx-auto flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
+                    
+                    {/* ANIMAÇÃO: HORIZONTAL NO MOBILE / VERTICAL NO DESKTOP */}
+                    <div className="w-full order-1 md:order-2">
+                        {/* Mobile: Marquee Horizontal */}
+                        <div className="md:hidden w-screen -mx-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] mb-4">
+                            <div className="flex gap-4 animate-[marquee_20s_linear_infinite] w-max">
+                                {[...galleryImages, ...galleryImages].map((img, i) => (
+                                    <div key={i} className="w-40 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/10 shadow-xl">
+                                        <img src={img} className="w-full h-full object-cover opacity-70" />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Desktop: Waterfall Vertical */}
+                        <div className="hidden md:block relative h-[550px] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
+                            <div className="grid grid-cols-3 gap-5 h-full">
+                                {[1, 2, 3].map((col) => (
+                                    <div key={col} className={`flex flex-col gap-5 animate-[marquee-vertical_${12 + col * 4}s_linear_infinite] ${col === 2 ? 'mt-[-50px] [animation-direction:reverse]' : ''}`}>
+                                        {[...galleryImages, ...galleryImages].map((img, i) => (
+                                            <div key={i} className="aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                                                <img src={img} className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* TEXTO: ABAIXO NO MOBILE / ESQUERDA NO DESKTOP */}
+                    <div className="text-center md:text-left animate-fade-in-up order-2 md:order-1">
+                        <h1 className="text-4xl md:text-7xl font-black text-white mb-6 leading-tight tracking-tighter">
                             Encontre a solução<br/>
                             <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">
                                 ideal para o seu negócio.
                             </span>
                         </h1>
-                        <p className="text-lg md:text-xl text-slate-400 font-medium max-w-lg leading-relaxed">
+                        <p className="text-base md:text-xl text-slate-400 font-medium max-w-lg mx-auto md:mx-0 leading-relaxed">
                             Crie presença digital, conecte clientes com NFC e automatize seu atendimento.
                         </p>
-                    </div>
-
-                    <div className="hidden md:block relative h-[550px] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
-                        <div className="grid grid-cols-3 gap-5 h-full">
-                            {[1, 2, 3].map((col) => (
-                                <div key={col} className={`flex flex-col gap-5 animate-[marquee-vertical_${12 + col * 4}s_linear_infinite] ${col === 2 ? 'mt-[-50px] [animation-direction:reverse]' : ''}`}>
-                                    {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
-                                        <div key={i} className="aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/10 shadow-2xl transition-transform hover:scale-105 duration-500">
-                                            <img src={img} className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity" />
-                                        </div>
-                                    ))}
-                                </div>
-                            ))}
-                        </div>
                     </div>
                 </div>
             </section>
 
             <div id="product-grid-anchor" className="h-0" />
 
-            {/* ============================================================
-                DOCK SECTION (CONFORME IMAGEM DE REFERÊNCIA)
-            ============================================================ */}
-            <div className="relative w-full bg-[#020617] pt-1 pb-10">
-                {/* Linha Gradiente Split (Azul-Rosa) */}
+            {/* DOCK SECTION (APENAS DESKTOP) */}
+            <div className="hidden md:block relative w-full bg-[#020617] pt-1 pb-10">
                 <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8 shadow-[0_0_15px_rgba(56,182,255,0.3)]"></div>
-
                 <div className="container mx-auto px-6">
                     <div className="flex flex-col gap-6 max-w-6xl mx-auto">
-                        
-                        {/* Linha 1: Categorias Estilo Pílula */}
                         <div className="flex flex-wrap items-center gap-3">
-                            <button
-                                onClick={() => handleCategoryChange('Todos')}
-                                className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${
-                                    catParam === 'Todos'
-                                        ? 'bg-brand-blue text-slate-950 shadow-[0_0_20px_rgba(56,182,255,0.4)]'
-                                        : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'
-                                }`}
-                            >
-                                Todos
-                            </button>
-
-                            {CATEGORIES.map(cat => {
-                                const isActive = catParam === cat.id;
-                                return (
-                                    <button
-                                        key={cat.id}
-                                        onClick={() => handleCategoryChange(cat.id)}
-                                        className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${
-                                            isActive
-                                                ? 'bg-white text-slate-950 shadow-[0_0_20px_rgba(255,255,255,0.4)]'
-                                                : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'
-                                        }`}
-                                    >
-                                        {cat.label}
-                                    </button>
-                                );
-                            })}
-                        </div>
-
-                        {/* Linha 2: Barra de Busca Estilo Imagem */}
-                        <div className="relative group">
-                            <div className="absolute left-6 top-1/2 -translate-y-1/2">
-                                <div className="w-5 h-5 rounded-full border-2 border-slate-500 flex items-center justify-center group-focus-within:border-brand-blue transition-colors">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-transparent"></div>
-                                </div>
-                            </div>
-                            <input
-                                type="text"
-                                placeholder="Buscar produtos, chaveiros, sistemas..."
-                                value={searchTerm}
-                                onChange={e => handleSearch(e.target.value)}
-                                className="w-full h-14 bg-slate-900/40 text-white text-sm pl-16 pr-12 border border-white/10 rounded-xl outline-none focus:border-brand-blue/50 transition-all placeholder-slate-500"
-                            />
-                            {searchTerm && (
-                                <button onClick={() => handleSearch('')} className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white">
-                                    <X size={18} />
-                                </button>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Subcategorias (Mantendo a funcionalidade) */}
-                    {activeCategoryData && activeCategoryData.subcategories.length > 0 && (
-                        <div className="flex flex-wrap items-center gap-3 mt-6 animate-fade-in max-w-6xl mx-auto">
-                            {activeCategoryData.subcategories.map(sub => (
-                                <button
-                                    key={sub}
-                                    onClick={() => handleSubcategoryChange(sub)}
-                                    className={`px-5 py-2 rounded-xl text-[11px] font-black border transition-all ${
-                                        subParam === sub ? 'bg-brand-blue/20 border-brand-blue text-white' : 'bg-transparent border-white/5 text-white/40'
-                                    }`}
-                                >
-                                    {sub}
-                                </button>
+                            <button onClick={() => handleCategoryChange('Todos')} className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${catParam === 'Todos' ? 'bg-brand-blue text-slate-950 shadow-xl' : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'}`}>Todos</button>
+                            {CATEGORIES.map(cat => (
+                                <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${catParam === cat.id ? 'bg-white text-slate-950 shadow-xl' : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'}`}>{cat.label}</button>
                             ))}
                         </div>
-                    )}
+                        <div className="relative group">
+                            <div className="absolute left-6 top-1/2 -translate-y-1/2"><div className="w-5 h-5 rounded-full border-2 border-slate-500 group-focus-within:border-brand-blue"></div></div>
+                            <input type="text" placeholder="Buscar produtos, chaveiros, sistemas..." value={searchTerm} onChange={e => handleSearch(e.target.value)} className="w-full h-14 bg-slate-900/40 text-white text-sm pl-16 pr-12 border border-white/10 rounded-xl outline-none focus:border-brand-blue/50 transition-all placeholder-slate-500" />
+                        </div>
+                    </div>
                 </div>
             </div>
 
             {/* CATALOGO */}
-            <div className="container mx-auto px-6 py-16 pb-48 flex-grow">
+            <div className="container mx-auto px-6 py-12 md:py-16 pb-48 flex-grow">
                 
-                {/* Título da Seção (Conforme Imagem) */}
+                {/* Título da Seção */}
                 <div className="flex items-center gap-3 mb-10 animate-fade-in">
                     <div className="w-2 h-2 rounded-full bg-brand-blue shadow-[0_0_10px_rgba(56,182,255,0.8)]"></div>
                     <h2 className="text-sm font-black uppercase tracking-[0.2em] text-white/50">
@@ -267,7 +223,7 @@ export const Products: React.FC = () => {
 
             <div ref={footerSensorRef} className="h-1 w-full -mt-20 pointer-events-none" />
 
-            {/* MANTENDO O DOCK MOBILE FLUTUANTE (Para não quebrar a UX Mobile que você amou) */}
+            {/* DOCK MOBILE FLUTUANTE (MANTIDO) */}
             <div
                 style={{ 
                     transform: `translateY(${isVisible ? (keyboardOffset > 0 ? -keyboardOffset + 10 : 0) : '100%'}px)`,
