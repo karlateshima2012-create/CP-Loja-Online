@@ -37,10 +37,9 @@ export const Products: React.FC = () => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
 
-        // LOGICA PARA ESCONDER O MENU NO RODAPÉ
         const handleScroll = () => {
             const scrollPosition = window.innerHeight + window.scrollY;
-            const threshold = document.documentElement.scrollHeight - 300; // 300px antes do fim
+            const threshold = document.documentElement.scrollHeight - 250;
             setIsVisible(scrollPosition < threshold);
         };
 
@@ -48,7 +47,6 @@ export const Products: React.FC = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // EFEITO DE SCROLL AUTOMÁTICO PARA O TOPO DA VITRINE
     useEffect(() => {
         const anchor = document.getElementById('product-grid-anchor');
         if (anchor && (catParam !== 'Todos' || subParam || searchTerm)) {
@@ -164,24 +162,27 @@ export const Products: React.FC = () => {
             <div id="product-grid-anchor" className="h-0" />
 
             {/* ============================================================
-                MENU FLUTUANTE DINÂMICO (Com Busca Abaixo e Auto-Hide no Footer)
+                DOCK MENU FULL WIDTH (Vibrante e Magnificado)
             ============================================================ */}
             <div
-                className={`fixed md:relative bottom-6 md:bottom-auto left-4 right-4 md:left-auto md:right-auto md:w-full z-50 md:z-40 bg-[#020617]/95 backdrop-blur-3xl border border-brand-blue/30 md:border-x-0 md:border-y shadow-[0_20px_60px_rgba(0,0,0,0.9)] md:shadow-none rounded-[2rem] md:rounded-none transition-all duration-500 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
+                className={`fixed md:relative bottom-0 md:bottom-auto left-0 right-0 md:w-full z-50 md:z-40 bg-[#03081a]/98 backdrop-blur-3xl border-t border-brand-blue/60 md:border-x-0 md:border-y shadow-[0_-20px_60px_rgba(0,0,0,0.9)] md:shadow-none rounded-t-[2.5rem] md:rounded-none transition-all duration-500 transform ${
+                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
                 }`}
             >
-                <div className="container mx-auto px-4 py-4 md:py-6 relative z-10">
-                    <div className="flex flex-col gap-4 max-w-5xl mx-auto">
+                {/* Efeito Glow Azul Pulsante no Fundo do Dock */}
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/10 via-transparent to-brand-blue/5 pointer-events-none rounded-t-[2.5rem] md:rounded-none"></div>
+                
+                <div className="container mx-auto px-4 py-6 md:py-8 relative z-10">
+                    <div className="flex flex-col gap-5 max-w-5xl mx-auto">
                         
-                        {/* Linha 1: Botões de Categoria */}
-                        <div className="grid grid-cols-5 gap-2.5 w-full">
+                        {/* Linha 1: Botões de Categoria (Maiores) */}
+                        <div className="grid grid-cols-5 gap-3 w-full">
                             <button
                                 onClick={() => handleCategoryChange('Todos')}
-                                className={`h-11 flex items-center justify-center rounded-xl text-[9px] md:text-[11px] font-black uppercase tracking-widest transition-all border-2 ${
+                                className={`h-14 flex items-center justify-center rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-[0.15em] transition-all border-2 ${
                                     catParam === 'Todos'
-                                        ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]'
-                                        : 'bg-slate-900/50 border-white/20 text-white hover:border-brand-blue/50'
+                                        ? 'bg-white text-slate-950 border-white shadow-[0_0_30px_rgba(255,255,255,0.4)] scale-105'
+                                        : 'bg-slate-900/60 border-white/10 text-white/80 hover:border-brand-blue/60 hover:text-white'
                                 }`}
                             >
                                 Todos
@@ -189,54 +190,59 @@ export const Products: React.FC = () => {
 
                             {CATEGORIES.map(cat => {
                                 const isActive = catParam === cat.id;
+                                const colorMap: Record<string, string> = {
+                                    'brand-blue': 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_20px_rgba(56,182,255,0.5)] scale-105',
+                                    'brand-pink': 'bg-brand-pink border-brand-pink text-white shadow-[0_0_20px_rgba(229,21,122,0.5)] scale-105',
+                                    'brand-yellow': 'bg-brand-yellow border-brand-yellow text-slate-950 shadow-[0_0_20px_rgba(255,242,0,0.5)] scale-105',
+                                };
                                 return (
                                     <button
                                         key={cat.id}
                                         onClick={() => handleCategoryChange(cat.id)}
-                                        className={`h-11 flex flex-col md:flex-row items-center justify-center gap-1.5 rounded-xl text-[9px] md:text-[11px] font-black uppercase tracking-widest transition-all border-2 ${
+                                        className={`h-14 flex flex-col md:flex-row items-center justify-center gap-1.5 rounded-2xl text-[9px] md:text-xs font-black uppercase tracking-[0.1em] transition-all border-2 ${
                                             isActive
-                                                ? 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]'
-                                                : 'bg-slate-900/50 border-white/20 text-white hover:border-brand-blue/50'
+                                                ? colorMap[cat.color]
+                                                : 'bg-slate-900/60 border-white/10 text-white/80 hover:border-brand-blue/60 hover:text-white'
                                         }`}
                                     >
-                                        <cat.icon size={16} className="flex-shrink-0" />
+                                        <cat.icon size={20} className="flex-shrink-0" />
                                         <span className="hidden md:inline">{cat.label}</span>
-                                        <span className="md:hidden text-[8px] text-center">{cat.label.split(' ')[0]}</span>
+                                        <span className="md:hidden text-[8px] leading-tight text-center">{cat.label.split(' ')[0]}</span>
                                     </button>
                                 );
                             })}
 
                             <button
                                 onClick={() => setIsSearchExpanded(!isSearchExpanded)}
-                                className={`h-11 flex items-center justify-center rounded-xl transition-all border-2 ${
+                                className={`h-14 flex items-center justify-center rounded-2xl transition-all border-2 ${
                                     isSearchExpanded
-                                        ? 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]'
-                                        : 'bg-slate-900/60 border-brand-blue/40 text-brand-blue hover:bg-brand-blue/10'
+                                        ? 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_25px_rgba(56,182,255,0.6)] scale-105'
+                                        : 'bg-slate-900/80 border-brand-blue/40 text-brand-blue hover:bg-brand-blue/20'
                                 }`}
                             >
-                                <Search size={22} />
+                                <Search size={24} />
                             </button>
                         </div>
 
-                        {/* Linha 2: Campo de Busca (Aparece Abaixo quando expandido) */}
+                        {/* Linha 2: Busca (Full Width embaixo) */}
                         {isSearchExpanded && (
                             <div className="animate-fade-in-up w-full">
-                                <div className="relative">
-                                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-blue" size={18} />
+                                <div className="relative group">
+                                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-blue group-focus-within:scale-110 transition-transform" size={20} />
                                     <input
                                         autoFocus
                                         type="text"
                                         placeholder="BUSCAR PRODUTOS, CHAVEIROS, SISTEMAS..."
                                         value={searchTerm}
                                         onChange={e => handleSearch(e.target.value)}
-                                        className="w-full h-12 bg-slate-900/80 text-white text-xs pl-12 pr-12 border-2 border-brand-blue/60 rounded-xl outline-none focus:border-brand-blue font-black uppercase tracking-widest placeholder-slate-600 shadow-[0_0_20px_rgba(56,182,255,0.2)]"
+                                        className="w-full h-16 bg-slate-900 text-white text-sm pl-16 pr-12 border-2 border-brand-blue/50 rounded-2xl outline-none focus:border-brand-blue font-black uppercase tracking-widest placeholder-slate-600 shadow-[0_0_30px_rgba(56,182,255,0.15)] transition-all"
                                     />
                                     {searchTerm && (
                                         <button
                                             onClick={() => handleSearch('')}
-                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                                            className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
                                         >
-                                            <X size={16} />
+                                            <X size={18} />
                                         </button>
                                     )}
                                 </div>
@@ -244,17 +250,17 @@ export const Products: React.FC = () => {
                         )}
                     </div>
 
-                    {/* Subcategorias Premium (Aparecem entre botões e busca) */}
+                    {/* Subcategorias Premium */}
                     {!isSearchExpanded && activeCategoryData && activeCategoryData.subcategories.length > 0 && (
-                        <div className="flex flex-wrap items-center justify-center gap-2.5 mt-5 pt-5 border-t border-brand-blue/20 animate-fade-in relative">
+                        <div className="flex flex-wrap items-center justify-center gap-3 mt-6 pt-6 border-t border-brand-blue/30 animate-fade-in">
                             {activeCategoryData.subcategories.map(sub => (
                                 <button
                                     key={sub}
                                     onClick={() => handleSubcategoryChange(sub)}
-                                    className={`px-4 py-2 rounded-xl text-[10px] md:text-xs font-black whitespace-nowrap border-2 transition-all ${
+                                    className={`px-6 py-3 rounded-2xl text-[11px] md:text-sm font-black whitespace-nowrap border-2 transition-all ${
                                         subParam === sub
-                                            ? 'bg-brand-blue/40 border-brand-blue text-white shadow-[0_0_20px_rgba(56,182,255,0.4)]'
-                                            : 'bg-slate-900/80 border-white/10 text-white hover:border-brand-blue/40'
+                                            ? 'bg-brand-blue/50 border-brand-blue text-white shadow-[0_0_20px_rgba(56,182,255,0.4)]'
+                                            : 'bg-slate-900/80 border-white/10 text-white/90 hover:border-brand-blue/50'
                                     }`}
                                 >
                                     {sub}
@@ -266,7 +272,7 @@ export const Products: React.FC = () => {
             </div>
 
             {/* CATALOGO */}
-            <div className="container mx-auto px-4 py-16 pb-40 flex-grow">
+            <div className="container mx-auto px-4 py-16 pb-48 flex-grow">
                 {isFiltering && (
                     <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-4 border-l-4 border-brand-blue pl-6 py-2">
                         <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight">
