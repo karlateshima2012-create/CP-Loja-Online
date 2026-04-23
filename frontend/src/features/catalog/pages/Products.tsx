@@ -126,7 +126,7 @@ export const Products: React.FC = () => {
             {/* HERO SECTION — UNIFIED (3 ROWS FOR ALL) */}
             <section
                 id="hero"
-                className="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-transparent"
+                className="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center pt-6 md:pt-24 pb-12 overflow-hidden bg-transparent"
             >
                 <div className="absolute inset-0 bg-[#020617] -z-20" />
                 <div className="absolute inset-0 -z-10 opacity-70">
