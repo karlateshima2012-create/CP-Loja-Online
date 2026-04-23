@@ -160,17 +160,18 @@ const SectionHeader = ({ icon: Icon, title, extra }: { icon: any, title: string,
     </div>
 );
 
-const TemplateButton = ({ id, label, desc, active, onClick, color }: any) => (
+const TemplateButton = ({ id, label, desc, active, onClick }: { id: string, label: string, desc: string, active: boolean, onClick: () => void }) => (
     <button
         onClick={onClick}
-        className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${active ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
+        type="button"
+        className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 w-full ${active ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
     >
         <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${active ? 'border-brand-blue' : 'border-slate-300'}`}>
             {active && <div className="w-2.5 h-2.5 bg-brand-blue rounded-full"></div>}
         </div>
-        <div>
-            <div className={`font-bold text-[11px] text-slate-800 uppercase tracking-wider ${active ? 'text-brand-blue' : ''}`}>{label}</div>
-            <div className="text-[9px] text-slate-500 leading-tight mt-0.5">{desc}</div>
+        <div className="min-w-0 flex-1">
+            <div className={`font-bold text-[11px] uppercase tracking-wider truncate ${active ? 'text-brand-blue' : 'text-slate-800'}`}>{label}</div>
+            <div className="text-[9px] text-slate-500 leading-tight mt-0.5 line-clamp-2">{desc}</div>
         </div>
     </button>
 );
