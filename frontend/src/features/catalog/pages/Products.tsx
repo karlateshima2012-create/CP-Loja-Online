@@ -36,6 +36,7 @@ export const Products: React.FC = () => {
     const [isDockDismissed, setIsDockDismissed] = useState(false);
 
     const lastScrollY = useRef(0);
+    const wasInFooter = useRef(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -43,10 +44,11 @@ export const Products: React.FC = () => {
 
         const observer = new IntersectionObserver(
             ([entry]) => {
-                // Se sair do rodapé (entry.isIntersecting === false), reativa o dock
-                if (!entry.isIntersecting) {
+                // SÓ reativa o dock se o usuário ESTAVA no rodapé e ACABOU de sair
+                if (wasInFooter.current && !entry.isIntersecting) {
                     setIsDockDismissed(false);
                 }
+                wasInFooter.current = entry.isIntersecting;
 
                 if (isSearchExpanded || isDockDismissed) {
                     if (isDockDismissed) setIsVisible(false);
@@ -62,13 +64,12 @@ export const Products: React.FC = () => {
         
         if (footerSensorRef.current) observer.observe(footerSensorRef.current);
 
-        // Lógica de Scroll Up (Rolar para cima faz o dock voltar)
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
             const deltaY = currentScrollY - lastScrollY.current;
 
-            // Se rolar para cima (deltaY < 0) e não estiver no topo absoluto
-            if (deltaY < -10 && currentScrollY > 100) {
+            // Só reativa se for um scroll significativo para cima (> 20px)
+            if (deltaY < -20 && currentScrollY > 150 && isDockDismissed) {
                 setIsDockDismissed(false);
             }
             
