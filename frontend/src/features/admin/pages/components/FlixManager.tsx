@@ -290,7 +290,7 @@ export const FlixManager: React.FC = () => {
     }
 
     return (
-        <div className="fixed inset-0 bg-gray-50 z-[50] flex flex-col text-slate-800">
+        <div className="fixed inset-0 bg-gray-50 z-[100] flex flex-col text-slate-800 animate-fade-in">
             <ImageCropper isOpen={cropperOpen} onClose={() => setCropperOpen(false)} onSave={(b64) => setEditForm(prev => ({ ...prev, [cropperType === 'PROFILE' ? 'profileImageUrl' : cropperType === 'COVER' ? 'coverImageUrl' : 'posterImageUrl']: b64 }))} aspectRatio={cropperType === 'PROFILE' ? 1 : cropperType === 'COVER' ? 1.3 : 0.66} title="Recortar Imagem" />
 
             <div className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shrink-0 shadow-sm z-20">
