@@ -25,14 +25,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <Link
       to={`/produto/${product.id}`}
-      className="group bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 hover:border-brand-blue/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(36,155,203,0.15)] flex flex-col h-full animate-fade-in-up"
+      className="group bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 md:hover:border-brand-blue/50 transition-all duration-300 md:hover:shadow-[0_0_30px_rgba(36,155,203,0.15)] flex flex-col h-full animate-fade-in-up border-brand-blue/20 md:border-slate-800"
     >
       <div className="aspect-square bg-slate-950 overflow-hidden relative">
-        <div className="absolute inset-0 bg-brand-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+        <div className="absolute inset-0 bg-brand-blue/10 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
         <img
           src={product.imageUrl}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+          className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-500 opacity-100 md:opacity-90 md:group-hover:opacity-100"
         />
 
         {/* PERSONALIZÁVEL TAG */}
@@ -51,17 +51,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         )}
       </div>
 
-      <div className="p-3 md:p-5 flex-1 flex flex-col">
-        <div className="text-[9px] md:text-xs text-brand-blue/60 font-bold uppercase tracking-wider mb-1">{product.category}</div>
-        <h3 className="font-bold text-white text-sm md:text-lg mb-3 leading-tight group-hover:text-brand-blue transition-colors line-clamp-2">{product.name}</h3>
+      <div className="p-4 md:p-6 flex-1 flex flex-col">
+        <div className="text-[10px] md:text-xs text-brand-blue/60 font-bold uppercase tracking-wider mb-1">{product.category}</div>
+        <h3 className="font-bold text-white text-base md:text-lg mb-4 leading-tight md:group-hover:text-brand-blue transition-colors line-clamp-2">{product.name}</h3>
 
-        <div className="flex flex-col md:flex-row md:items-center justify-between mt-auto pt-3 border-t border-white/5 gap-2 md:gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mt-auto pt-5 border-t border-white/5 gap-3 md:gap-4">
           <div className="flex flex-col">
-            <span className="font-black text-base md:text-xl text-white tracking-tight">
+            <span className="font-black text-lg md:text-xl text-white tracking-tight">
               ¥{price.toLocaleString()}
             </span>
           </div>
-          <button className="w-full md:w-auto bg-slate-800 hover:bg-brand-blue text-slate-300 hover:text-slate-950 px-3 md:px-4 py-2.5 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 transform hover:-translate-y-1 shadow-lg hover:shadow-brand-blue/30 border border-brand-blue/20 md:border-transparent">
+          <button className="w-full md:w-auto bg-slate-800 md:hover:bg-brand-blue text-slate-300 md:hover:text-slate-950 px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 transform md:hover:-translate-y-1 shadow-lg md:hover:shadow-brand-blue/30 border border-brand-blue/30 md:border-transparent">
             <ShoppingCart size={14} /> Adicionar
           </button>
         </div>

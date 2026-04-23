@@ -80,13 +80,6 @@ export const Products: React.FC = () => {
         setSearchParams(p);
     };
 
-    const handleSubcategoryChange = (sub: string) => {
-        const p = new URLSearchParams(searchParams);
-        if (sub === subParam) p.delete('sub');
-        else p.set('sub', sub);
-        setSearchParams(p);
-    };
-
     const handleSearch = (val: string) => {
         setSearchTerm(val);
         const p = new URLSearchParams(searchParams);
@@ -100,12 +93,6 @@ export const Products: React.FC = () => {
         setSearchParams(p);
     };
 
-    const resetFilters = () => {
-        setSearchTerm('');
-        setIsSearchExpanded(false);
-        setSearchParams(new URLSearchParams());
-    };
-
     const filteredProducts = products.filter(p => {
         const matchesSearch = searchTerm
             ? p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -116,14 +103,12 @@ export const Products: React.FC = () => {
         return matchesSearch && matchesCat && matchesSub;
     });
 
-    const activeCategoryData = CATEGORIES.find(c => c.id === catParam);
-    const isFiltering = catParam !== 'Todos' || !!searchTerm || !!subParam;
     const galleryImages = products.map(p => p.imageUrl);
 
     return (
-        <div className="min-h-screen bg-[#020617] flex flex-col overflow-x-hidden">
+        <div className="min-h-screen bg-[#020617] flex flex-col">
             
-            {/* HERO SECTION — UNIFIED (3 ROWS FOR ALL) */}
+            {/* HERO SECTION */}
             <section
                 id="hero"
                 className="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center pt-6 md:pt-24 pb-12 overflow-hidden bg-transparent"
@@ -134,7 +119,6 @@ export const Products: React.FC = () => {
                 </div>
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-brand-blue/10 rounded-full blur-[200px] animate-pulse -z-10 pointer-events-none"></div>
 
-                {/* TEXTO FLUTUANTE CENTRALIZADO */}
                 <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-8">
                     <div className="text-center animate-fade-in-up">
                         <h1 className="text-4xl md:text-8xl font-black text-white leading-[1.1] tracking-tighter drop-shadow-[0_10px_40px_rgba(0,0,0,1)]">
@@ -149,9 +133,7 @@ export const Products: React.FC = () => {
                     </div>
                 </div>
 
-                {/* CARROSSEL MULTI-LINHA (3 LINHAS GLOBAIS) */}
                 <div className="w-full flex flex-col gap-4 md:gap-8 opacity-25 md:opacity-20 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
-                    {/* Linha 1 */}
                     <div className="flex gap-4 animate-[marquee_50s_linear_infinite] w-max">
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
                             <div key={i} className="w-28 md:w-56 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
@@ -159,7 +141,6 @@ export const Products: React.FC = () => {
                             </div>
                         ))}
                     </div>
-                    {/* Linha 2 */}
                     <div className="flex gap-4 animate-[marquee_70s_linear_infinite] w-max ml-[-100px] md:ml-[-200px]" style={{ animationDirection: 'reverse' }}>
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
                             <div key={i} className="w-28 md:w-56 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
@@ -167,7 +148,6 @@ export const Products: React.FC = () => {
                             </div>
                         ))}
                     </div>
-                    {/* Linha 3 */}
                     <div className="flex gap-4 animate-[marquee_60s_linear_infinite] w-max ml-[50px] md:ml-[100px]">
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
                             <div key={i} className="w-28 md:w-56 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
@@ -180,9 +160,9 @@ export const Products: React.FC = () => {
 
             <div id="product-grid-anchor" className="h-0" />
 
-            {/* DOCK SECTION (DESKTOP ONLY) */}
+            {/* DOCK SECTION (DESKTOP) */}
             <div className="hidden md:block relative w-full bg-[#020617] pt-1 pb-10">
-                <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8"></div>
+                <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8 shadow-[0_0_15px_rgba(56,182,255,0.3)]"></div>
                 <div className="container mx-auto px-6">
                     <div className="flex flex-col gap-6 max-w-6xl mx-auto">
                         <div className="flex flex-wrap items-center gap-3">
