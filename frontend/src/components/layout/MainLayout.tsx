@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Menu, X, User, Clapperboard, LogOut, LayoutDashboard, Truck, ShieldCheck, Box, Clock } from 'lucide-react';
@@ -47,10 +46,12 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
   // Efeito de neon para os botões usando Azul Principal
   const glowBorder = "border border-brand-blue/30 hover:border-brand-blue shadow-[0_0_15px_rgba(36,155,203,0.15)] hover:shadow-[0_0_20px_rgba(36,155,203,0.4)]";
+  
+  // Hover permanente para mobile
+  const mobileGlow = "border-brand-blue/50 shadow-[0_0_20px_rgba(36,155,203,0.4)] bg-brand-blue/10";
 
-  // Context Navigation Logic - UNIFICADO PARA LOJA
+  // Context Navigation Logic
   const homeLink = '/';
-  const productsLink = '/';
 
   const handleLogout = () => {
     logout();
@@ -65,9 +66,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-gray-100 font-sans selection:bg-brand-blue/30">
-      {/* ============================================================
-          ANNOUNCEMENT BAR (MARQUEE GLOBAL NO TOPO)
-      ============================================================ */}
+      {/* ANNOUNCEMENT BAR */}
       <div className="bg-[#020617] border-b border-white/5 py-2 overflow-hidden relative z-[100]">
           <div className="animate-marquee whitespace-nowrap flex items-center w-max">
               {[1, 2, 3].map((i) => (
@@ -93,7 +92,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
       <header className="bg-slate-900/80 backdrop-blur-md border-b border-brand-blue/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
 
-          {/* Logo Area - Aumentada para h-16 */}
+          {/* Logo Area */}
           <Link to={homeLink} className="flex items-center gap-3 group hover:opacity-90 transition-opacity">
             <Logo className="h-16" withText={true} />
           </Link>
@@ -128,7 +127,8 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
               </Link>
             )}
 
-            <Link to="/cart" className={`relative p-3 rounded-full text-brand-blue hover:bg-brand-blue/10 transition-all ${glowBorder} border-transparent`}>
+            {/* Carrinho com Hover Ativado no Mobile */}
+            <Link to="/cart" className={`relative p-3 rounded-full text-brand-blue transition-all ${glowBorder} md:border-transparent ${mobileGlow} md:bg-transparent`}>
               <ShoppingCart size={22} />
               {cartItemCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-brand-pink text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-lg ring-2 ring-slate-900">
@@ -137,55 +137,15 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
               )}
             </Link>
 
+            {/* Hambúrguer removido do Mobile (oculto) */}
             <button
-              className="md:hidden p-2 text-brand-blue hover:text-white transition-colors"
+              className="hidden md:hidden p-2 text-brand-blue hover:text-white transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
-
-        {/* Mobile Menu — ESTILO PREMIUM GLOW */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-[#020617]/98 backdrop-blur-2xl border-t border-brand-blue/30 p-6 space-y-4 shadow-2xl absolute w-full z-50 animate-fade-in overflow-hidden">
-            {/* Brilho azul suave no fundo do menu expandido */}
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-blue/10 via-transparent to-brand-blue/5 pointer-events-none"></div>
-            
-            <div className="relative z-10 space-y-1">
-              <MobileNavLink to="/?cat=Impressão 3D" onClick={() => setIsMenuOpen(false)}>
-                <span className="text-white font-black tracking-widest">Impressão 3D</span>
-              </MobileNavLink>
-              <MobileNavLink to="/?cat=Tecnologia NFC" onClick={() => setIsMenuOpen(false)}>
-                <span className="text-white font-black tracking-widest">Tecnologia NFC</span>
-              </MobileNavLink>
-              <MobileNavLink to="/?cat=Sistemas" onClick={() => setIsMenuOpen(false)}>
-                <span className="text-white font-black tracking-widest">SOLUÇÕES DIGITAIS</span>
-              </MobileNavLink>
-            </div>
-
-            <div className="border-t border-white/10 pt-4 relative z-10">
-              {user ? (
-                <>
-                  <MobileNavLink to={getDashboardLink()} onClick={() => setIsMenuOpen(false)}>
-                    <span className="text-brand-blue font-black tracking-widest"><T k="nav_dashboard" default="Minha Conta" /></span>
-                  </MobileNavLink>
-                  <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="w-full text-left px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 font-black uppercase tracking-widest transition-colors flex items-center gap-2">
-                    <LogOut size={18} /> <T k="nav_logout" default="Sair" />
-                  </button>
-                </>
-              ) : (
-                <Link 
-                  to="/login" 
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block w-full text-center py-4 rounded-2xl bg-brand-blue text-slate-950 font-black uppercase tracking-widest shadow-[0_0_20px_rgba(56,182,255,0.4)]"
-                >
-                  <T k="nav_login" default="ENTRAR NA CONTA" />
-                </Link>
-              )}
-            </div>
-          </div>
-        )}
       </header>
 
       <main className="flex-grow">
