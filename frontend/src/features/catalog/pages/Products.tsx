@@ -52,9 +52,9 @@ export const Products: React.FC = () => {
         <div className="min-h-screen flex flex-col bg-black text-white font-sans selection:bg-brand-blue/30">
             <Starfield />
             
-            {/* STRATEGIC LIGHT POINTS */}
-            <div className="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/15 rounded-full blur-[150px] pointer-events-none z-0"></div>
-            <div className="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-pink/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
+            {/* STRATEGIC LIGHT POINTS (More Subtle) */}
+            <div className="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/5 rounded-full blur-[180px] pointer-events-none z-0"></div>
+            <div className="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-pink/3 rounded-full blur-[180px] pointer-events-none z-0"></div>
 
             {/* Header (High Contrast) */}
             <header className="bg-slate-900/90 backdrop-blur-2xl border-b border-brand-blue/40 sticky top-0 z-50 shadow-[0_4px_30px_rgba(36,155,203,0.15)]">
@@ -70,17 +70,17 @@ export const Products: React.FC = () => {
                             </button>
                         ))}
                     </div>
-                    <div className="flex items-center gap-4 border-l border-white/20 pl-6 ml-2">
-                        <div className="hidden lg:flex items-center bg-black border-2 border-brand-blue/50 rounded-2xl px-4 py-2 focus-within:border-brand-blue focus-within:ring-4 focus-within:ring-brand-blue/20 transition-all w-72 shadow-[0_0_15px_rgba(56,182,255,0.2)]">
-                            <Search size={18} className="text-brand-blue" />
+                    <div className="flex items-center gap-4 border-l border-white/10 pl-6 ml-2">
+                        <div className="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-xl px-4 py-2 focus-within:border-white/30 transition-all w-72">
+                            <Search size={16} className="text-slate-500" />
                             <input 
-                                className="bg-transparent border-none text-[11px] text-white outline-none pl-3 w-full font-black placeholder:text-slate-700 uppercase tracking-widest" 
+                                className="bg-transparent border-none text-[11px] text-white outline-none pl-3 w-full font-bold placeholder:text-slate-600 uppercase tracking-widest" 
                                 placeholder="BUSCAR PRODUTOS..." 
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
                             />
                         </div>
-                        <button className="text-white hover:text-brand-blue lg:hidden p-2"><Search size={24} /></button>
+                        <button className="text-white/50 hover:text-white lg:hidden p-2"><Search size={20} /></button>
                     </div>
                 </div>
             </header>
@@ -106,6 +106,10 @@ export const Products: React.FC = () => {
 
             {/* CATEGORY CARDS (3 Columns) */}
             <section className="container mx-auto px-6 py-4 grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                {/* BACK LIGHTS FOR CARDS */}
+                <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-brand-blue/10 blur-[100px] -z-10"></div>
+                <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-brand-pink/5 blur-[100px] -z-10"></div>
+                
                 {[
                     { id: 'Impressão 3D', label: 'Impressão 3D', img: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?q=80&w=1000&auto=format&fit=crop' },
                     { id: 'Tecnologia NFC', label: 'Tecnologia NFC', img: 'https://images.unsplash.com/photo-1621504450181-5d356f63d3ee?q=80&w=1000&auto=format&fit=crop' },
