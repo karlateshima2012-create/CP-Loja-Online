@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from 'react';
+const SUBCATEGORIES = [
+    { id: 'Chaveiros NFC', label: 'Chaveiros com NFC', img: 'https://images.unsplash.com/photo-1621504450181-5d356f63d3ee?q=80&w=800&auto=format&fit=crop' },
+    { id: 'Displays NFC', label: 'Displays com NFC', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop' },
+    { id: 'Chaveiros 3D', label: 'Chaveiros 3D', img: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?q=80&w=800&auto=format&fit=crop' },
+    { id: 'Displays', label: 'Displays', img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop' },
+    { id: 'Letreiros', label: 'Letreiros Personalizados', img: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=800&auto=format&fit=crop' }
+];
 import { useSearchParams, Link } from 'react-router-dom';
 import { mockService } from '@/src/services/mockData';
 import { Product, UserRole } from '@/src/types';
@@ -104,25 +111,39 @@ export const Products: React.FC = () => {
                 </div>
             </section>
 
-            {/* CATEGORY CARDS (3 Columns) */}
-            <section className="container mx-auto px-6 py-4 grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-                {/* BACK LIGHTS FOR CARDS */}
-                <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-brand-blue/10 blur-[100px] -z-10"></div>
-                <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-brand-pink/5 blur-[100px] -z-10"></div>
+            {/* SUBCATEGORY INFINITE MARQUEE */}
+            <section className="w-full overflow-hidden py-12 relative z-10 group">
+                <style>{`
+                    @keyframes scroll {
+                        0% { transform: translateX(0); }
+                        100% { transform: translateX(calc(-300px * 5 - 1rem * 5)); }
+                    }
+                    .animate-scroll {
+                        animation: scroll 40s linear infinite;
+                    }
+                    .animate-scroll:hover {
+                        animation-play-state: paused;
+                    }
+                `}</style>
                 
-                {[
-                    { id: 'Impressão 3D', label: 'Impressão 3D', img: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?q=80&w=1000&auto=format&fit=crop' },
-                    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', img: 'https://images.unsplash.com/photo-1621504450181-5d356f63d3ee?q=80&w=1000&auto=format&fit=crop' },
-                    { id: 'Soluções Digitais', label: 'Soluções Digitais', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop' }
-                ].map(cat => (
-                    <button 
-                        key={cat.id}
-                        onClick={() => handleCategoryChange(cat.id)}
-                        className="h-48 bg-slate-900 rounded-2xl border border-white/5 relative overflow-hidden group transition-all"
-                    >
-                        <img src={cat.img} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700" alt={cat.label} />
-                    </button>
-                ))}
+                <div className="flex gap-4 animate-scroll whitespace-nowrap w-fit">
+                    {/* Render twice for infinite loop effect */}
+                    {[...SUBCATEGORIES, ...SUBCATEGORIES].map((cat, idx) => (
+                        <button 
+                            key={`${cat.id}-${idx}`}
+                            onClick={() => handleCategoryChange(cat.id)}
+                            className="w-[300px] h-40 bg-slate-900 rounded-2xl border border-white/10 relative overflow-hidden flex-shrink-0 group/card transition-all hover:border-brand-blue/50"
+                        >
+                            <div className="absolute inset-0 bg-black/40 group-hover/card:bg-black/20 z-10 transition-colors"></div>
+                            <img src={cat.img} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/card:scale-110 transition-transform duration-1000" alt={cat.label} />
+                            <div className="absolute inset-0 z-20 flex items-center justify-center p-6">
+                                <span className="text-sm md:text-base font-black uppercase tracking-widest text-white text-center drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                                    {cat.label}
+                                </span>
+                            </div>
+                        </button>
+                    ))}
+                </div>
             </section>
 
             {/* PRODUCT GRID - DEEP LAYER CONTRAST (High Contrast Version) */}
