@@ -214,12 +214,11 @@ export const Products: React.FC = () => {
                         {isSearchExpanded && (
                             <div className="animate-fade-in-up pb-2">
                                 <input 
-                                    autoFocus 
                                     type="text" 
                                     placeholder="BUSCAR PRODUTOS..." 
                                     value={searchTerm} 
                                     onChange={e => handleSearch(e.target.value)} 
-                                    className="w-full h-12 bg-slate-900 text-white text-xs px-4 border border-brand-blue/50 rounded-xl outline-none" 
+                                    className="w-full h-12 bg-slate-900 text-white text-base px-4 border border-brand-blue/50 rounded-xl outline-none shadow-[0_0_20px_rgba(56,182,255,0.2)]" 
                                 />
                             </div>
                         )}
