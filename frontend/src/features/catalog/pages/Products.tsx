@@ -160,19 +160,23 @@ export const Products: React.FC = () => {
 
             <div id="product-grid-anchor" className="h-0" />
 
-            {/* DOCK SECTION (DESKTOP) */}
-            <div className="hidden md:block relative w-full bg-[#020617] pt-1 pb-10">
+            {/* DIVISOR GRADIENTE (Split Screen - Global) */}
+            <div className="relative w-full bg-[#020617] pt-1">
                 <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8 shadow-[0_0_15px_rgba(56,182,255,0.3)]"></div>
-                <div className="container mx-auto px-6">
-                    <div className="flex flex-col gap-6 max-w-6xl mx-auto">
-                        <div className="flex flex-wrap items-center gap-3">
-                            <button onClick={() => handleCategoryChange('Todos')} className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${catParam === 'Todos' ? 'bg-brand-blue text-slate-950 shadow-xl' : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'}`}>Todos</button>
-                            {CATEGORIES.map(cat => (
-                                <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${catParam === cat.id ? 'bg-white text-slate-950 shadow-xl' : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'}`}>{cat.label}</button>
-                            ))}
-                        </div>
-                        <div className="relative group">
-                            <input type="text" placeholder="Buscar produtos, chaveiros, sistemas..." value={searchTerm} onChange={e => handleSearch(e.target.value)} className="w-full h-14 bg-slate-900/40 text-white text-sm pl-6 pr-12 border border-white/10 rounded-xl outline-none focus:border-brand-blue/50 transition-all placeholder-slate-500" />
+                
+                {/* DOCK SECTION (DESKTOP ONLY) */}
+                <div className="hidden md:block pb-10">
+                    <div className="container mx-auto px-6">
+                        <div className="flex flex-col gap-6 max-w-6xl mx-auto">
+                            <div className="flex flex-wrap items-center gap-3">
+                                <button onClick={() => handleCategoryChange('Todos')} className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${catParam === 'Todos' ? 'bg-brand-blue text-slate-950 shadow-xl' : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'}`}>Todos</button>
+                                {CATEGORIES.map(cat => (
+                                    <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${catParam === cat.id ? 'bg-white text-slate-950 shadow-xl' : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'}`}>{cat.label}</button>
+                                ))}
+                            </div>
+                            <div className="relative group">
+                                <input type="text" placeholder="Buscar produtos, chaveiros, sistemas..." value={searchTerm} onChange={e => handleSearch(e.target.value)} className="w-full h-14 bg-slate-900/40 text-white text-sm pl-6 pr-12 border border-white/10 rounded-xl outline-none focus:border-brand-blue/50 transition-all placeholder-slate-500" />
+                            </div>
                         </div>
                     </div>
                 </div>
