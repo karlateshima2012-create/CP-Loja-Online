@@ -123,10 +123,10 @@ export const Products: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col overflow-x-hidden">
             
-            {/* HERO SECTION — MOBILE REFINED */}
+            {/* HERO SECTION — MOBILE OPTIMIZED (3 ROWS) */}
             <section
                 id="hero"
-                className="relative min-h-[60vh] md:min-h-[80vh] flex flex-col md:flex-row items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-transparent"
+                className="relative min-h-[65vh] md:min-h-[80vh] flex flex-col md:flex-row items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-transparent"
             >
                 <div className="absolute inset-0 bg-[#020617] -z-20" />
                 <div className="absolute inset-0 -z-10 opacity-70">
@@ -138,31 +138,45 @@ export const Products: React.FC = () => {
                     
                     {/* ANIMAÇÃO E TEXTO MOBILE SOBREPOSTO */}
                     <div className="w-full relative order-1 md:order-2">
-                        {/* Mobile: Marquee com Texto Flutuante */}
+                        {/* Mobile: 3 Linhas de Marquee com Texto Flutuante */}
                         <div className="md:hidden relative w-screen -mx-6 overflow-hidden">
-                            {/* O Título Flutuante */}
-                            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-4">
-                                <h1 className="text-3xl font-black text-white text-center leading-tight tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
+                            
+                            {/* O Título e Subtítulo Flutuante */}
+                            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-6">
+                                <h1 className="text-3xl font-black text-white text-center leading-tight tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,1)]">
                                     Encontre a solução<br/>
                                     <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">
                                         ideal para o seu negócio.
                                     </span>
                                 </h1>
+                                <p className="text-[11px] font-medium text-slate-300 text-center mt-4 max-w-[280px] leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,1)] opacity-90">
+                                    Crie presença digital, conecte clientes com NFC e automatize seu atendimento.
+                                </p>
                             </div>
 
-                            {/* O Carrossel (Fundo do texto no mobile) */}
-                            <div className="flex flex-col gap-3 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] opacity-40">
+                            {/* O Carrossel (Fundo do texto no mobile - 3 LINHAS) */}
+                            <div className="flex flex-col gap-3 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] opacity-30">
+                                {/* Linha 1 */}
                                 <div className="flex gap-3 animate-[marquee_25s_linear_infinite] w-max">
                                     {[...galleryImages, ...galleryImages].map((img, i) => (
                                         <div key={i} className="w-24 aspect-[4/5] bg-slate-900 rounded-lg overflow-hidden border border-white/5">
-                                            <img src={img} className="w-full h-full object-cover opacity-60" />
+                                            <img src={img} className="w-full h-full object-cover" />
                                         </div>
                                     ))}
                                 </div>
+                                {/* Linha 2 */}
                                 <div className="flex gap-3 animate-[marquee_35s_linear_infinite] w-max" style={{ animationDirection: 'reverse' }}>
                                     {[...galleryImages, ...galleryImages].map((img, i) => (
                                         <div key={i} className="w-24 aspect-[4/5] bg-slate-900 rounded-lg overflow-hidden border border-white/5">
-                                            <img src={img} className="w-full h-full object-cover opacity-60" />
+                                            <img src={img} className="w-full h-full object-cover" />
+                                        </div>
+                                    ))}
+                                </div>
+                                {/* Linha 3 */}
+                                <div className="flex gap-3 animate-[marquee_28s_linear_infinite] w-max">
+                                    {[...galleryImages, ...galleryImages].map((img, i) => (
+                                        <div key={i} className="w-24 aspect-[4/5] bg-slate-900 rounded-lg overflow-hidden border border-white/5">
+                                            <img src={img} className="w-full h-full object-cover" />
                                         </div>
                                     ))}
                                 </div>
@@ -185,7 +199,7 @@ export const Products: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* TEXTO DESKTOP / ESPAÇADOR MOBILE */}
+                    {/* TEXTO DESKTOP */}
                     <div className="hidden md:block text-left animate-fade-in-up order-2 md:order-1">
                         <h1 className="text-7xl font-black text-white mb-6 leading-tight tracking-tighter">
                             Encontre a solução<br/>
@@ -204,7 +218,7 @@ export const Products: React.FC = () => {
 
             {/* DOCK SECTION (DESKTOP ONLY) */}
             <div className="hidden md:block relative w-full bg-[#020617] pt-1 pb-10">
-                <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8"></div>
+                <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8 shadow-[0_0_15px_rgba(56,182,255,0.3)]"></div>
                 <div className="container mx-auto px-6">
                     <div className="flex flex-col gap-6 max-w-6xl mx-auto">
                         <div className="flex flex-wrap items-center gap-3">
@@ -241,7 +255,7 @@ export const Products: React.FC = () => {
 
             <div ref={footerSensorRef} className="h-1 w-full -mt-20 pointer-events-none" />
 
-            {/* DOCK MOBILE REFINADO (COM NOMES) */}
+            {/* DOCK MOBILE REFINADO */}
             <div
                 style={{ 
                     transform: `translateY(${isVisible ? (keyboardOffset > 0 ? -keyboardOffset + 10 : 0) : '100%'}px)`,
@@ -256,7 +270,6 @@ export const Products: React.FC = () => {
                                 <Filter size={18} />
                                 <span className="text-[8px] font-black uppercase tracking-tighter">Todos</span>
                             </button>
-                            
                             {CATEGORIES.map(cat => {
                                 const isActive = catParam === cat.id;
                                 return (
@@ -266,10 +279,8 @@ export const Products: React.FC = () => {
                                     </button>
                                 );
                             })}
-
                             <button onClick={() => setIsSearchExpanded(!isSearchExpanded)} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${isSearchExpanded ? 'text-brand-blue' : 'text-white/40'}`}>
-                                <Search size={18} />
-                                <span className="text-[8px] font-black uppercase tracking-tighter">Busca</span>
+                                <Search size={18} /><span className="text-[8px] font-black uppercase tracking-tighter">Busca</span>
                             </button>
                         </div>
                         {isSearchExpanded && (
