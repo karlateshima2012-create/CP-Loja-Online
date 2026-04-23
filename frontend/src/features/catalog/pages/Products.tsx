@@ -67,9 +67,11 @@ export const Products: React.FC = () => {
             <nav className="sticky top-16 z-40 py-4 px-6 animate-fade-in">
                 <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-6 bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[2rem] p-2 pr-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                     
-                    {/* Tabs Area */}
-                    <div className="flex items-center gap-1 overflow-x-auto no-scrollbar p-1">
-                        {CATEGORIES.map(cat => (
+                    {/* Tabs Area (Clean) */}
+                    <div className="flex items-center gap-1 overflow-x-auto p-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                        <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
+                        <div className="flex items-center gap-1 no-scrollbar">
+                            {CATEGORIES.map(cat => (
                             <button 
                                 key={cat.id} 
                                 onClick={() => handleCategoryChange(cat.id)}
@@ -95,9 +97,9 @@ export const Products: React.FC = () => {
                 </div>
             </nav>
 
-            {/* MAIN BANNER (Larger) */}
-            <section className="container mx-auto px-6 py-8 relative z-10">
-                <div className="w-full aspect-[16/10] md:aspect-[2.5/1] bg-slate-900 rounded-3xl border border-white/5 overflow-hidden relative group shadow-2xl">
+            {/* MAIN BANNER (Full Width) */}
+            <section className="w-full relative z-10">
+                <div className="w-full aspect-[16/10] md:aspect-[2.8/1] bg-slate-900 border-y border-white/5 overflow-hidden relative group shadow-2xl">
                     <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent z-10"></div>
                     <img 
                         src="https://images.unsplash.com/photo-1635332309325-189f7f45b546?q=80&w=2500&auto=format&fit=crop" 
