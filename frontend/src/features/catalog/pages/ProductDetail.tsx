@@ -110,7 +110,7 @@ export const ProductDetail: React.FC = () => {
                     <PenTool size={20} className="text-brand-pink shrink-0 mt-0.5" />
                     <div>
                       <h4 className="font-bold text-brand-pink text-sm uppercase mb-1">Produto Personalizado</h4>
-                      <p className="text-sm text-slate-300">Após a compra, você receberá pelo WhatsApp o formulário para envio da logo e dos dados de personalização.</p>
+                      <p className="text-sm text-slate-300">Após a compra, você receberá pelo WhatsApp informações para personalização.</p>
                     </div>
                   </div>
                 )}
