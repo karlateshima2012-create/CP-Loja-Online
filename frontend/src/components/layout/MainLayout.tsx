@@ -61,7 +61,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
           {/* Logo Area */}
           <Link to={homeLink} className="flex items-center gap-3 group hover:opacity-90 transition-opacity">
-            <Logo className="h-10 md:h-16" withText={true} />
+            <Logo className="h-14 md:h-16" withText={true} />
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
