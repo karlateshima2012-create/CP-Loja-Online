@@ -148,7 +148,7 @@ export const Products: React.FC = () => {
                                 ideal para o seu negócio.
                             </span>
                         </h1>
-                        <p className="text-sm md:text-2xl font-semibold text-slate-200 mt-6 md:mt-10 max-w-[320px] md:max-w-4xl mx-auto leading-relaxed drop-shadow-[0_4px_20px_rgba(0,0,0,1)] opacity-100">
+                        <p className="text-lg md:text-3xl font-semibold text-slate-200 mt-6 md:mt-10 max-w-[320px] md:max-w-4xl mx-auto leading-relaxed drop-shadow-[0_4px_20px_rgba(0,0,0,1)] opacity-100">
                             Crie presença digital, conecte clientes com NFC e automatize seu atendimento.
                         </p>
                     </div>
