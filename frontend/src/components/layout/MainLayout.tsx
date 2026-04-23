@@ -32,13 +32,9 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
   const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-  // Efeito de neon para os botões usando Azul Principal
   const glowBorder = "border border-brand-blue/30 hover:border-brand-blue shadow-[0_0_15px_rgba(36,155,203,0.15)] hover:shadow-[0_0_20px_rgba(36,155,203,0.4)]";
-  
-  // Hover permanente para mobile
   const mobileGlow = "border-brand-blue/50 shadow-[0_0_20px_rgba(36,155,203,0.4)] bg-brand-blue/10";
 
-  // Context Navigation Logic
   const homeLink = '/';
 
   const handleLogout = () => {
@@ -80,7 +76,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
       <header className="bg-slate-900/80 backdrop-blur-md border-b border-brand-blue/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
 
-          {/* Logo Area - Reduzida no Mobile */}
+          {/* Logo Area */}
           <Link to={homeLink} className="flex items-center gap-3 group hover:opacity-90 transition-opacity">
             <Logo className="h-10 md:h-16" withText={true} />
           </Link>
@@ -91,7 +87,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
             <NavLink to="/?cat=Sistemas" active={location.search.includes('Sistemas')}>SOLUÇÕES DIGITAIS</NavLink>
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5 md:gap-4">
 
             {/* Auth Area */}
             {user ? (
@@ -106,9 +102,9 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
               </Link>
             ) : (
               <>
-                {/* Botão Entrar Mobile (Lado esquerdo do carrinho) */}
-                <Link to="/login" className="flex md:hidden flex-col items-center gap-0.5 text-brand-blue transition-opacity">
-                   <User size={20} fill="currentColor" className="text-brand-blue" />
+                {/* Botão Entrar Mobile (Branco e com Gap maior) */}
+                <Link to="/login" className="flex md:hidden flex-col items-center gap-0.5 text-white transition-opacity">
+                   <User size={20} fill="currentColor" className="text-white" />
                    <span className="text-[8px] font-black uppercase tracking-tighter">Entrar</span>
                 </Link>
 
