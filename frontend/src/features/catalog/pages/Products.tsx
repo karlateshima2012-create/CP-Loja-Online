@@ -10,13 +10,18 @@ import { ProductCard } from './components/ProductCard';
 import { Starfield } from '../../../components/ui/Starfield';
 
 // ============================================================
-// CATEGORIAS
+// CONFIGURAÇÃO DE CATEGORIAS E SUBCATEGORIAS
 // ============================================================
 const CATEGORIES = [
-    { id: 'Impressão 3D', label: 'Impressão 3D', icon: Box, color: 'brand-pink' },
-    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', icon: Cpu, color: 'brand-blue' },
-    { id: 'Soluções Digitais', label: 'Soluções Digitais', icon: Monitor, color: 'brand-yellow' },
+    { id: 'Impressão 3D', label: 'Impressão 3D', icon: Box },
+    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', icon: Cpu },
+    { id: 'Soluções Digitais', label: 'Soluções Digitais', icon: Monitor },
 ];
+
+const SUBCATEGORIES: Record<string, string[]> = {
+    'Impressão 3D': ['Chaveiros 3D', 'Displays / Suportes', 'Letreiros personalizados'],
+    'Tecnologia NFC': ['Chaveiros com NFC', 'Displays com NFC'],
+};
 
 // ============================================================
 // COMPONENTE PRINCIPAL
@@ -80,6 +85,13 @@ export const Products: React.FC = () => {
         setSearchParams(p);
     };
 
+    const handleSubcategoryChange = (sub: string) => {
+        const p = new URLSearchParams(searchParams);
+        if (sub === subParam) p.delete('sub');
+        else p.set('sub', sub);
+        setSearchParams(p);
+    };
+
     const handleSearch = (val: string) => {
         setSearchTerm(val);
         const p = new URLSearchParams(searchParams);
@@ -104,6 +116,7 @@ export const Products: React.FC = () => {
     });
 
     const galleryImages = products.map(p => p.imageUrl);
+    const availableSubcategories = SUBCATEGORIES[catParam] || [];
 
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col">
@@ -160,11 +173,11 @@ export const Products: React.FC = () => {
 
             <div id="product-grid-anchor" className="h-0" />
 
-            {/* DIVISOR GRADIENTE (Split Screen - Global) */}
+            {/* DIVISOR GRADIENTE E CATEGORIAS */}
             <div className="relative w-full bg-[#020617] pt-1">
                 <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8 shadow-[0_0_15px_rgba(56,182,255,0.3)]"></div>
                 
-                {/* DOCK SECTION (DESKTOP ONLY) */}
+                {/* DOCK SECTION (DESKTOP) */}
                 <div className="hidden md:block pb-10">
                     <div className="container mx-auto px-6">
                         <div className="flex flex-col gap-6 max-w-6xl mx-auto">
@@ -174,6 +187,16 @@ export const Products: React.FC = () => {
                                     <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${catParam === cat.id ? 'bg-white text-slate-950 shadow-xl' : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'}`}>{cat.label}</button>
                                 ))}
                             </div>
+
+                            {/* SUBCATEGORIAS DESKTOP */}
+                            {availableSubcategories.length > 0 && (
+                                <div className="flex flex-wrap items-center gap-2 animate-fade-in">
+                                    {availableSubcategories.map(sub => (
+                                        <button key={sub} onClick={() => handleSubcategoryChange(sub)} className={`px-5 py-1.5 rounded-full text-[10px] font-bold transition-all border ${subParam === sub ? 'bg-brand-pink border-brand-pink text-white' : 'bg-transparent border-white/10 text-white/40 hover:border-white/20'}`}>{sub}</button>
+                                    ))}
+                                </div>
+                            )}
+
                             <div className="relative group">
                                 <input type="text" placeholder="Buscar produtos, chaveiros, sistemas..." value={searchTerm} onChange={e => handleSearch(e.target.value)} className="w-full h-14 bg-slate-900/40 text-white text-sm pl-6 pr-12 border border-white/10 rounded-xl outline-none focus:border-brand-blue/50 transition-all placeholder-slate-500" />
                             </div>
@@ -203,7 +226,7 @@ export const Products: React.FC = () => {
 
             <div ref={footerSensorRef} className="h-1 w-full -mt-20 pointer-events-none" />
 
-            {/* DOCK MOBILE */}
+            {/* DOCK MOBILE (COM SUBCATEGORIAS) */}
             <div
                 style={{ 
                     transform: `translateY(${isVisible ? (keyboardOffset > 0 ? -keyboardOffset + 10 : 0) : '100%'}px)`,
@@ -213,6 +236,15 @@ export const Products: React.FC = () => {
             >
                 <div className="container mx-auto px-4 py-4 pb-[env(safe-area-inset-bottom,12px)]">
                     <div className="flex flex-col gap-4">
+                        {/* Subcategorias Mobile (Aparecem flutuando acima dos botões principais) */}
+                        {availableSubcategories.length > 0 && (
+                            <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar animate-fade-in">
+                                {availableSubcategories.map(sub => (
+                                    <button key={sub} onClick={() => handleSubcategoryChange(sub)} className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[9px] font-black border transition-all ${subParam === sub ? 'bg-brand-pink border-brand-pink text-white' : 'bg-slate-900 border-white/10 text-white/50'}`}>{sub}</button>
+                                ))}
+                            </div>
+                        )}
+
                         <div className="flex items-center justify-between gap-1">
                             <button onClick={() => handleCategoryChange('Todos')} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${catParam === 'Todos' ? 'text-brand-blue' : 'text-white/40'}`}>
                                 <Filter size={18} /><span className="text-[8px] font-black uppercase tracking-tighter">Todos</span>
