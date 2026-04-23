@@ -158,7 +158,7 @@ export const FlixManager: React.FC = () => {
     const [viewMode, setViewMode] = useState<'LIST' | 'BUILDER'>('LIST');
     const [editForm, setEditForm] = useState<Partial<FlixProfile>>({});
     const [tagsInput, setTagsInput] = useState('');
-    const [activeTab, setActiveTab] = useState<'SETTINGS' | 'CONTENT' | 'DESIGN' | 'ADMIN'>('SETTINGS');
+    const [activeTab, setActiveTab] = useState<'SETTINGS' | 'CONTENT' | 'DESIGN' | 'ADMIN'>('ADMIN');
     const [isCustomCategory, setIsCustomCategory] = useState(false);
     const [cropperOpen, setCropperOpen] = useState(false);
     const [cropperType, setCropperType] = useState<'PROFILE' | 'COVER' | 'POSTER'>('PROFILE');
@@ -307,14 +307,16 @@ export const FlixManager: React.FC = () => {
 
             <div className="flex-1 flex overflow-hidden">
                 <div className="w-full md:w-[450px] bg-white border-r border-slate-200 flex flex-col shadow-xl z-10">
-                        {['SETTINGS', 'CONTENT', 'DESIGN', 'ADMIN'].map((tab) => (
-                            <button key={tab} onClick={() => setActiveTab(tab as any)} className={`flex-1 py-3 rounded-lg text-xs font-bold uppercase tracking-wider flex justify-center items-center gap-2 transition-all ${activeTab === tab ? 'bg-slate-800 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
-                                {tab === 'SETTINGS' && <><Layout size={18} /> Perfil</>}
-                                {tab === 'CONTENT' && <><Link2 size={18} /> Links</>}
-                                {tab === 'DESIGN' && <><Palette size={18} /> Visual</>}
-                                {tab === 'ADMIN' && <><ShieldCheck size={18} /> Admin</>}
+                    <div className="flex gap-2 p-2 bg-slate-100 border-b border-slate-200">
+                        {['ADMIN', 'SETTINGS', 'CONTENT', 'DESIGN'].map((tab) => (
+                            <button key={tab} onClick={() => setActiveTab(tab as any)} className={`flex-1 py-3 rounded-lg text-[10px] font-bold uppercase tracking-wider flex justify-center items-center gap-2 transition-all ${activeTab === tab ? 'bg-slate-800 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
+                                {tab === 'ADMIN' && <><ShieldCheck size={16} /> Admin</>}
+                                {tab === 'SETTINGS' && <><Layout size={16} /> Perfil</>}
+                                {tab === 'CONTENT' && <><Link2 size={16} /> Links</>}
+                                {tab === 'DESIGN' && <><Palette size={16} /> Visual</>}
                             </button>
                         ))}
+                    </div>
 
                     <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
                         {activeTab === 'SETTINGS' && (
