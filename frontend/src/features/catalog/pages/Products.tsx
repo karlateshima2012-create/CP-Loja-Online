@@ -204,7 +204,7 @@ export const Products: React.FC = () => {
                     <div className="w-2 h-2 rounded-full bg-brand-blue shadow-[0_0_10px_rgba(56,182,255,0.8)]"></div>
                     <h2 className="text-sm font-black uppercase tracking-[0.2em] text-white/50">Nossos Produtos</h2>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-10">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6">
                     {filteredProducts.map(product => (
                         <ProductCard key={product.id} product={product} />
                     ))}
