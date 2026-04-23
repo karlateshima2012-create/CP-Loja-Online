@@ -117,33 +117,33 @@ export const Products: React.FC = () => {
                 ))}
             </section>
 
-            {/* PRODUCT GRID - SWISS MINIMALIST HEADER */}
-            <section className="container mx-auto px-6 pt-24 pb-32 relative z-10">
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16 animate-fade-in">
-                    <div className="space-y-2">
-                        <span className="text-brand-blue font-black uppercase tracking-[0.5em] text-[10px] block opacity-80">Premium Collection</span>
-                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-[-0.05em] leading-none text-white">
-                            Catálogo
-                        </h2>
-                    </div>
-                    <div className="flex items-center gap-4 text-slate-500">
-                        <div className="h-px w-12 bg-white/10 hidden md:block"></div>
-                        <span className="text-[10px] font-mono font-bold tracking-widest uppercase">
-                            [ {filteredProducts.length} itens disponíveis ]
-                        </span>
+            {/* PRODUCT GRID - DEEP LAYER CONTRAST */}
+            <section className="relative z-20 mt-12">
+                {/* The 'Tray' Layer */}
+                <div className="bg-slate-900/40 backdrop-blur-sm rounded-t-[4rem] border-t border-white/5 shadow-[0_-20px_50px_rgba(0,0,0,0.5)] pt-20 pb-32 px-6">
+                    <div className="container mx-auto">
+                        <div className="flex flex-col items-center text-center mb-16 animate-fade-in">
+                            <div className="w-12 h-1 bg-brand-blue rounded-full mb-6 opacity-50"></div>
+                            <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white">
+                                Coleção <span className="text-brand-blue">Exclusiva</span>
+                            </h2>
+                            <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">
+                                [ {filteredProducts.length} itens ]
+                            </p>
+                        </div>
+
+                        {filteredProducts.length > 0 ? (
+                            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+                                {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
+                            </div>
+                        ) : (
+                            <div className="py-20 text-center bg-slate-950/50 rounded-3xl border border-white/5">
+                                <p className="text-slate-500 font-bold">Nenhum produto encontrado para "{searchTerm}"</p>
+                                <button onClick={() => {setSearchTerm(''); handleCategoryChange('Todos');}} className="mt-4 text-brand-blue text-xs font-black uppercase tracking-widest border-b border-brand-blue/30 pb-1">Ver Tudo</button>
+                            </div>
+                        )}
                     </div>
                 </div>
-
-                {filteredProducts.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
-                        {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
-                    </div>
-                ) : (
-                    <div className="py-20 text-center bg-slate-900/50 rounded-3xl border border-white/5">
-                        <p className="text-slate-500 font-bold">Nenhum produto encontrado para "{searchTerm}"</p>
-                        <button onClick={() => {setSearchTerm(''); handleCategoryChange('Todos');}} className="mt-4 text-brand-blue text-xs font-black uppercase tracking-widest border-b border-brand-blue/30 pb-1">Ver Tudo</button>
-                    </div>
-                )}
             </section>
 
             {/* FOOTER AREA (Simple for now) */}
