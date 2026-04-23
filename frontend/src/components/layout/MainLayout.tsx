@@ -64,9 +64,7 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
-            <NavLink to="/?cat=Impressão 3D" active={location.search.includes('Impressão%203D')}>Impressão 3D</NavLink>
-            <NavLink to="/?cat=Tecnologia NFC" active={location.search.includes('Tecnologia%20NFC')}>Tecnologia NFC</NavLink>
-            <NavLink to="/?cat=Sistemas" active={location.search.includes('Sistemas')}>SOLUÇÕES DIGITAIS</NavLink>
+            {/* Links de categorias removidos para evitar redundância */}
           </nav>
 
           <div className="flex items-center gap-5 md:gap-4">
