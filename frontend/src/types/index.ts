@@ -42,8 +42,9 @@ export enum TestimonialSource {
 export type FlixButtonStyle = 'solid' | 'outline' | 'glass' | 'hard-shadow' | 'soft-shadow';
 export type FlixButtonShape = 'rounded' | 'pill' | 'square' | 'sharp';
 export type FlixFont = 'sans' | 'serif' | 'mono';
-export type FlixFontSize = 'sm' | 'md' | 'lg';
+export type FlixFontSize = 'sm' | 'md' | 'lg' | 'xl';
 export type FlixTextTransform = 'uppercase' | 'none';
+export type FlixFontWeight = '300' | '400' | '500' | '600' | '700' | '800' | '900';
 
 export type FlixPageType = 'LINKS' | 'LANDING' | 'STORE' | 'MENU' | 'CATALOG' | 'SERVICES';
 export type FlixPlanType = 'FREE' | 'PREMIUM';
@@ -55,12 +56,16 @@ export interface FlixStyleConfig {
   backgroundImageUrl?: string;
   fontFamily: FlixFont;
   fontSize?: FlixFontSize;
+  fontWeight?: string; // Add font weight
   textTransform?: FlixTextTransform;
   textColor: string;
+  secondaryTextColor?: string; // Add secondary text color
   buttonStyle: FlixButtonStyle;
   buttonShape: FlixButtonShape;
   buttonColor: string;
   buttonTextColor: string;
+  borderColor?: string; // Add border color
+  borderRadius?: number; // Add border radius
   effectColor: string;
   layoutMode: 'stack' | 'grid';
 }

@@ -166,6 +166,49 @@ export const FlixManager: React.FC = () => {
     const [orderStatusMsg, setOrderStatusMsg] = useState<{ status: 'success' | 'error' | 'neutral', msg: string } | null>(null);
     const [search, setSearch] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [extractedColors, setExtractedColors] = useState<string[]>([]);
+    const [isAdvancedPickerOpen, setIsAdvancedPickerOpen] = useState(false);
+    const [pickerTarget, setPickerTarget] = useState<'BG' | 'BTN' | 'BTXT' | 'TXT1' | 'TXT2' | 'BRD'>('BTN');
+    const [tempColor, setTempColor] = useState('#000000');
+    const [openAccordion, setOpenAccordion] = useState<string | null>('DOC');
+
+    const STANDARD_COLORS = [
+        '#000000', '#545454', '#737373', '#a6a6a6', '#d9d9d9', '#ffffff',
+        '#ff3131', '#ff5757', '#ff66c4', '#cb6ce6', '#8c52ff', '#5e17eb', '#004aad', '#00c2cb', '#5ce1e6', '#38b6ff', '#5271ff', '#00bf63', '#7ed957', '#c1ff72', '#ffde59', '#ffbd59', '#ff914d'
+    ];
+
+    const GRADIENTS = [
+        'linear-gradient(45deg, #000000, #434343)', 'linear-gradient(45deg, #8e9eab, #eef2f3)', 'linear-gradient(45deg, #ff9a9e, #fad0c4)', 'linear-gradient(45deg, #a18cd1, #fbc2eb)', 'linear-gradient(45deg, #84fab0, #8fd3f4)', 'linear-gradient(45deg, #fa709a, #fee140)'
+    ];
+
+    const extractColorsFromImage = (imgUrl: string) => {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.src = imgUrl;
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return;
+            canvas.width = 50; canvas.height = 50;
+            ctx.drawImage(img, 0, 0, 50, 50);
+            const data = ctx.getImageData(0, 0, 50, 50).data;
+            const colors: Record<string, number> = {};
+            for (let i = 0; i < data.length; i += 20) { // Sample every 5th pixel
+                const r = data[i], g = data[i+1], b = data[i+2];
+                const hex = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+                if (r > 240 && g > 240 && b > 240) continue; // Skip near-white
+                if (r < 15 && g < 15 && b < 15) continue; // Skip near-black
+                colors[hex] = (colors[hex] || 0) + 1;
+            }
+            const sorted = Object.entries(colors).sort((a, b) => b[1] - a[1]).slice(0, 6).map(c => c[0]);
+            setExtractedColors(prev => Array.from(new Set([...sorted, ...prev])).slice(0, 12));
+        };
+    };
+
+    useEffect(() => {
+        if (editForm.profileImageUrl) extractColorsFromImage(editForm.profileImageUrl);
+        if (editForm.coverImageUrl) extractColorsFromImage(editForm.coverImageUrl);
+    }, [editForm.profileImageUrl, editForm.coverImageUrl]);
 
     useEffect(() => {
         if (role !== UserRole.ADMIN && activeTab === 'ADMIN') {
@@ -259,6 +302,12 @@ export const FlixManager: React.FC = () => {
             links.forEach((l, i) => l.order = i);
             return { ...prev, links };
         });
+    };
+
+    const openAdvancedPicker = (target: 'BG' | 'BTN' | 'TXT' | 'EFF', current: string) => {
+        setPickerTarget(target);
+        setTempColor(current || '#ffffff');
+        setIsAdvancedPickerOpen(true);
     };
 
     if (viewMode === 'LIST') {
@@ -411,37 +460,246 @@ export const FlixManager: React.FC = () => {
                         )}
 
                         {activeTab === 'DESIGN' && (
-                            <div className="space-y-8 animate-fade-in">
-                                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                                    <SectionHeader icon={Palette} title="Brand Kit e Cores" />
-                                    <div className="p-4 space-y-6">
-                                        <div className="flex gap-4">
-                                            <button onClick={() => handleStyleUpdate({ backgroundColor: '#ffffff', buttonColor: '#38b6ff', effectColor: '#38b6ff', buttonTextColor: '#ffffff' })} className="w-10 h-10 rounded-full bg-brand-blue border-2 border-white shadow-md hover:scale-110" title="Azul CP"></button>
-                                            <button onClick={() => handleStyleUpdate({ backgroundColor: '#ffffff', buttonColor: '#E5157A', effectColor: '#E5157A', buttonTextColor: '#ffffff' })} className="w-10 h-10 rounded-full bg-brand-pink border-2 border-white shadow-md hover:scale-110" title="Rosa CP"></button>
-                                            <button onClick={() => handleStyleUpdate({ backgroundColor: '#ffffff', buttonColor: '#FFF200', effectColor: '#FFF200', buttonTextColor: '#000000' })} className="w-10 h-10 rounded-full bg-brand-yellow border-2 border-white shadow-md hover:scale-110" title="Amarelo CP"></button>
+                            <div className="space-y-6 animate-fade-in">
+                                <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                                    <div className="p-4 border-b border-slate-100">
+                                        <div className="relative mb-4">
+                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                            <input className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-xs outline-none focus:border-brand-blue" placeholder="Experimente 'azul' ou '#00c4cc'" />
                                         </div>
-                                        <div className="grid grid-cols-3 gap-4">
-                                            <div><label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Fundo</label><input type="color" value={editForm.style?.backgroundColor} onChange={e => handleStyleUpdate({ backgroundColor: e.target.value })} className="w-full h-10 rounded-lg cursor-pointer" /></div>
-                                            <div><label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Botão</label><input type="color" value={editForm.style?.buttonColor} onChange={e => handleStyleUpdate({ buttonColor: e.target.value })} className="w-full h-10 rounded-lg cursor-pointer" /></div>
-                                            <div><label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Efeito</label><input type="color" value={editForm.style?.effectColor} onChange={e => handleStyleUpdate({ effectColor: e.target.value })} className="w-full h-10 rounded-lg cursor-pointer" /></div>
+
+                                        <div className="space-y-4">
+                                            {/* DOCUMENT COLORS ACCORDION */}
+                                            <div className="space-y-3">
+                                                <div className="flex items-center gap-2">
+                                                    <Layout size={16} className="text-slate-900" />
+                                                    <span className="text-sm font-bold text-slate-900">Cores no documento</span>
+                                                </div>
+                                                <div className="flex flex-wrap gap-3">
+                                                    <button 
+                                                        onClick={() => openAdvancedPicker('BTN', editForm.style?.buttonColor || '#000000')}
+                                                        className="w-10 h-10 rounded-full border-2 border-slate-100 shadow-sm flex items-center justify-center relative overflow-hidden group hover:scale-110 transition-all"
+                                                        style={{ background: 'conic-gradient(red, yellow, lime, aqua, blue, magenta, red)' }}
+                                                    >
+                                                        <div className="absolute inset-0.5 bg-white rounded-full flex items-center justify-center">
+                                                            <Plus size={20} className="text-slate-400" />
+                                                        </div>
+                                                    </button>
+                                                    {extractedColors.map(c => (
+                                                        <button key={c} onClick={() => handleStyleUpdate({ buttonColor: c })} className="w-10 h-10 rounded-full border-2 border-white shadow-md hover:scale-110 transition-all" style={{ backgroundColor: c }} />
+                                                    ))}
+                                                    {[editForm.style?.backgroundColor, editForm.style?.buttonColor, editForm.style?.buttonTextColor].map((c, i) => (
+                                                        c && <button key={i} onClick={() => handleStyleUpdate({ buttonColor: c })} className="w-10 h-10 rounded-full border-2 border-white shadow-md hover:scale-110 transition-all" style={{ backgroundColor: c }} />
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* SOLID COLORS ACCORDION */}
+                                            <div className="space-y-3 border-t border-slate-50 pt-4">
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-2">
+                                                        <Palette size={16} className="text-slate-900" />
+                                                        <span className="text-sm font-bold text-slate-900">Cores sólidas padrão</span>
+                                                    </div>
+                                                    <button className="text-[10px] font-bold text-slate-400 uppercase">Ver tudo</button>
+                                                </div>
+                                                <div className="grid grid-cols-6 gap-2">
+                                                    {STANDARD_COLORS.map(c => (
+                                                        <button key={c} onClick={() => handleStyleUpdate({ buttonColor: c })} className="w-8 h-8 rounded-full border border-slate-100 shadow-sm hover:scale-110 transition-all" style={{ backgroundColor: c }} />
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* GRADIENTS ACCORDION */}
+                                            <div className="space-y-3 border-t border-slate-50 pt-4 pb-2">
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-4 h-4 rounded bg-gradient-to-br from-slate-400 to-slate-200" />
+                                                        <span className="text-sm font-bold text-slate-900">Cores de gradientes padrão</span>
+                                                    </div>
+                                                    <button className="text-[10px] font-bold text-slate-400 uppercase">Ver tudo</button>
+                                                </div>
+                                                <div className="grid grid-cols-6 gap-2">
+                                                    {GRADIENTS.map(c => (
+                                                        <button key={c} onClick={() => handleStyleUpdate({ backgroundColor: c })} className="w-8 h-8 rounded-full border border-slate-100 shadow-sm hover:scale-110 transition-all" style={{ background: c }} />
+                                                    ))}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                                    <SectionHeader icon={MousePointerClick} title="Formatos e Estilos" />
+
+                                {/* EDIT TARGETS (THE ACTUAL INPUTS) */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <button onClick={() => openAdvancedPicker('BG', editForm.style?.backgroundColor || '#ffffff')} className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-blue transition-all group shadow-sm">
+                                        <div className="flex flex-col items-start">
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Fundo</span>
+                                            <span className="text-xs font-bold text-slate-700">Cor da Página</span>
+                                        </div>
+                                        <div className="w-8 h-8 rounded-full border-2 border-slate-100 shadow-inner" style={{ background: editForm.style?.backgroundColor }} />
+                                    </button>
+                                    <button onClick={() => openAdvancedPicker('BTN', editForm.style?.buttonColor || '#000000')} className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-blue transition-all group shadow-sm">
+                                        <div className="flex flex-col items-start">
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Ação</span>
+                                            <span className="text-xs font-bold text-slate-700">Cor do Botão</span>
+                                        </div>
+                                        <div className="w-8 h-8 rounded-full border-2 border-slate-100 shadow-inner" style={{ background: editForm.style?.buttonColor }} />
+                                    </button>
+                                    <button onClick={() => openAdvancedPicker('TXT1', editForm.style?.textColor || '#000000')} className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-blue transition-all group shadow-sm">
+                                        <div className="flex flex-col items-start">
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Texto</span>
+                                            <span className="text-xs font-bold text-slate-700">Principal</span>
+                                        </div>
+                                        <div className="w-8 h-8 rounded-full border-2 border-slate-100 shadow-inner" style={{ background: editForm.style?.textColor }} />
+                                    </button>
+                                    <button onClick={() => openAdvancedPicker('TXT2', editForm.style?.secondaryTextColor || '#64748b')} className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-blue transition-all group shadow-sm">
+                                        <div className="flex flex-col items-start">
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Legendas</span>
+                                            <span className="text-xs font-bold text-slate-700">Secundário</span>
+                                        </div>
+                                        <div className="w-8 h-8 rounded-full border-2 border-slate-100 shadow-inner" style={{ background: editForm.style?.secondaryTextColor || '#64748b' }} />
+                                    </button>
+                                    <button onClick={() => openAdvancedPicker('BRD', editForm.style?.borderColor || '#e2e8f0')} className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-blue transition-all group shadow-sm">
+                                        <div className="flex flex-col items-start">
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Detalhamento</span>
+                                            <span className="text-xs font-bold text-slate-700">Cor das Bordas</span>
+                                        </div>
+                                        <div className="w-8 h-8 rounded-full border-4" style={{ borderColor: editForm.style?.borderColor || '#e2e8f0' }} />
+                                    </button>
+                                </div>
+
+                                {/* TYPOGRAPHY SECTION */}
+                                <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                                    <div className="p-4 border-b border-slate-100 bg-slate-50/50">
+                                        <h3 className="font-bold text-slate-800 flex items-center gap-2"><Type size={18} className="text-brand-blue" /> Tipografia e Textos</h3>
+                                    </div>
                                     <div className="p-4 space-y-6">
-                                        <div><label className="text-[10px] font-bold text-slate-500 uppercase block mb-2">Formato</label><div className="grid grid-cols-2 gap-2">{Object.entries(SHAPE_LABELS).map(([key, label]) => <button key={key} onClick={() => handleStyleUpdate({ buttonShape: key as any })} className={`py-2 rounded-lg border text-xs font-bold ${editForm.style?.buttonShape === key ? 'bg-slate-800 text-white' : 'bg-slate-50'}`}>{label}</button>)}</div></div>
-                                        <div><label className="text-[10px] font-bold text-slate-500 uppercase block mb-2">Efeito Visual</label><div className="grid grid-cols-2 gap-2">{Object.entries(STYLE_LABELS).map(([key, label]) => <button key={key} onClick={() => handleStyleUpdate({ buttonStyle: key as any })} className={`py-2 rounded-lg border text-xs font-bold ${editForm.style?.buttonStyle === key ? 'bg-slate-800 text-white' : 'bg-slate-50'}`}>{label}</button>)}</div></div>
+                                        <div>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Família da Fonte</label>
+                                            <div className="grid grid-cols-3 gap-2">
+                                                {['sans', 'serif', 'mono'].map(f => (
+                                                    <button key={f} onClick={() => handleStyleUpdate({ fontFamily: f as any })} className={`py-3 rounded-xl border text-xs font-black uppercase tracking-tighter transition-all ${editForm.style?.fontFamily === f ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-slate-50 text-slate-500 border-slate-100'}`}>{f}</button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Peso da Fonte (Weight)</label>
+                                            <div className="grid grid-cols-4 gap-2">
+                                                {[
+                                                    { v: '300', l: 'Light' },
+                                                    { v: '400', l: 'Reg' },
+                                                    { v: '700', l: 'Bold' },
+                                                    { v: '900', l: 'Black' }
+                                                ].map(w => (
+                                                    <button key={w.v} onClick={() => handleStyleUpdate({ fontWeight: w.v })} className={`py-3 rounded-xl border text-[10px] font-black uppercase transition-all ${editForm.style?.fontWeight === w.v ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-500 border-slate-100'}`}>{w.l}</button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Tamanho dos Títulos</label>
+                                            <div className="grid grid-cols-4 gap-2">
+                                                {['sm', 'md', 'lg', 'xl'].map(sz => (
+                                                    <button key={sz} onClick={() => handleStyleUpdate({ fontSize: sz as any })} className={`py-3 rounded-xl border text-[10px] font-black uppercase transition-all ${editForm.style?.fontSize === sz ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-500 border-slate-100'}`}>{sz}</button>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                                    <SectionHeader icon={Type} title="Tipografia" />
+
+                                {/* SHAPES AND BORDERS */}
+                                <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                                    <div className="p-4 border-b border-slate-100 bg-slate-50/50">
+                                        <h3 className="font-bold text-slate-800 flex items-center gap-2"><Layout size={18} className="text-brand-blue" /> Formatos e Bordas</h3>
+                                    </div>
                                     <div className="p-4 space-y-6">
-                                        <div className="grid grid-cols-3 gap-2">{['sans', 'serif', 'mono'].map(f => <button key={f} onClick={() => handleStyleUpdate({ fontFamily: f as any })} className={`py-2 rounded-lg border text-xs font-bold uppercase ${editForm.style?.fontFamily === f ? 'bg-slate-800 text-white' : 'bg-slate-50'}`}>{f}</button>)}</div>
-                                        <div className="grid grid-cols-3 gap-2">{['sm', 'md', 'lg'].map(sz => <button key={sz} onClick={() => handleStyleUpdate({ fontSize: sz as any })} className={`py-2 rounded-lg border text-xs font-bold uppercase ${editForm.style?.fontSize === sz ? 'bg-slate-800 text-white' : 'bg-slate-50'}`}>{sz === 'sm' ? 'Pequeno' : sz === 'md' ? 'Médio' : 'Grande'}</button>)}</div>
-                                        <label className="flex items-center gap-3 cursor-pointer bg-slate-50 p-4 rounded-xl border border-slate-100 hover:bg-slate-100 transition-all"><input type="checkbox" className="w-5 h-5 rounded text-brand-blue" checked={editForm.style?.textTransform === 'uppercase'} onChange={e => handleStyleUpdate({ textTransform: e.target.checked ? 'uppercase' : 'none' })} /><span className="text-xs font-bold uppercase text-slate-700">Caixa Alta (MAIÚSCULAS)</span></label>
+                                        <div>
+                                            <div className="flex justify-between mb-3">
+                                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Arredondamento (Corner Radius)</label>
+                                                <span className="text-[10px] font-bold text-brand-blue">{editForm.style?.borderRadius || '12'}px</span>
+                                            </div>
+                                            <input 
+                                                type="range" min="0" max="40" step="4"
+                                                value={editForm.style?.borderRadius || 12}
+                                                onChange={e => handleStyleUpdate({ borderRadius: parseInt(e.target.value) })}
+                                                className="w-full h-2 bg-slate-100 rounded-full appearance-none cursor-pointer"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">Estilo dos Botões</label>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {[
+                                                    { id: 'solid', l: 'Sólido' },
+                                                    { id: 'outline', l: 'Borda' },
+                                                    { id: 'glass', l: 'Vidro (Glass)' },
+                                                    { id: 'shadow', l: 'Sombra Suave' }
+                                                ].map(st => (
+                                                    <button key={st.id} onClick={() => handleStyleUpdate({ buttonStyle: st.id as any })} className={`py-3 rounded-xl border text-[10px] font-black uppercase transition-all ${editForm.style?.buttonStyle === st.id ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-500 border-slate-100'}`}>{st.l}</button>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                {/* THE ADVANCED PICKER MODAL (CANVA STYLE) */}
+                                {isAdvancedPickerOpen && (
+                                    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 animate-fade-in">
+                                        <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setIsAdvancedPickerOpen(false)}></div>
+                                        <div className="relative bg-white w-full max-w-sm rounded-[32px] overflow-hidden shadow-2xl animate-fade-in-up border border-white/20">
+                                            <div className="p-6">
+                                                <div className="flex justify-between items-center mb-6">
+                                                    <span className="font-black text-lg">Definir Cor</span>
+                                                    <button onClick={() => setIsAdvancedPickerOpen(false)} className="p-2 bg-slate-50 rounded-full text-slate-400 hover:bg-slate-100"><X size={20} /></button>
+                                                </div>
+                                                
+                                                <div className="aspect-video w-full rounded-2xl mb-6 relative overflow-hidden shadow-inner border border-slate-100" style={{ backgroundColor: tempColor }}>
+                                                    <div className="absolute inset-0 bg-gradient-to-r from-white to-transparent" />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
+                                                </div>
+
+                                                <div className="space-y-6">
+                                                    <input 
+                                                        type="range" 
+                                                        className="w-full h-3 rounded-full appearance-none cursor-pointer border border-slate-100 ring-2 ring-white"
+                                                        style={{ background: 'linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)' }}
+                                                        min="0" max="360"
+                                                        onChange={(e) => {
+                                                            const h = e.target.value;
+                                                            const newColor = `hsl(${h}, 100%, 50%)`;
+                                                            setTempColor(newColor);
+                                                        }}
+                                                    />
+
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-12 h-12 rounded-full border-4 border-slate-50 shadow-md" style={{ backgroundColor: tempColor }} />
+                                                        <input 
+                                                            className="flex-1 bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 font-mono font-bold text-slate-700 uppercase outline-none focus:border-brand-blue"
+                                                            value={tempColor}
+                                                            onChange={(e) => setTempColor(e.target.value)}
+                                                        />
+                                                    </div>
+
+                                                    <button 
+                                                        onClick={() => {
+                                                            const targetMap: Record<string, string> = {
+                                                                'BG': 'backgroundColor',
+                                                                'BTN': 'buttonColor',
+                                                                'BTXT': 'buttonTextColor',
+                                                                'TXT1': 'textColor',
+                                                                'TXT2': 'secondaryTextColor',
+                                                                'BRD': 'borderColor'
+                                                            };
+                                                            handleStyleUpdate({ [targetMap[pickerTarget]]: tempColor });
+                                                            setIsAdvancedPickerOpen(false);
+                                                        }}
+                                                        className="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-[1.02] transition-all shadow-xl"
+                                                    >
+                                                        Confirmar Seleção
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
 
