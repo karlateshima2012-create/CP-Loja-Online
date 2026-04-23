@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import {
     Instagram, MapPin, Globe as GlobeIcon, Menu, Phone, MessageCircle, Youtube, Share2,
-    Mail, Facebook, DollarSign
+    Mail, Facebook, DollarSign, Users
 } from 'lucide-react';
 
 const DEFAULT_STYLE: FlixStyleConfig = {
@@ -417,9 +417,27 @@ export const FlixManager: React.FC = () => {
                             <div className="space-y-6 animate-fade-in">
                                 <div className="bg-red-50 border border-red-100 p-4 rounded-xl flex items-start gap-3"><ShieldCheck className="text-red-500 shrink-0" size={24} /><div><h4 className="text-sm font-black text-red-600 uppercase">Acesso Restrito ao Admin</h4><p className="text-xs text-red-500">Configurações de SEO e Faturamento.</p></div></div>
                                 <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                                    <SectionHeader icon={Users} title="Vincular ao Cliente" />
+                                    <SectionHeader icon={Layout} title="1. Escolha o Template Profissional" />
                                     <div className="p-4 space-y-4">
-                                        <p className="text-[10px] text-slate-500 mb-2">Selecione o cliente que terá acesso para editar esta página no painel dele.</p>
+                                        <p className="text-[10px] text-slate-500 mb-2">Selecione a estrutura base que melhor atende ao seu cliente.</p>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                            <TemplateButton id="links_clean" label="Links Clean" desc="Layout padrão para links." active={editForm.template_key === 'links_clean' || !editForm.template_key} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'links_clean' }))} />
+                                            <TemplateButton id="landing_page" label="Landing Page" desc="Páginas de marketing premium." active={editForm.template_key === 'landing_page'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'landing_page' }))} />
+                                            <TemplateButton id="portfolio" label="Portfólio" desc="Focado em exposição visual." active={editForm.template_key === 'portfolio'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'portfolio' }))} />
+                                            <TemplateButton id="interactive_menu" label="Cardápio Digital" desc="Ideal para gastronomia." active={editForm.template_key === 'interactive_menu'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'interactive_menu' }))} />
+                                            <TemplateButton id="business_card" label="Business Card" desc="Cartão de visitas digital." active={editForm.template_key === 'business_card'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'business_card' }))} />
+                                            <TemplateButton id="storefront" label="Storefront" desc="Vitrine de produtos." active={editForm.template_key === 'storefront'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'storefront' }))} />
+                                            <TemplateButton id="mini_store" label="Mini Loja" desc="Vendas rápidas via WhatsApp." active={editForm.template_key === 'mini_store'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'mini_store' }))} />
+                                            <TemplateButton id="services" label="Serviços" desc="Listagem profissional." active={editForm.template_key === 'services'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'services' }))} />
+                                            <TemplateButton id="jobs_board" label="Vagas" desc="Portal de recrutamento." active={editForm.template_key === 'jobs_board'} onClick={() => setEditForm(prev => ({ ...prev, template_key: 'jobs_board' }))} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                                    <SectionHeader icon={Users} title="2. Vincular ao Cliente" />
+                                    <div className="p-4 space-y-4">
+                                        <p className="text-[10px] text-slate-500 mb-2">Selecione o dono desta página para habilitar a edição no painel do cliente.</p>
                                         <select 
                                             className="w-full bg-slate-50 border border-slate-200 rounded px-3 py-2 text-sm outline-none focus:border-brand-blue"
                                             value={editForm.customerId || ''}
@@ -430,93 +448,6 @@ export const FlixManager: React.FC = () => {
                                                 <option key={c.id} value={c.id}>{c.name} ({c.email})</option>
                                             ))}
                                         </select>
-                                    </div>
-                                </div>
-
-                                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                                    <SectionHeader icon={Clapperboard} title="Poster CreativeFlix" />
-                                    <div className="p-4 flex flex-col items-center gap-4">
-                                        <button onClick={() => { setCropperType('POSTER'); setCropperOpen(true); }} className="w-40 h-60 bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl flex items-center justify-center text-slate-400 overflow-hidden relative group">{editForm.posterImageUrl ? <img src={editForm.posterImageUrl} className="w-full h-full object-cover" /> : <ImageIcon size={32} />}<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-bold">Editar Poster</div></button>
-                                    </div>
-                                </div>
-                                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                                    <SectionHeader icon={Layout} title="Template de Layout Profissional" />
-                                    <div className="p-4 space-y-4">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                            {/* LINHAS DE TEMPLATES */}
-                                            <TemplateButton 
-                                                id="links_clean" 
-                                                label="Links Clean" 
-                                                desc="Layout mobile-first padrão para links e redes sociais." 
-                                                color="bg-brand-blue" 
-                                                active={editForm.template_key === 'links_clean' || !editForm.template_key} 
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'links_clean' }))} 
-                                            />
-                                            <TemplateButton 
-                                                id="landing_page" 
-                                                label="Landing Page" 
-                                                desc="Páginas de marketing premium para alta conversão." 
-                                                color="bg-brand-blue" 
-                                                active={editForm.template_key === 'landing_page'} 
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'landing_page' }))} 
-                                            />
-                                            <TemplateButton 
-                                                id="portfolio" 
-                                                label="Portfólio" 
-                                                desc="Focado em exposição visual para artistas e fotógrafos." 
-                                                color="bg-purple-500" 
-                                                active={editForm.template_key === 'portfolio'} 
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'portfolio' }))} 
-                                            />
-                                            <TemplateButton 
-                                                id="interactive_menu" 
-                                                label="Cardápio Digital" 
-                                                desc="Menu interativo ideal para gastronomia e eventos." 
-                                                color="bg-red-500" 
-                                                active={editForm.template_key === 'interactive_menu'} 
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'interactive_menu' }))} 
-                                            />
-                                            <TemplateButton 
-                                                id="business_card" 
-                                                label="Business Card" 
-                                                desc="Cartão de visitas digital minimalista e profissional." 
-                                                color="bg-slate-700" 
-                                                active={editForm.template_key === 'business_card'} 
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'business_card' }))} 
-                                            />
-                                            <TemplateButton 
-                                                id="storefront" 
-                                                label="Storefront" 
-                                                desc="Vitrine completa de produtos com catálogo ativo." 
-                                                color="bg-brand-pink" 
-                                                active={editForm.template_key === 'storefront'} 
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'storefront' }))} 
-                                            />
-                                            <TemplateButton 
-                                                id="mini_store" 
-                                                label="Mini Loja" 
-                                                desc="Ideal para vendas rápidas via WhatsApp." 
-                                                color="bg-green-500" 
-                                                active={editForm.template_key === 'mini_store'} 
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'mini_store' }))} 
-                                            />
-                                            <TemplateButton 
-                                                id="services" 
-                                                label="Página de Serviços" 
-                                                desc="Listagem profissional para consultores e empresas." 
-                                                color="bg-blue-600" 
-                                                active={editForm.template_key === 'services'} 
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'services' }))} 
-                                            />
-                                            <TemplateButton 
-                                                id="jobs_board" 
-                                                label="Mural de Vagas" 
-                                                desc="Portal especializado para agências de recrutamento." 
-                                                color="bg-slate-900" 
-                                                active={editForm.template_key === 'jobs_board'} 
-                                                onClick={() => setEditForm(prev => ({ ...prev, template_key: 'jobs_board' }))} 
-                                            />
-                                        </div>
                                     </div>
                                 </div>
 
