@@ -137,4 +137,4 @@ jobs:
             cd public_html/cp-loja-online/backend
             echo "Rodando migrações em $(pwd)..."
             php artisan migrate --force
-# Force wake up workflow
+
