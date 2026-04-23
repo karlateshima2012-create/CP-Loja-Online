@@ -92,9 +92,9 @@ export const Products: React.FC = () => {
                 </div>
             </header>
 
-            {/* MAIN BANNER */}
+            {/* MAIN BANNER (Larger) */}
             <section className="container mx-auto px-6 py-8 relative z-10">
-                <div className="w-full aspect-[21/9] md:aspect-[3/1] bg-slate-900 rounded-3xl border border-white/5 overflow-hidden relative group shadow-2xl">
+                <div className="w-full aspect-[16/10] md:aspect-[2.5/1] bg-slate-900 rounded-3xl border border-white/5 overflow-hidden relative group shadow-2xl">
                     <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent z-10"></div>
                     <img 
                         src="https://images.unsplash.com/photo-1635332309325-189f7f45b546?q=80&w=2500&auto=format&fit=crop" 
@@ -112,14 +112,20 @@ export const Products: React.FC = () => {
             </section>
 
             {/* SUBCATEGORY INFINITE MARQUEE */}
-            <section className="w-full overflow-hidden py-12 relative z-10 group">
+            <section className="w-full overflow-hidden py-8 relative z-10 group">
                 <style>{`
                     @keyframes scroll {
                         0% { transform: translateX(0); }
-                        100% { transform: translateX(calc(-300px * 5 - 1rem * 5)); }
+                        100% { transform: translateX(calc(-220px * 5 - 1rem * 5)); }
+                    }
+                    @media (min-width: 768px) {
+                        @keyframes scroll {
+                            0% { transform: translateX(0); }
+                            100% { transform: translateX(calc(-300px * 5 - 1rem * 5)); }
+                        }
                     }
                     .animate-scroll {
-                        animation: scroll 40s linear infinite;
+                        animation: scroll 35s linear infinite;
                     }
                     .animate-scroll:hover {
                         animation-play-state: paused;
@@ -132,7 +138,7 @@ export const Products: React.FC = () => {
                         <button 
                             key={`${cat.id}-${idx}`}
                             onClick={() => handleCategoryChange(cat.id)}
-                            className="w-[300px] h-40 bg-slate-900 rounded-2xl border border-white/10 relative overflow-hidden flex-shrink-0 group/card transition-all hover:border-brand-blue/50"
+                            className="w-[220px] md:w-[300px] h-32 md:h-40 bg-slate-900 rounded-2xl border border-white/10 relative overflow-hidden flex-shrink-0 group/card transition-all hover:border-brand-blue/50"
                         >
                             <div className="absolute inset-0 bg-black/40 group-hover/card:bg-black/20 z-10 transition-colors"></div>
                             <img src={cat.img} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/card:scale-110 transition-transform duration-1000" alt={cat.label} />
@@ -146,13 +152,13 @@ export const Products: React.FC = () => {
                 </div>
             </section>
 
-            {/* PRODUCT GRID - DEEP LAYER CONTRAST (High Contrast Version) */}
-            <section className="relative z-20 mt-20">
+            {/* PRODUCT GRID - DEEP LAYER CONTRAST (More Compact) */}
+            <section className="relative z-20 mt-8">
                 {/* STRATEGIC LIGHT POINT BEHIND TRAY */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-40 bg-brand-blue/20 blur-[100px] -z-10"></div>
                 
                 {/* The 'Tray' Layer */}
-                <div className="bg-slate-900/60 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,0.9)] pt-24 pb-32 px-6">
+                <div className="bg-slate-900/60 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,0.9)] pt-16 pb-32 px-6">
                     <div className="container mx-auto">
                         <div className="flex flex-col items-center text-center mb-16 animate-fade-in">
                             <div className="w-12 h-1 bg-brand-blue rounded-full mb-6 opacity-50"></div>
