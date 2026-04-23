@@ -83,7 +83,7 @@ export const Products: React.FC = () => {
                         <button className="text-white hover:text-brand-blue lg:hidden p-2"><Search size={24} /></button>
                     </div>
                 </div>
-            </nav>
+            </header>
 
             {/* MAIN BANNER */}
             <section className="container mx-auto px-6 py-8 relative z-10">
