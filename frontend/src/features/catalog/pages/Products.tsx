@@ -44,10 +44,20 @@ export const Products: React.FC = () => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
 
+        // Lógica de visibilidade aprimorada: só some se o sensor estiver 50% visível
         const observer = new IntersectionObserver(
-            ([entry]) => setIsVisible(!entry.isIntersecting),
-            { threshold: 0.1 }
+            ([entry]) => {
+                // Se estiver filtrando e a página for curta, forçamos o dock a ficar visível
+                const isShortPage = document.body.scrollHeight <= window.innerHeight + 100;
+                if (isShortPage) {
+                    setIsVisible(true);
+                } else {
+                    setIsVisible(!entry.isIntersecting);
+                }
+            },
+            { threshold: 0.5 }
         );
+        
         if (footerSensorRef.current) observer.observe(footerSensorRef.current);
 
         const handleViewportChange = () => {
@@ -224,9 +234,10 @@ export const Products: React.FC = () => {
                 </div>
             </div>
 
-            <div ref={footerSensorRef} className="h-1 w-full -mt-20 pointer-events-none" />
+            {/* Sensor de Rodapé — Ajustado para evitar sumiço precoce */}
+            <div ref={footerSensorRef} className="h-20 w-full pointer-events-none" />
 
-            {/* DOCK MOBILE (COM SUBCATEGORIAS) */}
+            {/* DOCK MOBILE */}
             <div
                 style={{ 
                     transform: `translateY(${isVisible ? (keyboardOffset > 0 ? -keyboardOffset + 10 : 0) : '100%'}px)`,
