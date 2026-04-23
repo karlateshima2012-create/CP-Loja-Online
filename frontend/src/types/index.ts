@@ -186,6 +186,12 @@ export interface PlanOption {
   description?: string;
 }
 
+export interface ProductAccordionItem {
+  title: string;
+  content: string;
+  isOpenByDefault?: boolean;
+}
+
 export interface RawMaterial {
   id: string;
   name: string;
@@ -221,6 +227,7 @@ export interface Product {
   isFeatured?: boolean;
   isRecommended?: boolean;
   isBestSeller?: boolean;
+  accordion?: ProductAccordionItem[];
 }
 
 export interface CartItem extends Product {
