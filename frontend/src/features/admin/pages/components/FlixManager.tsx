@@ -150,31 +150,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ isOpen, onClose, onSave, as
     );
 };
 
-const SectionHeader = ({ icon: Icon, title, extra }: { icon: any, title: string, extra?: React.ReactNode }) => (
-    <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-            <Icon size={16} className="text-slate-500" />
-            <h4 className="font-bold text-xs text-slate-700 uppercase tracking-wider">{title}</h4>
-        </div>
-        {extra}
-    </div>
-);
-
-const TemplateButton = ({ id, label, desc, active, onClick }: { id: string, label: string, desc: string, active: boolean, onClick: () => void }) => (
-    <button
-        onClick={onClick}
-        type="button"
-        className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 w-full ${active ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
-    >
-        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${active ? 'border-brand-blue' : 'border-slate-300'}`}>
-            {active && <div className="w-2.5 h-2.5 bg-brand-blue rounded-full"></div>}
-        </div>
-        <div className="min-w-0 flex-1">
-            <div className={`font-bold text-[11px] uppercase tracking-wider truncate ${active ? 'text-brand-blue' : 'text-slate-800'}`}>{label}</div>
-            <div className="text-[9px] text-slate-500 leading-tight mt-0.5 line-clamp-2">{desc}</div>
-        </div>
-    </button>
-);
+// Helpers move to the bottom of the file for cleaner code flow
 
 export const FlixManager: React.FC = () => {
     const { role } = useAuth();
@@ -826,3 +802,31 @@ const PreviewFrame: React.FC<{ profile: FlixProfile }> = ({ profile }) => {
         </div>
     );
 };
+
+// --- HELPER COMPONENTS DEFINITIONS (Moved for safety) ---
+
+const SectionHeader = ({ icon: Icon, title, extra }: { icon: any, title: string, extra?: React.ReactNode }) => (
+    <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+            <Icon size={16} className="text-slate-500" />
+            <h4 className="font-bold text-xs text-slate-700 uppercase tracking-wider">{title}</h4>
+        </div>
+        {extra}
+    </div>
+);
+
+const TemplateButton = ({ id, label, desc, active, onClick }: { id: string, label: string, desc: string, active: boolean, onClick: () => void }) => (
+    <button
+        onClick={onClick}
+        type="button"
+        className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 w-full ${active ? 'border-brand-blue bg-brand-blue/5' : 'border-slate-100 hover:border-slate-200'}`}
+    >
+        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${active ? 'border-brand-blue' : 'border-slate-300'}`}>
+            {active && <div className="w-2.5 h-2.5 bg-brand-blue rounded-full"></div>}
+        </div>
+        <div className="min-w-0 flex-1">
+            <div className={`font-bold text-[11px] uppercase tracking-wider truncate ${active ? 'text-brand-blue' : 'text-slate-800'}`}>{label}</div>
+            <div className="text-[9px] text-slate-500 leading-tight mt-0.5 line-clamp-2">{desc}</div>
+        </div>
+    </button>
+);
