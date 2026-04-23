@@ -219,6 +219,19 @@ export const Products: React.FC = () => {
                         <ProductCard key={product.id} product={product} />
                     ))}
                 </div>
+
+                {/* BOTÃO VOLTAR AO TOPO (Desktop Only) */}
+                <div className="hidden md:flex justify-center mt-20">
+                    <button 
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        className="group flex flex-col items-center gap-4 text-white/30 hover:text-brand-blue transition-all duration-500"
+                    >
+                        <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-brand-blue group-hover:shadow-[0_0_20px_rgba(56,182,255,0.3)] transition-all">
+                            <ArrowLeft className="rotate-90" size={20} />
+                        </div>
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em]">Voltar ao Topo</span>
+                    </button>
+                </div>
             </div>
 
             <div ref={footerSensorRef} className="h-1 w-full -mt-20 pointer-events-none" />
