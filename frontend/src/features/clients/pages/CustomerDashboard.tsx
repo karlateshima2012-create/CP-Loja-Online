@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/src/features/auth/context/AuthContext';
 import { mockService } from '@/src/services/mockData';
 import { Order, OrderStatus, Customer, TestimonialSource, Testimonial, Coupon } from '@/src/types';
-import { ShoppingBag, Package, CheckCircle, Clock, Edit, Save, User, LogOut, Copy, Star, Loader2, ThumbsUp, MessageSquare, Truck, Hammer, FileText, AlertCircle, Ticket, CalendarHeart } from 'lucide-react';
+import { ShoppingBag, Package, CheckCircle, Clock, Edit, Save, User, LogOut, Copy, Star, Loader2, ThumbsUp, MessageSquare, Truck, Hammer, FileText, AlertCircle, Ticket, CalendarHeart, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { FlixManager } from '../../admin/pages/components/FlixManager';
 
 export const CustomerDashboard: React.FC = () => {
     const { user, logout } = useAuth();
@@ -13,6 +14,7 @@ export const CustomerDashboard: React.FC = () => {
     const [myReviews, setMyReviews] = useState<Testimonial[]>([]);
     const [myCoupons, setMyCoupons] = useState<Coupon[]>([]);
     const [activeTab, setActiveTab] = useState<'orders' | 'profile' | 'coupons' | 'pages'>('orders');
+    const [showEditor, setShowEditor] = useState(false);
 
     // ... (rest of states)
 
@@ -339,7 +341,9 @@ export const CustomerDashboard: React.FC = () => {
                                     {myPages.map(page => (
                                         <div key={page.id} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-6">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-16 h-16 bg-slate-800 rounded-xl overflow-hidden"><img src={page.profileImageUrl} className="w-full h-full object-cover" alt="" /></div>
+                                                <div className="w-16 h-16 bg-slate-800 rounded-xl overflow-hidden">
+                                                    <img src={page.profileImageUrl} className="w-full h-full object-cover" alt="" />
+                                                </div>
                                                 <div>
                                                     <h3 className="text-white font-bold text-lg">{page.displayName}</h3>
                                                     <p className="text-brand-blue text-sm">creativprintjp.com/#/p/{page.slug}</p>
@@ -347,10 +351,31 @@ export const CustomerDashboard: React.FC = () => {
                                             </div>
                                             <div className="flex gap-3 w-full md:w-auto">
                                                 <button onClick={() => window.open(`/#/p/${page.slug}`, '_blank')} className="flex-1 md:flex-none bg-slate-800 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-slate-700 transition-all text-sm">Visualizar</button>
-                                                <button className="flex-1 md:flex-none bg-brand-blue text-slate-900 px-6 py-2.5 rounded-xl font-black hover:scale-105 transition-all text-sm uppercase tracking-widest">Editar Página</button>
+                                                <button 
+                                                    onClick={() => setShowEditor(true)}
+                                                    className="flex-1 md:flex-none bg-brand-blue text-slate-900 px-6 py-2.5 rounded-xl font-black hover:scale-105 transition-all text-sm uppercase tracking-widest"
+                                                >
+                                                    Editar Página
+                                                </button>
                                             </div>
                                         </div>
                                     ))}
+                                </div>
+                            )}
+
+                            {/* EDITOR OVERLAY */}
+                            {showEditor && (
+                                <div className="fixed inset-0 z-[100] animate-fade-in">
+                                    <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={() => setShowEditor(false)}></div>
+                                    <div className="relative w-full h-full">
+                                        <FlixManager />
+                                        <button 
+                                            onClick={() => setShowEditor(false)}
+                                            className="fixed top-4 right-4 z-[110] bg-white text-slate-900 p-2 rounded-full shadow-2xl hover:scale-110 transition-transform"
+                                        >
+                                            <LogOut size={24} />
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                         </div>

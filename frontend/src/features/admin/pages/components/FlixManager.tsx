@@ -168,6 +168,10 @@ export const FlixManager: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        if (role !== UserRole.ADMIN && activeTab === 'ADMIN') {
+            setActiveTab('SETTINGS');
+        }
+
         const fetchProfile = async () => {
             setIsLoading(true);
             try {
@@ -309,12 +313,14 @@ export const FlixManager: React.FC = () => {
                 <div className="w-full md:w-[450px] bg-white border-r border-slate-200 flex flex-col shadow-xl z-10">
                     <div className="flex gap-2 p-2 bg-slate-100 border-b border-slate-200">
                         {['ADMIN', 'SETTINGS', 'CONTENT', 'DESIGN'].map((tab) => (
-                            <button key={tab} onClick={() => setActiveTab(tab as any)} className={`flex-1 py-3 rounded-lg text-[10px] font-bold uppercase tracking-wider flex justify-center items-center gap-2 transition-all ${activeTab === tab ? 'bg-slate-800 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
-                                {tab === 'ADMIN' && <><ShieldCheck size={16} /> Admin</>}
-                                {tab === 'SETTINGS' && <><Layout size={16} /> Perfil</>}
-                                {tab === 'CONTENT' && <><Link2 size={16} /> Links</>}
-                                {tab === 'DESIGN' && <><Palette size={16} /> Visual</>}
-                            </button>
+                            role === UserRole.ADMIN || tab !== 'ADMIN' ? (
+                                <button key={tab} onClick={() => setActiveTab(tab as any)} className={`flex-1 py-3 rounded-lg text-[10px] font-bold uppercase tracking-wider flex justify-center items-center gap-2 transition-all ${activeTab === tab ? 'bg-slate-800 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
+                                    {tab === 'ADMIN' && <><ShieldCheck size={16} /> Admin</>}
+                                    {tab === 'SETTINGS' && <><Layout size={16} /> Perfil</>}
+                                    {tab === 'CONTENT' && <><Link2 size={16} /> Links</>}
+                                    {tab === 'DESIGN' && <><Palette size={16} /> Visual</>}
+                                </button>
+                            ) : null
                         ))}
                     </div>
 
