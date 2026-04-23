@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Menu, X, User, Clapperboard, LogOut, LayoutDashboard } from 'lucide-react';
+import { ShoppingCart, Menu, X, User, Clapperboard, LogOut, LayoutDashboard, Truck, ShieldCheck, Box, Clock } from 'lucide-react';
 import { useCart } from '../../features/cart/CartContext';
 import { useAuth } from '@/src/features/auth/context/AuthContext';
 import { Logo } from '../ui/Logo';
