@@ -132,19 +132,26 @@ export const Products: React.FC = () => {
                 <div className="absolute inset-0 -z-10 opacity-70">
                     <Starfield />
                 </div>
-                
-                {/* LUZ PULSANTE MOBILE (Mais centralizada no topo) */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-[500px] h-[500px] bg-brand-blue/10 rounded-full blur-[150px] animate-pulse -z-10 pointer-events-none"></div>
 
                 <div className="container mx-auto flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
                     
-                    {/* ANIMAÇÃO: HORIZONTAL NO MOBILE / VERTICAL NO DESKTOP */}
+                    {/* ANIMAÇÃO: HORIZONTAL NO MOBILE (2 LINHAS) / VERTICAL NO DESKTOP */}
                     <div className="w-full order-1 md:order-2">
-                        {/* Mobile: Marquee Horizontal */}
-                        <div className="md:hidden w-screen -mx-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] mb-4">
-                            <div className="flex gap-4 animate-[marquee_20s_linear_infinite] w-max">
+                        {/* Mobile: 2 Linhas de Marquee Horizontal */}
+                        <div className="md:hidden flex flex-col gap-3 w-screen -mx-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] mb-4">
+                            {/* Linha 1 */}
+                            <div className="flex gap-3 animate-[marquee_25s_linear_infinite] w-max">
                                 {[...galleryImages, ...galleryImages].map((img, i) => (
-                                    <div key={i} className="w-40 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/10 shadow-xl">
+                                    <div key={i} className="w-28 aspect-[4/5] bg-slate-900 rounded-lg overflow-hidden border border-white/10 shadow-lg">
+                                        <img src={img} className="w-full h-full object-cover opacity-70" />
+                                    </div>
+                                ))}
+                            </div>
+                            {/* Linha 2 (Sentido Reverso ou Velocidade Diferente) */}
+                            <div className="flex gap-3 animate-[marquee_35s_linear_infinite] w-max opacity-80" style={{ animationDirection: 'reverse' }}>
+                                {[...galleryImages, ...galleryImages].map((img, i) => (
+                                    <div key={i} className="w-28 aspect-[4/5] bg-slate-900 rounded-lg overflow-hidden border border-white/10 shadow-lg">
                                         <img src={img} className="w-full h-full object-cover opacity-70" />
                                     </div>
                                 ))}
@@ -167,7 +174,7 @@ export const Products: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* TEXTO: ABAIXO NO MOBILE / ESQUERDA NO DESKTOP */}
+                    {/* TEXTO */}
                     <div className="text-center md:text-left animate-fade-in-up order-2 md:order-1">
                         <h1 className="text-4xl md:text-7xl font-black text-white mb-6 leading-tight tracking-tighter">
                             Encontre a solução<br/>
@@ -184,7 +191,7 @@ export const Products: React.FC = () => {
 
             <div id="product-grid-anchor" className="h-0" />
 
-            {/* DOCK SECTION (APENAS DESKTOP) */}
+            {/* DOCK SECTION (DESKTOP) */}
             <div className="hidden md:block relative w-full bg-[#020617] pt-1 pb-10">
                 <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8 shadow-[0_0_15px_rgba(56,182,255,0.3)]"></div>
                 <div className="container mx-auto px-6">
@@ -222,13 +229,8 @@ export const Products: React.FC = () => {
 
                 {/* BOTÃO VOLTAR AO TOPO (Desktop Only) */}
                 <div className="hidden md:flex justify-center mt-20">
-                    <button 
-                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                        className="group flex flex-col items-center gap-4 text-white/30 hover:text-brand-blue transition-all duration-500"
-                    >
-                        <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-brand-blue group-hover:shadow-[0_0_20px_rgba(56,182,255,0.3)] transition-all">
-                            <ArrowLeft className="rotate-90" size={20} />
-                        </div>
+                    <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="group flex flex-col items-center gap-4 text-white/30 hover:text-brand-blue transition-all duration-500">
+                        <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-brand-blue transition-all"><ArrowLeft className="rotate-90" size={20} /></div>
                         <span className="text-[10px] font-black uppercase tracking-[0.3em]">Voltar ao Topo</span>
                     </button>
                 </div>
@@ -236,7 +238,7 @@ export const Products: React.FC = () => {
 
             <div ref={footerSensorRef} className="h-1 w-full -mt-20 pointer-events-none" />
 
-            {/* DOCK MOBILE FLUTUANTE (MANTIDO) */}
+            {/* DOCK MOBILE FLUTUANTE */}
             <div
                 style={{ 
                     transform: `translateY(${isVisible ? (keyboardOffset > 0 ? -keyboardOffset + 10 : 0) : '100%'}px)`,
