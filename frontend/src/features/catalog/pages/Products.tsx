@@ -14,27 +14,9 @@ import { Starfield } from '../../../components/ui/Starfield';
 // CATEGORIAS
 // ============================================================
 const CATEGORIES = [
-    {
-        id: 'Impressão 3D',
-        label: 'Impressão 3D',
-        icon: Box,
-        color: 'brand-pink',
-        subcategories: ['Chaveiros 3D', 'Displays / Suportes', 'Letreiros personalizados', 'Outros acessórios 3D'],
-    },
-    {
-        id: 'Tecnologia NFC',
-        label: 'Tecnologia NFC',
-        icon: Cpu,
-        color: 'brand-blue',
-        subcategories: ['Chaveiros com NFC', 'Displays com NFC'],
-    },
-    {
-        id: 'Soluções Digitais',
-        label: 'Soluções Digitais',
-        icon: Monitor,
-        color: 'brand-yellow',
-        subcategories: [],
-    },
+    { id: 'Impressão 3D', label: 'Impressão 3D', icon: Box, color: 'brand-pink' },
+    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', icon: Cpu, color: 'brand-blue' },
+    { id: 'Soluções Digitais', label: 'Soluções Digitais', icon: Monitor, color: 'brand-yellow' },
 ];
 
 // ============================================================
@@ -49,10 +31,21 @@ export const Products: React.FC = () => {
     const subParam = searchParams.get('sub') || '';
     const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
+
+        // LOGICA PARA ESCONDER O MENU NO RODAPÉ
+        const handleScroll = () => {
+            const scrollPosition = window.innerHeight + window.scrollY;
+            const threshold = document.documentElement.scrollHeight - 300; // 300px antes do fim
+            setIsVisible(scrollPosition < threshold);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     // EFEITO DE SCROLL AUTOMÁTICO PARA O TOPO DA VITRINE
@@ -67,7 +60,6 @@ export const Products: React.FC = () => {
         const p = new URLSearchParams();
         if (cat !== 'Todos') p.set('cat', cat);
         setSearchTerm('');
-        setIsSearchExpanded(false);
         setSearchParams(p);
     };
 
@@ -172,94 +164,94 @@ export const Products: React.FC = () => {
             <div id="product-grid-anchor" className="h-0" />
 
             {/* ============================================================
-                MENU FLUTUANTE DE CATEGORIAS (Mobile Fixed / Desktop Static Divider)
+                MENU FLUTUANTE DINÂMICO (Com Busca Abaixo e Auto-Hide no Footer)
             ============================================================ */}
             <div
-                className="fixed md:relative bottom-6 md:bottom-auto left-4 right-4 md:left-auto md:right-auto md:w-full z-50 md:z-40 bg-[#020617]/95 backdrop-blur-2xl border border-brand-blue/30 md:border-x-0 md:border-y shadow-[0_20px_50px_rgba(0,0,0,0.8)] md:shadow-none rounded-2xl md:rounded-none animate-fade-in-up"
+                className={`fixed md:relative bottom-6 md:bottom-auto left-4 right-4 md:left-auto md:right-auto md:w-full z-50 md:z-40 bg-[#020617]/95 backdrop-blur-3xl border border-brand-blue/30 md:border-x-0 md:border-y shadow-[0_20px_60px_rgba(0,0,0,0.9)] md:shadow-none rounded-[2rem] md:rounded-none transition-all duration-500 ${
+                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
+                }`}
             >
-                {/* Efeito Glow Azul Interno */}
-                <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/5 via-transparent to-brand-blue/5 pointer-events-none rounded-2xl md:rounded-none"></div>
-                
-                <div className="container mx-auto px-3 py-4 md:py-6 relative z-10">
-                    <div className="relative h-12 w-full max-w-5xl mx-auto">
-                        {!isSearchExpanded ? (
-                            <div className="grid grid-cols-5 gap-2.5 animate-fade-in w-full h-full">
-                                <button
-                                    onClick={() => handleCategoryChange('Todos')}
-                                    className={`h-12 flex items-center justify-center px-1 rounded-xl text-[9px] md:text-xs font-black uppercase tracking-widest transition-all border-2 ${
-                                        catParam === 'Todos'
-                                            ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]'
-                                            : 'bg-slate-900/50 border-white/20 text-white hover:border-brand-blue/50'
-                                    }`}
-                                >
-                                    Todos
-                                </button>
+                <div className="container mx-auto px-4 py-4 md:py-6 relative z-10">
+                    <div className="flex flex-col gap-4 max-w-5xl mx-auto">
+                        
+                        {/* Linha 1: Botões de Categoria */}
+                        <div className="grid grid-cols-5 gap-2.5 w-full">
+                            <button
+                                onClick={() => handleCategoryChange('Todos')}
+                                className={`h-11 flex items-center justify-center rounded-xl text-[9px] md:text-[11px] font-black uppercase tracking-widest transition-all border-2 ${
+                                    catParam === 'Todos'
+                                        ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                                        : 'bg-slate-900/50 border-white/20 text-white hover:border-brand-blue/50'
+                                }`}
+                            >
+                                Todos
+                            </button>
 
-                                {CATEGORIES.map(cat => {
-                                    const isActive = catParam === cat.id;
-                                    const colorMap: Record<string, string> = {
-                                        'brand-blue': 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]',
-                                        'brand-pink': 'bg-brand-pink border-brand-pink text-white shadow-[0_0_15px_rgba(229,21,122,0.4)]',
-                                        'brand-yellow': 'bg-brand-yellow border-brand-yellow text-slate-950 shadow-[0_0_15px_rgba(255,242,0,0.4)]',
-                                    };
-                                    return (
-                                        <button
-                                            key={cat.id}
-                                            onClick={() => handleCategoryChange(cat.id)}
-                                            className={`h-12 flex flex-col md:flex-row items-center justify-center gap-1.5 px-1 rounded-xl text-[9px] md:text-xs font-black uppercase tracking-widest transition-all border-2 ${
-                                                isActive
-                                                    ? colorMap[cat.color]
-                                                    : 'bg-slate-900/50 border-white/20 text-white hover:border-brand-blue/50'
-                                            }`}
-                                        >
-                                            <cat.icon size={18} className="flex-shrink-0" />
-                                            <span className="hidden md:inline">{cat.label}</span>
-                                            <span className="md:hidden text-[8px] text-center">{cat.label.split(' ')[0]}</span>
-                                        </button>
-                                    );
-                                })}
+                            {CATEGORIES.map(cat => {
+                                const isActive = catParam === cat.id;
+                                return (
+                                    <button
+                                        key={cat.id}
+                                        onClick={() => handleCategoryChange(cat.id)}
+                                        className={`h-11 flex flex-col md:flex-row items-center justify-center gap-1.5 rounded-xl text-[9px] md:text-[11px] font-black uppercase tracking-widest transition-all border-2 ${
+                                            isActive
+                                                ? 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]'
+                                                : 'bg-slate-900/50 border-white/20 text-white hover:border-brand-blue/50'
+                                        }`}
+                                    >
+                                        <cat.icon size={16} className="flex-shrink-0" />
+                                        <span className="hidden md:inline">{cat.label}</span>
+                                        <span className="md:hidden text-[8px] text-center">{cat.label.split(' ')[0]}</span>
+                                    </button>
+                                );
+                            })}
 
-                                <button
-                                    onClick={() => setIsSearchExpanded(true)}
-                                    className="h-12 flex items-center justify-center bg-slate-900/60 border-2 border-brand-blue/40 text-brand-blue rounded-xl hover:bg-brand-blue/10 transition-all"
-                                >
-                                    <Search size={22} />
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="flex items-center gap-3 animate-fade-in w-full h-full">
-                                <button 
-                                    onClick={() => {
-                                        setIsSearchExpanded(false);
-                                        if (!searchTerm) resetFilters();
-                                    }}
-                                    className="h-12 w-12 flex items-center justify-center bg-slate-900 text-white rounded-xl border-2 border-brand-blue/50"
-                                >
-                                    <ArrowLeft size={24} />
-                                </button>
-                                <div className="relative flex-1 h-full">
-                                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-blue" size={20} />
+                            <button
+                                onClick={() => setIsSearchExpanded(!isSearchExpanded)}
+                                className={`h-11 flex items-center justify-center rounded-xl transition-all border-2 ${
+                                    isSearchExpanded
+                                        ? 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]'
+                                        : 'bg-slate-900/60 border-brand-blue/40 text-brand-blue hover:bg-brand-blue/10'
+                                }`}
+                            >
+                                <Search size={22} />
+                            </button>
+                        </div>
+
+                        {/* Linha 2: Campo de Busca (Aparece Abaixo quando expandido) */}
+                        {isSearchExpanded && (
+                            <div className="animate-fade-in-up w-full">
+                                <div className="relative">
+                                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-blue" size={18} />
                                     <input
                                         autoFocus
                                         type="text"
-                                        placeholder="O QUE VOCÊ PROCURA?"
+                                        placeholder="BUSCAR PRODUTOS, CHAVEIROS, SISTEMAS..."
                                         value={searchTerm}
                                         onChange={e => handleSearch(e.target.value)}
-                                        className="w-full h-full bg-slate-900/80 text-white text-sm pl-12 pr-12 border-2 border-brand-blue/60 rounded-xl outline-none focus:border-brand-blue font-black uppercase tracking-widest"
+                                        className="w-full h-12 bg-slate-900/80 text-white text-xs pl-12 pr-12 border-2 border-brand-blue/60 rounded-xl outline-none focus:border-brand-blue font-black uppercase tracking-widest placeholder-slate-600 shadow-[0_0_20px_rgba(56,182,255,0.2)]"
                                     />
+                                    {searchTerm && (
+                                        <button
+                                            onClick={() => handleSearch('')}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                                        >
+                                            <X size={16} />
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         )}
                     </div>
 
-                    {/* Subcategorias Premium (Aparecem acima no flutuante) */}
+                    {/* Subcategorias Premium (Aparecem entre botões e busca) */}
                     {!isSearchExpanded && activeCategoryData && activeCategoryData.subcategories.length > 0 && (
-                        <div className="flex flex-wrap items-center justify-center gap-3 mt-6 pt-6 border-t border-brand-blue/30 animate-fade-in relative">
+                        <div className="flex flex-wrap items-center justify-center gap-2.5 mt-5 pt-5 border-t border-brand-blue/20 animate-fade-in relative">
                             {activeCategoryData.subcategories.map(sub => (
                                 <button
                                     key={sub}
                                     onClick={() => handleSubcategoryChange(sub)}
-                                    className={`px-5 py-2.5 rounded-xl text-[11px] md:text-sm font-black whitespace-nowrap border-2 transition-all relative z-10 ${
+                                    className={`px-4 py-2 rounded-xl text-[10px] md:text-xs font-black whitespace-nowrap border-2 transition-all ${
                                         subParam === sub
                                             ? 'bg-brand-blue/40 border-brand-blue text-white shadow-[0_0_20px_rgba(56,182,255,0.4)]'
                                             : 'bg-slate-900/80 border-white/10 text-white hover:border-brand-blue/40'
@@ -274,7 +266,7 @@ export const Products: React.FC = () => {
             </div>
 
             {/* CATALOGO */}
-            <div className="container mx-auto px-4 py-16 pb-32 flex-grow">
+            <div className="container mx-auto px-4 py-16 pb-40 flex-grow">
                 {isFiltering && (
                     <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-4 border-l-4 border-brand-blue pl-6 py-2">
                         <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight">
