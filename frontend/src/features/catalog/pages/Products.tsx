@@ -4,7 +4,8 @@ import { mockService } from '@/src/services/mockData';
 import { Product } from '@/src/types';
 import {
     Search, X, Sparkles, Filter, ChevronDown,
-    Box, Cpu, Monitor, ArrowRight, Zap, Flame, Layers, ArrowLeft
+    Box, Cpu, Monitor, ArrowRight, Zap, Flame, Layers, ArrowLeft,
+    Truck, ShieldCheck, Clock, Award
 } from 'lucide-react';
 import { ProductCard } from './components/ProductCard';
 import { Starfield } from '../../../components/ui/Starfield';
@@ -58,19 +59,10 @@ export const Products: React.FC = () => {
         setProducts(mockService.getProducts());
     }, []);
 
-    useEffect(() => {
-        if (searchTerm) setIsSearchExpanded(true);
-    }, []);
-
-    useEffect(() => {
-        if (searchTerm) setIsSearchExpanded(true);
-    }, []);
-
     // EFEITO DE SCROLL AUTOMÁTICO PARA O TOPO DA VITRINE
     useEffect(() => {
-        // Sempre que mudar Categoria, Subcategoria ou Busca, volta para o topo da vitrine
         const anchor = document.getElementById('product-grid-anchor');
-        if (anchor) {
+        if (anchor && (catParam !== 'Todos' || subParam || searchTerm)) {
             anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }, [catParam, subParam, searchTerm]);
@@ -130,31 +122,59 @@ export const Products: React.FC = () => {
             {/* HERO SECTION */}
             <section
                 id="hero"
-                className="relative min-h-[50vh] flex flex-col items-center justify-center pt-28 pb-10 px-4 overflow-hidden text-center animate-fade-in bg-[#020617]"
+                className="relative min-h-[55vh] flex flex-col items-center justify-center pt-28 pb-10 px-4 overflow-hidden text-center animate-fade-in bg-[#020617]"
             >
                 <Starfield />
                 <div className="absolute -top-40 -left-40 w-[300px] h-[300px] bg-[#38b6ff] rounded-full blur-[100px] opacity-20 animate-pulse-slow -z-10 pointer-events-none"></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617] -z-10"></div>
 
                 <div className="relative z-10 max-w-5xl mx-auto w-full">
-                    <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-[1.05] tracking-tight animate-fade-in-up">
+                    <h1 className="text-5xl md:text-8xl font-black text-white mb-6 leading-[1.05] tracking-tight animate-fade-in-up">
                         <span className="bg-gradient-to-r from-[#38b6ff] to-[#E5157A] bg-clip-text text-transparent filter drop-shadow-[0_0_30px_rgba(56,182,255,0.3)]">
                             Conheça nossos produtos
                         </span>
                     </h1>
-                    <p className="text-lg md:text-xl text-slate-400 font-light max-w-2xl mx-auto mb-6 animate-fade-in-up">
+                    <p className="text-lg md:text-xl text-slate-400 font-light max-w-2xl mx-auto animate-fade-in-up">
                         Soluções digitais, NFC e Impressão 3D com tecnologia de ponta.
                     </p>
                 </div>
             </section>
 
+            {/* ============================================================
+                DIVISOR UI/UX: VALUE BAR (Marquee de Diferenciais)
+            ============================================================ */}
+            <div className="bg-slate-900/50 border-y border-white/5 py-4 overflow-hidden relative">
+                <div className="flex animate-[marquee_30s_linear_infinite] whitespace-nowrap gap-12 items-center">
+                    {[1, 2, 3].map((n) => (
+                        <React.Fragment key={n}>
+                            <div className="flex items-center gap-3 text-brand-blue/80 text-[10px] font-black uppercase tracking-widest">
+                                <Truck size={14} /> Envio para todo Japão
+                            </div>
+                            <div className="flex items-center gap-3 text-brand-pink/80 text-[10px] font-black uppercase tracking-widest">
+                                <ShieldCheck size={14} /> Tecnologia NFC 2.0
+                            </div>
+                            <div className="flex items-center gap-3 text-brand-yellow/80 text-[10px] font-black uppercase tracking-widest">
+                                <Box size={14} /> Impressão 3D PLA+ Premium
+                            </div>
+                            <div className="flex items-center gap-3 text-white/40 text-[10px] font-black uppercase tracking-widest">
+                                <Clock size={14} /> Suporte 24/7
+                            </div>
+                            <div className="flex items-center gap-3 text-brand-blue/80 text-[10px] font-black uppercase tracking-widest">
+                                <Award size={14} /> Qualidade Garantida
+                            </div>
+                        </React.Fragment>
+                    ))}
+                </div>
+                {/* Linha Neon de separação final */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-[1px] bg-gradient-to-r from-transparent via-brand-blue to-transparent blur-[1px]"></div>
+            </div>
+
             <div id="product-grid-anchor" className="h-0" />
 
-            {/* BARRA DE CATEGORIAS + BUSCA DINÂMICA (Ajustada) */}
+            {/* BARRA DE CATEGORIAS + BUSCA DINÂMICA */}
             <div
                 className="sticky top-20 md:top-20 bottom-0 md:bottom-auto z-40 bg-[#020617]/98 backdrop-blur-2xl border-y border-brand-blue/30 shadow-[0_-15px_35px_rgba(0,0,0,0.9)] md:shadow-[0_15px_35px_rgba(0,0,0,0.9)] mt-auto md:mt-0 order-last md:order-none"
             >
-                {/* Efeito de luz suave azul no background do menu */}
                 <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/5 via-transparent to-brand-blue/5 pointer-events-none"></div>
                 
                 <div className="container mx-auto px-3 py-4 md:py-5 relative z-10">
@@ -240,12 +260,10 @@ export const Products: React.FC = () => {
                         )}
                     </div>
 
-                    {/* Subcategorias (Ajustadas com Glow e Letras Maiores) */}
+                    {/* Subcategorias */}
                     {!isSearchExpanded && activeCategoryData && activeCategoryData.subcategories.length > 0 && (
                         <div className="flex flex-wrap items-center justify-center gap-2 mt-5 pt-5 border-t border-brand-blue/20 animate-fade-in relative">
-                            {/* Brilho suave nas subcategorias */}
                             <div className="absolute inset-0 bg-brand-blue/5 blur-xl pointer-events-none"></div>
-                            
                             {activeCategoryData.subcategories.map(sub => (
                                 <button
                                     key={sub}
