@@ -65,6 +65,30 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-gray-100 font-sans selection:bg-brand-blue/30">
+      {/* ============================================================
+          ANNOUNCEMENT BAR (MARQUEE GLOBAL NO TOPO)
+      ============================================================ */}
+      <div className="bg-[#020617] border-b border-white/5 py-2 overflow-hidden relative z-[100]">
+          <div className="animate-marquee whitespace-nowrap flex items-center w-max">
+              {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center gap-10 px-4">
+                      <div className="flex items-center gap-2 text-brand-blue text-[8px] font-black uppercase tracking-widest opacity-80">
+                          <Truck size={10} /> Envio para todo Japão
+                      </div>
+                      <div className="flex items-center gap-2 text-brand-pink text-[8px] font-black uppercase tracking-widest opacity-80">
+                          <ShieldCheck size={10} /> Tecnologia NFC 2.0
+                      </div>
+                      <div className="flex items-center gap-2 text-brand-yellow text-[8px] font-black uppercase tracking-widest opacity-80">
+                          <Box size={10} /> Impressão 3D Premium
+                      </div>
+                      <div className="flex items-center gap-2 text-white/40 text-[8px] font-black uppercase tracking-widest">
+                          <Clock size={10} /> Suporte Rápido - WhatsApp
+                      </div>
+                  </div>
+              ))}
+          </div>
+      </div>
+
       {/* Header */}
       <header className="bg-slate-900/80 backdrop-blur-md border-b border-brand-blue/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">

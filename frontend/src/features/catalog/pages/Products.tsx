@@ -100,29 +100,6 @@ export const Products: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col overflow-x-hidden">
             
-            {/* ============================================================
-                TOP VALUE BAR (MARQUEE ESTREITO NO TOPO ABSOLUTO)
-            ============================================================ */}
-            <div className="bg-slate-950 border-b border-white/5 py-1.5 overflow-hidden relative z-[60]">
-                <div className="animate-marquee whitespace-nowrap flex items-center w-max">
-                    {[1, 2, 3].map((i) => (
-                        <div key={i} className="flex items-center gap-10 px-4">
-                            <div className="flex items-center gap-2 text-brand-blue text-[8px] font-black uppercase tracking-widest opacity-70">
-                                <Truck size={10} /> Envio para todo Japão
-                            </div>
-                            <div className="flex items-center gap-2 text-brand-pink text-[8px] font-black uppercase tracking-widest opacity-70">
-                                <ShieldCheck size={10} /> Tecnologia NFC 2.0
-                            </div>
-                            <div className="flex items-center gap-2 text-brand-yellow text-[8px] font-black uppercase tracking-widest opacity-70">
-                                <Box size={10} /> Impressão 3D Premium
-                            </div>
-                            <div className="flex items-center gap-2 text-white/30 text-[8px] font-black uppercase tracking-widest">
-                                <Clock size={10} /> Suporte Rápido - WhatsApp
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
 
             {/* HERO SECTION */}
             <section
