@@ -122,23 +122,42 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu — ESTILO PREMIUM GLOW */}
         {isMenuOpen && (
-          <div className="md:hidden bg-slate-900 border-t border-brand-blue/30 p-4 space-y-4 shadow-2xl absolute w-full z-50">
-            <MobileNavLink to="/?cat=Impressão 3D" onClick={() => setIsMenuOpen(false)}>Impressão 3D</MobileNavLink>
-            <MobileNavLink to="/?cat=Tecnologia NFC" onClick={() => setIsMenuOpen(false)}>Tecnologia NFC</MobileNavLink>
-            <MobileNavLink to="/?cat=Sistemas" onClick={() => setIsMenuOpen(false)}>SOLUÇÕES DIGITAIS</MobileNavLink>
+          <div className="md:hidden bg-[#020617]/98 backdrop-blur-2xl border-t border-brand-blue/30 p-6 space-y-4 shadow-2xl absolute w-full z-50 animate-fade-in overflow-hidden">
+            {/* Brilho azul suave no fundo do menu expandido */}
+            <div className="absolute inset-0 bg-gradient-to-b from-brand-blue/10 via-transparent to-brand-blue/5 pointer-events-none"></div>
+            
+            <div className="relative z-10 space-y-1">
+              <MobileNavLink to="/?cat=Impressão 3D" onClick={() => setIsMenuOpen(false)}>
+                <span className="text-white font-black tracking-widest">Impressão 3D</span>
+              </MobileNavLink>
+              <MobileNavLink to="/?cat=Tecnologia NFC" onClick={() => setIsMenuOpen(false)}>
+                <span className="text-white font-black tracking-widest">Tecnologia NFC</span>
+              </MobileNavLink>
+              <MobileNavLink to="/?cat=Sistemas" onClick={() => setIsMenuOpen(false)}>
+                <span className="text-white font-black tracking-widest">SOLUÇÕES DIGITAIS</span>
+              </MobileNavLink>
+            </div>
 
-            <div className="border-t border-slate-800 pt-2">
+            <div className="border-t border-white/10 pt-4 relative z-10">
               {user ? (
                 <>
-                  <MobileNavLink to={getDashboardLink()} onClick={() => setIsMenuOpen(false)}><T k="nav_dashboard" default="Minha Conta" /></MobileNavLink>
-                  <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="w-full text-left px-4 py-3 rounded-lg text-red-400 hover:bg-slate-800 font-bold uppercase transition-colors flex items-center gap-2">
-                    <LogOut size={16} /> <T k="nav_logout" default="Sair" />
+                  <MobileNavLink to={getDashboardLink()} onClick={() => setIsMenuOpen(false)}>
+                    <span className="text-brand-blue font-black tracking-widest"><T k="nav_dashboard" default="Minha Conta" /></span>
+                  </MobileNavLink>
+                  <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="w-full text-left px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 font-black uppercase tracking-widest transition-colors flex items-center gap-2">
+                    <LogOut size={18} /> <T k="nav_logout" default="Sair" />
                   </button>
                 </>
               ) : (
-                <MobileNavLink to="/login" onClick={() => setIsMenuOpen(false)}><T k="nav_login" default="ENTRAR" /></MobileNavLink>
+                <Link 
+                  to="/login" 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-center py-4 rounded-2xl bg-brand-blue text-slate-950 font-black uppercase tracking-widest shadow-[0_0_20px_rgba(56,182,255,0.4)]"
+                >
+                  <T k="nav_login" default="ENTRAR NA CONTA" />
+                </Link>
               )}
             </div>
           </div>
