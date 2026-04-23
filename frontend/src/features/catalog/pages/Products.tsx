@@ -63,34 +63,37 @@ export const Products: React.FC = () => {
             <div className="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/5 rounded-full blur-[180px] pointer-events-none z-0"></div>
             <div className="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-pink/3 rounded-full blur-[180px] pointer-events-none z-0"></div>
 
-            {/* Header (High Contrast) */}
-            <header className="bg-slate-900/90 backdrop-blur-2xl border-b border-brand-blue/40 sticky top-0 z-50 shadow-[0_4px_30px_rgba(36,155,203,0.15)]">
-                <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-8 overflow-hidden py-2">
+            {/* CATEGORY NAV - GLASSMORPHIC TAB BAR (Option 3) */}
+            <nav className="sticky top-16 z-40 py-4 px-6 animate-fade-in">
+                <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-6 bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[2rem] p-2 pr-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                    
+                    {/* Tabs Area */}
+                    <div className="flex items-center gap-1 overflow-x-auto no-scrollbar p-1">
                         {CATEGORIES.map(cat => (
                             <button 
                                 key={cat.id} 
                                 onClick={() => handleCategoryChange(cat.id)}
-                                className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap pb-1 border-b-2 ${catParam === cat.id ? 'text-brand-blue border-brand-blue drop-shadow-[0_0_8px_rgba(56,182,255,0.5)]' : 'text-slate-100/50 border-transparent hover:text-white'}`}
+                                className={`px-6 py-3 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${catParam === cat.id ? 'bg-brand-blue text-slate-950 shadow-[0_0_20px_rgba(56,182,255,0.4)]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
                             >
                                 {cat.label}
                             </button>
                         ))}
                     </div>
-                    <div className="flex items-center gap-4 border-l border-white/10 pl-6 ml-2">
-                        <div className="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-xl px-4 py-2 focus-within:border-white/30 transition-all w-72">
+
+                    {/* Integrated Search */}
+                    <div className="flex items-center gap-4 w-full lg:w-auto">
+                        <div className="flex items-center bg-black/40 border border-white/5 rounded-full px-5 py-2.5 focus-within:border-brand-blue/30 transition-all w-full lg:w-72">
                             <Search size={16} className="text-slate-500" />
                             <input 
-                                className="bg-transparent border-none text-[11px] text-white outline-none pl-3 w-full font-bold placeholder:text-slate-600 uppercase tracking-widest" 
-                                placeholder="BUSCAR PRODUTOS..." 
+                                className="bg-transparent border-none text-[11px] text-white outline-none pl-3 w-full font-bold placeholder:text-slate-700 uppercase tracking-widest" 
+                                placeholder="Procurar no catálogo..." 
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
                             />
                         </div>
-                        <button className="text-white/50 hover:text-white lg:hidden p-2"><Search size={20} /></button>
                     </div>
                 </div>
-            </header>
+            </nav>
 
             {/* MAIN BANNER (Larger) */}
             <section className="container mx-auto px-6 py-8 relative z-10">
