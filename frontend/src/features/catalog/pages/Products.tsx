@@ -1,289 +1,179 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
 import { mockService } from '@/src/services/mockData';
-import { Product } from '@/src/types';
+import { Product, UserRole } from '@/src/types';
+import { useAuth } from '@/src/features/auth/context/AuthContext';
 import {
-    Search, X, Box, Cpu, Monitor, ArrowLeft,
-    Truck, ShieldCheck, Clock, Award, Filter
+    Search, SlidersHorizontal, LayoutGrid, Bell, Heart, 
+    Home as HomeIcon, ShoppingBag, User as UserIcon, Plus, ChevronRight
 } from 'lucide-react';
-import { ProductCard } from './components/ProductCard';
-import { Starfield } from '../../../components/ui/Starfield';
+import { useCart } from '../../cart/CartContext';
 
 const CATEGORIES = [
-    { id: 'Impressão 3D', label: 'Impressão 3D', icon: Box },
-    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', icon: Cpu },
-    { id: 'Soluções Digitais', label: 'Soluções Digitais', icon: Monitor },
+    { id: 'Todos', label: 'All', icon: LayoutGrid },
+    { id: 'Impressão 3D', label: 'Impressão 3D', icon: ShoppingBag },
+    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', icon: Bell },
+    { id: 'Soluções Digitais', label: 'Soluções Digitais', icon: LayoutGrid },
 ];
 
-const SUBCATEGORIES: Record<string, string[]> = {
-    'Impressão 3D': ['Chaveiros 3D', 'Displays / Suportes', 'Letreiros personalizados'],
-    'Tecnologia NFC': ['Chaveiros com NFC', 'Displays com NFC'],
-};
-
 export const Products: React.FC = () => {
+    const { user, role } = useAuth();
+    const { addToCart } = useCart();
     const [products, setProducts] = useState<Product[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
-    const navigate = useNavigate();
-
-    const catParam = searchParams.get('cat') || 'Todos';
-    const subParam = searchParams.get('sub') || '';
-    const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
-    const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
     
-    const footerSensorRef = useRef<HTMLDivElement>(null);
-
-    const [isDockDismissed, setIsDockDismissed] = useState(false);
-
-    const lastScrollY = useRef(0);
-    const wasInFooter = useRef(false);
+    const catParam = searchParams.get('cat') || 'Todos';
+    const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
 
     useEffect(() => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                // SÓ reativa o dock se o usuário ESTAVA no rodapé e ACABOU de sair
-                if (wasInFooter.current && !entry.isIntersecting) {
-                    setIsDockDismissed(false);
-                }
-                wasInFooter.current = entry.isIntersecting;
-
-                if (isSearchExpanded || isDockDismissed) {
-                    if (isDockDismissed) setIsVisible(false);
-                    else setIsVisible(true);
-                    return;
-                }
-                
-                const isShortPage = document.documentElement.scrollHeight <= window.innerHeight + 200;
-                setIsVisible(isShortPage ? true : !entry.isIntersecting);
-            },
-            { threshold: 0.1 }
-        );
-        
-        if (footerSensorRef.current) observer.observe(footerSensorRef.current);
-
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            const deltaY = currentScrollY - lastScrollY.current;
-
-            // Só reativa se for um scroll significativo para cima (> 20px)
-            if (deltaY < -20 && currentScrollY > 150 && isDockDismissed) {
-                setIsDockDismissed(false);
-            }
-            
-            lastScrollY.current = currentScrollY;
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-
-        return () => {
-            observer.disconnect();
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [isSearchExpanded, isDockDismissed]);
-
-    // Re-habilitar o dock ao mudar de filtros
-    useEffect(() => {
-        setIsDockDismissed(false);
-        const checkShortPage = () => {
-            const isShortPage = document.documentElement.scrollHeight <= window.innerHeight + 200;
-            if (isShortPage) setIsVisible(true);
-        };
-        setTimeout(checkShortPage, 150);
-    }, [catParam, searchTerm, subParam]);
+    }, []);
 
     const handleCategoryChange = (cat: string) => {
         const p = new URLSearchParams();
         if (cat !== 'Todos') p.set('cat', cat);
-        setSearchTerm('');
-        setSearchParams(p);
-    };
-
-    const handleSubcategoryChange = (sub: string) => {
-        const p = new URLSearchParams(searchParams);
-        if (sub === subParam) p.delete('sub');
-        else p.set('sub', sub);
-        setSearchParams(p);
-    };
-
-    const handleSearch = (val: string) => {
-        setSearchTerm(val);
-        const p = new URLSearchParams(searchParams);
-        if (val) {
-            p.set('q', val);
-            p.delete('cat');
-            p.delete('sub');
-        } else {
-            p.delete('q');
-        }
         setSearchParams(p);
     };
 
     const filteredProducts = products.filter(p => {
-        // Se houver busca, ela tem prioridade total e ignora categoria/subcategoria
-        if (searchTerm) {
-            return p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                   p.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                   p.category.toLowerCase().includes(searchTerm.toLowerCase());
-        }
-
-        const matchesCat = catParam === 'Todos' || p.category === catParam;
-        const matchesSub = !subParam || (p as any).subcategory === subParam;
-        return matchesCat && matchesSub;
+        if (searchTerm) return p.name.toLowerCase().includes(searchTerm.toLowerCase());
+        return catParam === 'Todos' || p.category === catParam;
     });
 
-    const galleryImages = products.map(p => p.imageUrl);
-    const availableSubcategories = SUBCATEGORIES[catParam] || [];
+    const getDashboardLink = () => {
+        if (role === UserRole.ADMIN) return '/admin/dashboard';
+        return '/customer/dashboard';
+    };
 
     return (
-        <div className="min-h-screen bg-[#020617] flex flex-col">
+        <div className="min-h-screen bg-[#F8F9FB] pb-32 text-slate-900 font-sans">
             
-            {/* HERO SECTION */}
-            <section id="hero" className="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center pt-6 md:pt-24 pb-12 overflow-hidden bg-transparent">
-                <div className="absolute inset-0 bg-[#020617] -z-20" />
-                <div className="absolute inset-0 -z-10 opacity-70"><Starfield /></div>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-brand-blue/10 rounded-full blur-[200px] animate-pulse -z-10 pointer-events-none"></div>
-
-                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-8 text-center animate-fade-in-up">
-                    <h1 className="text-4xl md:text-8xl font-black text-white leading-[1.1] tracking-tighter drop-shadow-[0_2px_10px_rgba(0,0,0,1)] drop-shadow-[0_5px_30px_rgba(0,0,0,1)] md:drop-shadow-[0_10px_50px_rgba(0,0,0,1)]">
-                        Encontre a solução<br/>
-                        <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">ideal para o seu negócio.</span>
-                    </h1>
-                    <p className="text-lg md:text-3xl font-semibold text-slate-200 mt-6 md:mt-10 max-w-[320px] md:max-w-4xl mx-auto leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,1)] drop-shadow-[0_5px_20px_rgba(0,0,0,1)] md:drop-shadow-[0_10px_30px_rgba(0,0,0,1)]">
-                        Crie presença digital, conecte clientes com NFC e automatize seu atendimento.
-                    </p>
+            {/* APP HEADER */}
+            <header className="px-6 pt-12 pb-6 flex items-center justify-between bg-transparent">
+                <button className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-slate-800 border border-slate-100">
+                    <LayoutGrid size={20} />
+                </button>
+                <h1 className="text-xl font-bold text-slate-800">Home</h1>
+                <div className="flex items-center gap-3">
+                    <button className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-slate-800 border border-slate-100 relative">
+                        <Bell size={20} />
+                        <span className="absolute top-3 right-3 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+                    </button>
+                    <Link to={getDashboardLink()} className="w-12 h-12 rounded-xl overflow-hidden shadow-md border-2 border-white">
+                        <img src={user?.avatar || "https://i.pravatar.cc/150?u=admin"} className="w-full h-full object-cover" alt="Profile" />
+                    </Link>
                 </div>
+            </header>
 
-                <div className="w-full flex flex-col gap-4 md:gap-8 opacity-50 md:opacity-30 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-                    <div className="flex gap-4 animate-[marquee_60s_linear_infinite] w-max">
-                        {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
-                            <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5"><img src={img} className="w-full h-full object-cover" /></div>
-                        ))}
+            {/* SEARCH AREA */}
+            <section className="px-6 py-4 flex gap-4">
+                <div className="flex-1 relative">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                    <input 
+                        type="text" 
+                        placeholder="Search" 
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full h-14 bg-white rounded-2xl pl-12 pr-4 text-slate-700 shadow-sm border border-slate-100 focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all"
+                    />
+                </div>
+                <button className="w-14 h-14 bg-brand-blue text-white rounded-2xl shadow-lg shadow-brand-blue/30 flex items-center justify-center">
+                    <SlidersHorizontal size={20} />
+                </button>
+            </section>
+
+            {/* HERO PROMO BANNER */}
+            <section className="px-6 py-6">
+                <div className="w-full aspect-[16/8] bg-gradient-to-br from-[#00C2FF] to-[#0047FF] rounded-[32px] p-8 relative overflow-hidden shadow-xl shadow-brand-blue/20 group">
+                    <div className="relative z-10 h-full flex flex-col justify-between items-start text-white">
+                        <div className="space-y-1">
+                            <h2 className="text-4xl font-black leading-none">20%<br/>OFF</h2>
+                        </div>
+                        <button className="bg-white text-slate-900 px-5 py-2.5 rounded-xl text-xs font-black flex items-center gap-2 hover:scale-105 transition-transform">
+                            Shop now <ChevronRight size={14} />
+                        </button>
                     </div>
-                    <div className="flex gap-4 animate-[marquee_80s_linear_infinite] w-max ml-[-100px] md:ml-[-200px]" style={{ animationDirection: 'reverse' }}>
-                        {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
-                            <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5"><img src={img} className="w-full h-full object-cover" /></div>
-                        ))}
-                    </div>
-                    <div className="flex gap-4 animate-[marquee_30s_linear_infinite] w-max ml-[50px] md:ml-[100px]">
-                        {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
-                            <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5"><img src={img} className="w-full h-full object-cover" /></div>
-                        ))}
-                    </div>
+                    {/* Floating Product Image (Representational) */}
+                    <img 
+                        src={products[0]?.imageUrl} 
+                        className="absolute right-[-20px] top-1/2 -translate-y-1/2 h-[120%] rotate-[-15deg] group-hover:rotate-0 transition-all duration-500 pointer-events-none drop-shadow-2xl" 
+                        alt="Promo"
+                    />
+                    {/* Decorative Circles */}
+                    <div className="absolute top-10 right-40 w-12 h-12 bg-white/20 rounded-full blur-xl"></div>
+                    <div className="absolute bottom-5 right-20 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+                </div>
+                {/* Pagination Dots */}
+                <div className="flex justify-center gap-1.5 mt-4">
+                    <div className="w-6 h-1.5 bg-slate-800 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 bg-slate-300 rounded-full"></div>
                 </div>
             </section>
 
-            <div id="product-grid-anchor" className="h-0" />
-
-            {/* CATALOGO */}
-            <div className="relative w-full bg-[#020617] pt-1">
-                <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8 shadow-[0_0_15px_rgba(56,182,255,0.3)]"></div>
-                
-                <div className="hidden md:block pb-10 container mx-auto px-6">
-                    <div className="flex flex-col gap-6 max-w-6xl mx-auto">
-                        <div className="flex flex-wrap items-center gap-3">
-                            <button onClick={() => handleCategoryChange('Todos')} className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${catParam === 'Todos' ? 'bg-brand-blue text-slate-950 shadow-xl' : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'}`}>Todos</button>
-                            {CATEGORIES.map(cat => (
-                                <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={`px-8 py-2.5 rounded-full text-sm font-black transition-all ${catParam === cat.id ? 'bg-white text-slate-950 shadow-xl' : 'bg-transparent border border-white/20 text-white/60 hover:border-white/40'}`}>{cat.label}</button>
-                            ))}
-                        </div>
-                        {availableSubcategories.length > 0 && (
-                            <div className="flex flex-wrap items-center gap-2 animate-fade-in">
-                                {availableSubcategories.map(sub => (
-                                    <button key={sub} onClick={() => handleSubcategoryChange(sub)} className={`px-5 py-1.5 rounded-full text-[10px] font-bold transition-all border ${subParam === sub ? 'bg-brand-pink border-brand-pink text-white' : 'bg-transparent border-white/10 text-white/40 hover:border-white/20'}`}>{sub}</button>
-                                ))}
-                            </div>
-                        )}
-                        <input type="text" placeholder="Buscar produtos..." value={searchTerm} onChange={e => handleSearch(e.target.value)} className="w-full h-14 bg-slate-900/40 text-white text-sm pl-6 border border-white/10 rounded-xl outline-none focus:border-brand-blue/50 transition-all placeholder-slate-500" />
-                    </div>
-                </div>
-            </div>
-
-            <div className="container mx-auto px-6 py-12 md:py-16 pb-48 flex-grow">
-                <div className="flex items-center justify-between mb-10 animate-fade-in">
-                    <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-brand-blue shadow-[0_0_10px_rgba(56,182,255,0.8)]"></div>
-                        <h2 className="text-sm font-black uppercase tracking-[0.2em] text-white/50">
-                            {searchTerm ? `Resultados para "${searchTerm}"` : 'Nossos Produtos'}
-                        </h2>
-                    </div>
-                    {searchTerm && (
-                        <button onClick={() => handleSearch('')} className="text-[10px] font-bold text-brand-pink uppercase tracking-widest flex items-center gap-1 hover:opacity-80">
-                            <X size={12} /> Limpar Busca
+            {/* CATEGORIES BAR */}
+            <section className="px-6 py-4">
+                <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+                    {CATEGORIES.map(cat => (
+                        <button 
+                            key={cat.id} 
+                            onClick={() => handleCategoryChange(cat.id)}
+                            className={`flex items-center gap-2 px-6 py-3.5 rounded-2xl whitespace-nowrap transition-all shadow-sm border ${catParam === cat.id ? 'bg-white text-brand-blue border-brand-blue/20' : 'bg-white text-slate-500 border-slate-100 hover:border-slate-200'}`}
+                        >
+                            <cat.icon size={18} className={catParam === cat.id ? 'text-brand-blue' : 'text-slate-400'} />
+                            <span className="text-sm font-bold">{cat.label}</span>
                         </button>
-                    )}
+                    ))}
+                </div>
+            </section>
+
+            {/* POPULAR SECTION */}
+            <section className="px-6 pt-8">
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-black text-slate-800">Popular</h2>
+                    <button className="text-sm font-bold text-slate-400 hover:text-brand-blue">View all</button>
                 </div>
 
-                {filteredProducts.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
-                        {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
-                    </div>
-                ) : (
-                    <div className="flex flex-col items-center justify-center py-20 text-center animate-fade-in">
-                        <div className="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center mb-6 border border-white/5">
-                            <Search size={32} className="text-slate-700" />
-                        </div>
-                        <h3 className="text-xl font-bold text-white mb-2">Nenhum produto encontrado</h3>
-                        <p className="text-slate-500 text-sm max-w-xs">Não encontramos nada para "{searchTerm}". Tente usar palavras-chave mais simples.</p>
-                        <button onClick={() => handleSearch('')} className="mt-8 text-brand-blue font-black uppercase tracking-widest text-xs border-b border-brand-blue/30 pb-1">Ver todos os produtos</button>
-                    </div>
-                )}
-            </div>
-
-            <div ref={footerSensorRef} className="h-40 w-full pointer-events-none" />
-
-            {/* DOCK MOBILE ESTÁVEL (CORREÇÃO DE PULO) */}
-            <div
-                className={`md:hidden fixed bottom-0 left-0 right-0 z-[100] bg-[#03081a]/98 backdrop-blur-3xl border-t border-brand-blue/60 rounded-t-[2.5rem] transition-all duration-500 ease-in-out ${
-                    isVisible && !isDockDismissed ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
-                }`}
-            >
-                {/* Botão X para fechar (Lado de fora, sutil) */}
-                <button 
-                    onClick={() => setIsDockDismissed(true)}
-                    className="absolute -top-12 right-6 w-10 h-10 bg-slate-900/50 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all shadow-2xl"
-                >
-                    <X size={20} />
-                </button>
-
-                <div className="container mx-auto px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-                    <div className="flex flex-col gap-4">
-                        {availableSubcategories.length > 0 && (
-                            <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar animate-fade-in">
-                                {availableSubcategories.map(sub => (
-                                    <button key={sub} onClick={() => handleSubcategoryChange(sub)} className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[9px] font-black border transition-all ${subParam === sub ? 'bg-brand-pink border-brand-pink text-white' : 'bg-slate-900 border-white/20 text-white/70'}`}>{sub}</button>
-                                ))}
-                            </div>
-                        )}
-
-                        <div className="flex items-center justify-between gap-1">
-                            <button onClick={() => handleCategoryChange('Todos')} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${catParam === 'Todos' ? 'text-brand-blue' : 'text-white/70'}`}>
-                                <Filter size={18} /><span className="text-[8px] font-black uppercase tracking-tighter">Todos</span>
-                            </button>
-                            {CATEGORIES.map(cat => (
-                                <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${catParam === cat.id ? 'text-brand-blue' : 'text-white/70'}`}>
-                                    <cat.icon size={18} /><span className="text-[8px] font-black uppercase tracking-tighter leading-none text-center">{cat.label.split(' ')[0]}</span>
+                <div className="grid grid-cols-2 gap-4">
+                    {filteredProducts.map((p, i) => (
+                        <div key={p.id} className="bg-white rounded-[32px] p-3 shadow-sm border border-slate-50 relative group overflow-hidden">
+                            {/* Card Background Gradient based on index or product */}
+                            <div className={`aspect-square rounded-[24px] mb-4 flex items-center justify-center p-4 relative overflow-hidden ${
+                                i % 3 === 0 ? 'bg-gradient-to-br from-red-50 to-red-100' : 
+                                i % 3 === 1 ? 'bg-gradient-to-br from-indigo-50 to-indigo-100' : 
+                                'bg-gradient-to-br from-amber-50 to-amber-100'
+                            }`}>
+                                <button className="absolute top-3 right-3 text-white drop-shadow-md">
+                                    <Heart size={20} className={i === 0 ? 'fill-red-500 text-red-500' : 'text-slate-200'} />
                                 </button>
-                            ))}
-                            <button onClick={() => setIsSearchExpanded(!isSearchExpanded)} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${isSearchExpanded ? 'text-brand-blue' : 'text-white/70'}`}>
-                                <Search size={18} /><span className="text-[8px] font-black uppercase tracking-tighter">Busca</span>
-                            </button>
-                        </div>
-                        {isSearchExpanded && (
-                            <div className="animate-fade-in-up pb-2">
-                                <input 
-                                    type="text" 
-                                    placeholder="BUSCAR PRODUTOS..." 
-                                    value={searchTerm} 
-                                    onChange={e => handleSearch(e.target.value)} 
-                                    className="w-full h-12 bg-slate-900 text-white text-base px-4 border border-brand-blue/50 rounded-xl outline-none shadow-[0_0_20px_rgba(56,182,255,0.2)]" 
-                                />
+                                <img src={p.imageUrl} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl" alt={p.name} />
                             </div>
-                        )}
-                    </div>
+                            
+                            <div className="px-1 pb-1">
+                                <h3 className="text-sm font-bold text-slate-800 line-clamp-1">{p.name}</h3>
+                                <div className="flex items-center justify-between mt-1">
+                                    <span className="text-lg font-black text-slate-900">¥{p.price.toLocaleString()}</span>
+                                    <button 
+                                        onClick={() => addToCart({ ...p, cartId: `c-${Date.now()}`, quantity: 1 })}
+                                        className="w-10 h-10 bg-slate-900 text-white rounded-xl flex items-center justify-center shadow-lg hover:bg-brand-blue transition-colors"
+                                    >
+                                        <Plus size={20} />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
+            </section>
+
+            {/* FLOATING BOTTOM NAV */}
+            <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-md h-20 bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-2xl border border-white flex items-center justify-around px-4 z-50">
+                <button className="p-3 text-brand-blue"><HomeIcon size={24} strokeWidth={2.5} /></button>
+                <button className="p-3 text-slate-300 hover:text-brand-blue transition-colors"><Heart size={24} /></button>
+                <Link to="/cart" className="p-3 text-slate-300 hover:text-brand-blue transition-colors relative">
+                    <ShoppingBag size={24} />
+                </Link>
+                <Link to={getDashboardLink()} className="p-3 text-slate-300 hover:text-brand-blue transition-colors"><UserIcon size={24} /></Link>
             </div>
         </div>
     );

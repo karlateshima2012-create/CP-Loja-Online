@@ -48,7 +48,6 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
 
   const getDashboardLink = () => {
     if (role === UserRole.ADMIN) return '/admin/dashboard';
-    if (role === UserRole.PARTNER) return '/partner/dashboard';
     return '/customer/dashboard';
   };
 
