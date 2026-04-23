@@ -96,10 +96,6 @@ export const Products: React.FC = () => {
                             Tecnologia de Ponta<br/>
                             <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">para sua Empresa.</span>
                         </h2>
-                        <div className="mt-8 flex gap-4">
-                            <button className="bg-brand-blue text-slate-950 px-8 py-3 rounded-xl font-black uppercase text-xs tracking-widest hover:shadow-[0_0_30px_rgba(36,155,203,0.5)] transition-all">Explorar</button>
-                            <button className="bg-white/5 hover:bg-white/10 text-white px-8 py-3 rounded-xl font-black uppercase text-xs tracking-widest border border-white/10 transition-all">Saiba mais</button>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -107,34 +103,23 @@ export const Products: React.FC = () => {
             {/* CATEGORY CARDS (3 Columns) */}
             <section className="container mx-auto px-6 py-4 grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
                 {[
-                    { id: 'Impressão 3D', label: 'Impressão 3D', icon: Box, img: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?q=80&w=1000&auto=format&fit=crop', color: 'from-blue-500/20' },
-                    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', icon: Cpu, img: 'https://images.unsplash.com/photo-1621504450181-5d356f63d3ee?q=80&w=1000&auto=format&fit=crop', color: 'from-pink-500/20' },
-                    { id: 'Soluções Digitais', label: 'Soluções Digitais', icon: Monitor, img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop', color: 'from-cyan-500/20' }
+                    { id: 'Impressão 3D', label: 'Impressão 3D', img: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?q=80&w=1000&auto=format&fit=crop' },
+                    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', img: 'https://images.unsplash.com/photo-1621504450181-5d356f63d3ee?q=80&w=1000&auto=format&fit=crop' },
+                    { id: 'Soluções Digitais', label: 'Soluções Digitais', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop' }
                 ].map(cat => (
                     <button 
                         key={cat.id}
                         onClick={() => handleCategoryChange(cat.id)}
-                        className="h-48 bg-slate-900 rounded-2xl border border-white/5 relative overflow-hidden group shadow-xl hover:border-brand-blue/30 transition-all"
+                        className="h-48 bg-slate-900 rounded-2xl border border-white/5 relative overflow-hidden group transition-all"
                     >
-                        <div className={`absolute inset-0 bg-gradient-to-t ${cat.color} to-black/80 z-10`}></div>
-                        <img src={cat.img} className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt={cat.label} />
-                        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3">
-                            <cat.icon className="text-brand-blue group-hover:scale-110 transition-transform" size={32} />
-                            <span className="text-sm font-black uppercase tracking-widest">{cat.label}</span>
-                        </div>
-                        <div className="absolute bottom-4 right-4 z-20 w-8 h-8 bg-brand-blue rounded-lg flex items-center justify-center text-slate-950 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
-                            <ChevronRight size={18} />
-                        </div>
+                        <img src={cat.img} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700" alt={cat.label} />
                     </button>
                 ))}
             </section>
 
             {/* PRODUCT GRID */}
             <section className="container mx-auto px-6 py-12 pb-32 relative z-10">
-                <div className="flex items-center justify-between mb-8">
-                    <h3 className="text-sm font-black uppercase tracking-[0.4em] text-white/40">Destaques</h3>
-                    <div className="flex-grow h-[1px] bg-white/5 mx-8"></div>
-                </div>
+                <div className="w-full h-px bg-white/5 mb-12"></div>
 
                 {filteredProducts.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
