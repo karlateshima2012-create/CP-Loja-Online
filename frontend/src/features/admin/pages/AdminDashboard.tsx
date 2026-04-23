@@ -11,10 +11,8 @@ import {
   LogOut,
   Bell,
   Search,
-  Menu,
-  X,
-  Layers,
-  Globe,
+  ChevronRight,
+  ChevronLeft,
   Monitor,
   FileText
 } from 'lucide-react';
@@ -53,6 +51,13 @@ export const AdminDashboard: React.FC = () => {
   const handleTabChange = (tab: TabType) => {
     setActiveTab(tab);
     setIsSidebarOpen(false); // Fecha o menu no mobile após clicar
+    
+    // Auto-recolhe o menu no Desktop se for a aba Connect
+    if (tab === 'connect') {
+      setIsDesktopCollapsed(true);
+    } else {
+      setIsDesktopCollapsed(false);
+    }
   };
 
   const renderContent = () => {
@@ -141,15 +146,16 @@ export const AdminDashboard: React.FC = () => {
               onClick={() => setIsSidebarOpen(true)}
               className="md:hidden p-2.5 bg-slate-800 rounded-xl text-brand-blue shadow-lg border border-brand-blue/20"
             >
-              <Menu size={22} />
+              <ChevronRight size={22} />
             </button>
 
-            {/* Botão Recolher Desktop */}
+            {/* Botão de Setinha Desktop (Expandir/Recolher) */}
             <button 
               onClick={() => setIsDesktopCollapsed(!isDesktopCollapsed)}
-              className="hidden md:block p-2 hover:bg-slate-800 rounded-lg text-slate-400 transition-colors"
+              className="hidden md:flex p-2 bg-slate-800 hover:bg-brand-blue hover:text-slate-900 rounded-lg text-slate-400 transition-all shadow-lg border border-white/5"
+              title={isDesktopCollapsed ? "Expandir Menu" : "Recolher Menu"}
             >
-              <Menu size={24} />
+              {isDesktopCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
             </button>
           </div>
 
