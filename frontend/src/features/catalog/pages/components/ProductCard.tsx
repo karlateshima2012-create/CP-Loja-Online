@@ -55,13 +55,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="text-[10px] md:text-xs text-brand-blue/60 font-bold uppercase tracking-wider mb-1">{product.category}</div>
         <h3 className="font-bold text-white text-base md:text-lg mb-4 leading-tight md:group-hover:text-brand-blue transition-colors line-clamp-2">{product.name}</h3>
 
-        <div className="flex flex-col md:flex-row md:items-center justify-between mt-auto pt-5 border-t border-white/5 gap-3 md:gap-4">
+        {/* Rodapé — Unificado para vertical em todos os dispositivos */}
+        <div className="flex flex-col justify-between mt-auto pt-5 border-t border-white/5 gap-3">
           <div className="flex flex-col">
-            <span className="font-black text-lg md:text-xl text-white tracking-tight">
+            <span className="font-black text-lg md:text-2xl text-white tracking-tight">
               ¥{price.toLocaleString()}
             </span>
           </div>
-          <button className="w-full md:w-auto bg-slate-800 md:hover:bg-brand-blue text-slate-300 md:hover:text-slate-950 px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 transform md:hover:-translate-y-1 shadow-lg md:hover:shadow-brand-blue/30 border border-brand-blue/30 md:border-transparent">
+          <button className="w-full bg-slate-800 md:hover:bg-brand-blue text-slate-300 md:hover:text-slate-950 px-4 py-3 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 transform md:hover:-translate-y-1 shadow-lg md:hover:shadow-brand-blue/30 border border-brand-blue/30 md:border-brand-blue/20">
             <ShoppingCart size={14} /> Adicionar
           </button>
         </div>
