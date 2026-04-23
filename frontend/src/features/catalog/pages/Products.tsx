@@ -44,10 +44,8 @@ export const Products: React.FC = () => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
 
-        // Lógica de visibilidade aprimorada: só some se o sensor estiver 50% visível
         const observer = new IntersectionObserver(
             ([entry]) => {
-                // Se estiver filtrando e a página for curta, forçamos o dock a ficar visível
                 const isShortPage = document.body.scrollHeight <= window.innerHeight + 100;
                 if (isShortPage) {
                     setIsVisible(true);
@@ -156,24 +154,28 @@ export const Products: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="w-full flex flex-col gap-4 md:gap-8 opacity-25 md:opacity-20 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+                {/* CARROSSEL MULTI-LINHA (AJUSTADO) */}
+                <div className="w-full flex flex-col gap-4 md:gap-8 opacity-40 md:opacity-20 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+                    {/* Linha 1 */}
                     <div className="flex gap-4 animate-[marquee_50s_linear_infinite] w-max">
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
-                            <div key={i} className="w-28 md:w-56 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
+                            <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
                                 <img src={img} className="w-full h-full object-cover" />
                             </div>
                         ))}
                     </div>
+                    {/* Linha 2 */}
                     <div className="flex gap-4 animate-[marquee_70s_linear_infinite] w-max ml-[-100px] md:ml-[-200px]" style={{ animationDirection: 'reverse' }}>
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
-                            <div key={i} className="w-28 md:w-56 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
+                            <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
                                 <img src={img} className="w-full h-full object-cover" />
                             </div>
                         ))}
                     </div>
-                    <div className="flex gap-4 animate-[marquee_60s_linear_infinite] w-max ml-[50px] md:ml-[100px]">
+                    {/* Linha 3 (Acelerada no mobile) */}
+                    <div className="flex gap-4 animate-[marquee_40s_linear_infinite] md:animate-[marquee_60s_linear_infinite] w-max ml-[50px] md:ml-[100px]">
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
-                            <div key={i} className="w-28 md:w-56 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
+                            <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
                                 <img src={img} className="w-full h-full object-cover" />
                             </div>
                         ))}
@@ -234,7 +236,7 @@ export const Products: React.FC = () => {
                 </div>
             </div>
 
-            {/* Sensor de Rodapé — Ajustado para evitar sumiço precoce */}
+            {/* Sensor de Rodapé */}
             <div ref={footerSensorRef} className="h-20 w-full pointer-events-none" />
 
             {/* DOCK MOBILE */}
