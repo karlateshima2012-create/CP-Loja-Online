@@ -43,7 +43,6 @@ export const Products: React.FC = () => {
             ([entry]) => setIsVisible(!entry.isIntersecting),
             { threshold: 0.1 }
         );
-
         if (footerSensorRef.current) observer.observe(footerSensorRef.current);
 
         const handleViewportChange = () => {
@@ -124,13 +123,14 @@ export const Products: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col overflow-x-hidden">
             
-            {/* HERO SECTION — VOLTANDO PARA A ANIMAÇÃO ESTÁVEL */}
+            {/* HERO SECTION — VELOCIDADE TURBO E EFEITOS DE LUZ */}
             <section
                 id="hero"
-                className="relative min-h-[75vh] flex items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-[#020617]"
+                className="relative min-h-[80vh] flex items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-[#020617]"
             >
+                {/* Estrelas e Luz Pulsante no Canto Esquerdo */}
                 <Starfield />
-                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-brand-blue/5 rounded-full blur-[150px] -z-10 pointer-events-none"></div>
+                <div className="absolute top-20 left-10 w-[400px] h-[400px] bg-brand-blue/10 rounded-full blur-[150px] animate-pulse -z-10 pointer-events-none"></div>
 
                 <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
                     <div className="text-left animate-fade-in-up">
@@ -145,13 +145,14 @@ export const Products: React.FC = () => {
                         </p>
                     </div>
 
-                    <div className="hidden md:block relative h-[500px] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
-                        <div className="grid grid-cols-3 gap-4 h-full">
+                    {/* GALERIA CACHOEIRA — VELOCIDADE ACELERADA */}
+                    <div className="hidden md:block relative h-[550px] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
+                        <div className="grid grid-cols-3 gap-5 h-full">
                             {[1, 2, 3].map((col) => (
-                                <div key={col} className={`flex flex-col gap-4 animate-[marquee-vertical_${30 + col * 10}s_linear_infinite] ${col === 2 ? 'mt-[-50px] [animation-direction:reverse]' : ''}`}>
-                                    {[...galleryImages, ...galleryImages].map((img, i) => (
-                                        <div key={i} className="aspect-[4/5] bg-slate-900 rounded-2xl overflow-hidden border border-white/5">
-                                            <img src={img} className="w-full h-full object-cover opacity-40 hover:opacity-100 transition-opacity" />
+                                <div key={col} className={`flex flex-col gap-5 animate-[marquee-vertical_${12 + col * 4}s_linear_infinite] ${col === 2 ? 'mt-[-50px] [animation-direction:reverse]' : ''}`}>
+                                    {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
+                                        <div key={i} className="aspect-[4/5] bg-slate-900 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
+                                            <img src={img} className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity" />
                                         </div>
                                     ))}
                                 </div>
