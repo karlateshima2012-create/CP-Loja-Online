@@ -39,19 +39,13 @@ export const Products: React.FC = () => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
 
-        // 1. SENSOR DE RODAPÉ (Intersection Observer)
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsVisible(!entry.isIntersecting);
-            },
+            ([entry]) => setIsVisible(!entry.isIntersecting),
             { threshold: 0.1 }
         );
 
-        if (footerSensorRef.current) {
-            observer.observe(footerSensorRef.current);
-        }
+        if (footerSensorRef.current) observer.observe(footerSensorRef.current);
 
-        // 2. DETECÇÃO DE TECLADO (Visual Viewport API — Especial para iPhone)
         const handleViewportChange = () => {
             if (window.visualViewport) {
                 const offset = window.innerHeight - window.visualViewport.height;
@@ -73,7 +67,6 @@ export const Products: React.FC = () => {
         };
     }, []);
 
-    // Efeito de scroll ao mudar filtros
     useEffect(() => {
         const anchor = document.getElementById('product-grid-anchor');
         if (anchor && (catParam !== 'Todos' || subParam || searchTerm)) {
@@ -131,7 +124,7 @@ export const Products: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col overflow-x-hidden">
             
-            {/* HERO SECTION */}
+            {/* HERO SECTION — NOVAS HEADLINES */}
             <section
                 id="hero"
                 className="relative min-h-[75vh] flex items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-[#020617]"
@@ -142,14 +135,13 @@ export const Products: React.FC = () => {
                 <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
                     <div className="text-left animate-fade-in-up">
                         <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight tracking-tighter">
-                            A melhor<br/>
+                            Encontre a solução<br/>
                             <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">
-                                experiência digital
-                            </span><br/>
-                            para o seu negócio.
+                                ideal para o seu negócio.
+                            </span>
                         </h1>
                         <p className="text-lg md:text-xl text-slate-400 font-medium max-w-lg leading-relaxed">
-                            NFC, Impressão 3D e Sistemas SaaS integrados em uma solução única e inovadora.
+                            Crie presença digital, conecte clientes com NFC e automatize seu atendimento.
                         </p>
                     </div>
 
@@ -192,30 +184,30 @@ export const Products: React.FC = () => {
                 </div>
             </div>
 
-            {/* SENSOR DE RODAPÉ (Invisível) */}
+            {/* SENSOR DE RODAPÉ */}
             <div ref={footerSensorRef} className="h-1 w-full -mt-20 pointer-events-none" />
 
             {/* ============================================================
-                DOCK MENU (Sincronizado com Teclado e Auto-Hide)
+                DOCK MENU (REESTRUTURADO PARA DESKTOP E MOBILE)
             ============================================================ */}
             <div
                 style={{ 
                     transform: `translateY(${isVisible ? (keyboardOffset > 0 ? -keyboardOffset + 10 : 0) : '100%'}px)`,
                     opacity: isVisible ? 1 : 0
                 }}
-                className={`fixed md:relative bottom-0 md:bottom-auto left-0 right-0 md:w-full z-50 md:z-40 bg-[#03081a]/98 backdrop-blur-3xl border-t border-brand-blue/60 md:border-x-0 md:border-y shadow-[0_-20px_60px_rgba(0,0,0,0.9)] md:shadow-none rounded-t-[2.5rem] md:rounded-none transition-all duration-300 ease-out`}
+                className={`fixed md:relative bottom-0 md:bottom-auto left-0 right-0 md:w-full z-50 md:z-40 bg-[#03081a]/98 backdrop-blur-3xl border-t border-brand-blue/60 md:border-t-0 md:border-b md:border-white/5 shadow-[0_-20px_60px_rgba(0,0,0,0.9)] md:shadow-none rounded-t-[2.5rem] md:rounded-none transition-all duration-300 ease-out`}
             >
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/10 via-transparent to-brand-blue/5 pointer-events-none rounded-t-[2.5rem] md:rounded-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/10 via-transparent to-brand-blue/5 pointer-events-none rounded-t-[2.5rem] md:rounded-none md:hidden"></div>
                 
-                <div className="container mx-auto px-4 py-6 md:py-8 relative z-10 pb-[env(safe-area-inset-bottom,20px)]">
-                    <div className="flex flex-col gap-5 max-w-5xl mx-auto">
+                <div className="container mx-auto px-4 py-6 md:py-10 relative z-10 pb-[env(safe-area-inset-bottom,20px)]">
+                    <div className="flex flex-col gap-6 max-w-5xl mx-auto">
                         
-                        {/* Linha 1: Categorias */}
-                        <div className="grid grid-cols-5 gap-3 w-full">
+                        {/* Linha 1: 4 Botões (Impressão, NFC, Soluções, Todos) */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full">
                             <button
                                 onClick={() => handleCategoryChange('Todos')}
-                                className={`h-14 flex items-center justify-center rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all border-2 ${
-                                    catParam === 'Todos' ? 'bg-white text-slate-950 border-white shadow-xl' : 'bg-slate-900/60 border-white/10 text-white/80'
+                                className={`h-14 flex items-center justify-center rounded-2xl text-[10px] md:text-sm font-black uppercase tracking-widest transition-all border-2 ${
+                                    catParam === 'Todos' ? 'bg-white text-slate-950 border-white shadow-xl' : 'bg-slate-900/60 border-white/10 text-white/80 hover:border-brand-blue/40'
                                 }`}
                             >
                                 Todos
@@ -225,52 +217,56 @@ export const Products: React.FC = () => {
                                 <button
                                     key={cat.id}
                                     onClick={() => handleCategoryChange(cat.id)}
-                                    className={`h-14 flex flex-col md:flex-row items-center justify-center gap-1.5 rounded-2xl text-[9px] md:text-xs font-black uppercase tracking-widest transition-all border-2 ${
-                                        catParam === cat.id ? 'bg-brand-blue border-brand-blue text-slate-950 shadow-xl' : 'bg-slate-900/60 border-white/10 text-white/80'
+                                    className={`h-14 flex flex-col md:flex-row items-center justify-center gap-2 rounded-2xl text-[9px] md:text-sm font-black uppercase tracking-widest transition-all border-2 ${
+                                        catParam === cat.id ? 'bg-brand-blue border-brand-blue text-slate-950 shadow-xl' : 'bg-slate-900/60 border-white/10 text-white/80 hover:border-brand-blue/40'
                                     }`}
                                 >
                                     <cat.icon size={20} />
-                                    <span className="hidden md:inline">{cat.label}</span>
-                                    <span className="md:hidden text-[8px] leading-tight text-center">{cat.label.split(' ')[0]}</span>
+                                    <span>{cat.label}</span>
                                 </button>
                             ))}
-
-                            <button
-                                onClick={() => setIsSearchExpanded(!isSearchExpanded)}
-                                className={`h-14 flex items-center justify-center rounded-2xl transition-all border-2 ${
-                                    isSearchExpanded ? 'bg-brand-blue border-brand-blue text-slate-950' : 'bg-slate-900/80 border-brand-blue/40 text-brand-blue'
-                                }`}
-                            >
-                                <Search size={24} />
-                            </button>
                         </div>
 
-                        {/* Linha 2: Busca */}
-                        {isSearchExpanded && (
-                            <div className="animate-fade-in-up w-full">
-                                <div className="relative group">
-                                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-blue" size={20} />
-                                    <input
-                                        autoFocus
-                                        type="text"
-                                        placeholder="BUSCAR PRODUTOS, CHAVEIROS, SISTEMAS..."
-                                        value={searchTerm}
-                                        onChange={e => handleSearch(e.target.value)}
-                                        className="w-full h-16 bg-slate-900 text-white text-sm pl-16 pr-12 border-2 border-brand-blue/50 rounded-2xl outline-none focus:border-brand-blue font-black uppercase tracking-widest placeholder-slate-600 shadow-xl"
-                                    />
-                                    {searchTerm && (
-                                        <button onClick={() => handleSearch('')} className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400">
-                                            <X size={18} />
-                                        </button>
-                                    )}
-                                </div>
+                        {/* Linha 2: Campo de Busca Permanente no Desktop, Expansível no Mobile */}
+                        <div className="w-full">
+                            {/* No mobile o botão Search alterna a visibilidade deste campo, no Desktop ele é fixo */}
+                            <div className="md:hidden flex justify-center mb-2">
+                                <button
+                                    onClick={() => setIsSearchExpanded(!isSearchExpanded)}
+                                    className={`h-12 w-full flex items-center justify-center rounded-2xl transition-all border-2 ${
+                                        isSearchExpanded ? 'bg-brand-blue border-brand-blue text-slate-950' : 'bg-slate-900/80 border-brand-blue/40 text-brand-blue'
+                                    }`}
+                                >
+                                    <Search size={22} className="mr-2" /> {isSearchExpanded ? 'Fechar Busca' : 'Buscar Produtos'}
+                                </button>
                             </div>
-                        )}
+
+                            {(isSearchExpanded || window.innerWidth > 768) && (
+                                <div className="animate-fade-in-up w-full">
+                                    <div className="relative group">
+                                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-blue" size={20} />
+                                        <input
+                                            autoFocus={isSearchExpanded}
+                                            type="text"
+                                            placeholder="BUSCAR PRODUTOS, CHAVEIROS, SISTEMAS..."
+                                            value={searchTerm}
+                                            onChange={e => handleSearch(e.target.value)}
+                                            className="w-full h-16 bg-slate-900/80 md:bg-slate-900/40 text-white text-sm pl-16 pr-12 border-2 border-brand-blue/30 md:border-white/10 rounded-2xl outline-none focus:border-brand-blue font-black uppercase tracking-widest placeholder-slate-600 transition-all"
+                                        />
+                                        {searchTerm && (
+                                            <button onClick={() => handleSearch('')} className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400">
+                                                <X size={18} />
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Subcategorias */}
                     {!isSearchExpanded && activeCategoryData && activeCategoryData.subcategories.length > 0 && (
-                        <div className="flex flex-wrap items-center justify-center gap-3 mt-6 pt-6 border-t border-brand-blue/30 animate-fade-in">
+                        <div className="flex flex-wrap items-center justify-center gap-3 mt-6 pt-6 border-t border-brand-blue/30 md:border-white/10 animate-fade-in">
                             {activeCategoryData.subcategories.map(sub => (
                                 <button
                                     key={sub}
