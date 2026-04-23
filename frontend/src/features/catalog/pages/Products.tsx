@@ -155,7 +155,7 @@ export const Products: React.FC = () => {
                 </div>
 
                 {/* CARROSSEL MULTI-LINHA (AJUSTE FINAL DE BRILHO E VELOCIDADE) */}
-                <div className="w-full flex flex-col gap-4 md:gap-8 opacity-65 md:opacity-30 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+                <div className="w-full flex flex-col gap-4 md:gap-8 opacity-50 md:opacity-30 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
                     {/* Linha 1 - Moderada */}
                     <div className="flex gap-4 animate-[marquee_60s_linear_infinite] w-max">
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
