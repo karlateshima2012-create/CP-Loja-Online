@@ -25,7 +25,6 @@ export enum OrderStatus {
   CANCELLED = 'CANCELLED'
 }
 
-
 export enum ConnectPlan {
   FREE = 'FREE',
   PRO = 'PRO',
@@ -39,8 +38,6 @@ export enum TestimonialSource {
   EMAIL = 'EMAIL',
   STORE = 'LOJA_VIRTUAL'
 }
-
-// --- CREATIVE FLIX / PAGE BUILDER TYPES ---
 
 export type FlixButtonStyle = 'solid' | 'outline' | 'glass' | 'hard-shadow' | 'soft-shadow';
 export type FlixButtonShape = 'rounded' | 'pill' | 'square' | 'sharp';
@@ -173,7 +170,6 @@ export interface ConnectPage {
   active: boolean;
 }
 
-
 export interface PriceTier {
   quantity: number;
   totalPrice: number;
@@ -250,7 +246,6 @@ export interface Order {
   trackingCode?: string;
   stockDeducted?: boolean;
 }
-
 
 export interface AdminUser {
   id: string;

@@ -59,7 +59,6 @@ export const ProductsManager: React.FC = () => {
                 </button>
             </div>
 
-            {/* Busca */}
             <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                 <input 
@@ -71,7 +70,6 @@ export const ProductsManager: React.FC = () => {
                 />
             </div>
 
-            {/* Grid de Produtos */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {filteredProducts.map(product => (
                     <div key={product.id} className="bg-slate-900 rounded-3xl border border-slate-800 overflow-hidden group">
@@ -99,7 +97,6 @@ export const ProductsManager: React.FC = () => {
                 ))}
             </div>
 
-            {/* Modal de Edição */}
             {isModalOpen && editingProduct && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={() => setIsModalOpen(false)}></div>
@@ -113,82 +110,37 @@ export const ProductsManager: React.FC = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Nome do Produto</label>
-                                    <input 
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none"
-                                        value={editingProduct.name}
-                                        onChange={(e) => setEditingProduct({...editingProduct, name: e.target.value})}
-                                    />
+                                    <input className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none" value={editingProduct.name} onChange={(e) => setEditingProduct({...editingProduct, name: e.target.value})} />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Preço Base (¥)</label>
-                                    <input 
-                                        type="number"
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none"
-                                        value={editingProduct.price}
-                                        onChange={(e) => setEditingProduct({...editingProduct, price: Number(e.target.value)})}
-                                    />
+                                    <input type="number" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none" value={editingProduct.price} onChange={(e) => setEditingProduct({...editingProduct, price: Number(e.target.value)})} />
                                 </div>
                             </div>
-
                             <div className="space-y-2">
                                 <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Categoria</label>
-                                <select 
-                                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none appearance-none"
-                                    value={editingProduct.category}
-                                    onChange={(e) => setEditingProduct({...editingProduct, category: e.target.value})}
-                                >
+                                <select className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none appearance-none" value={editingProduct.category} onChange={(e) => setEditingProduct({...editingProduct, category: e.target.value})}>
                                     <option value="Impressão 3D">Impressão 3D</option>
                                     <option value="Tecnologia NFC">Tecnologia NFC</option>
                                     <option value="Soluções Digitais">Soluções Digitais</option>
                                 </select>
                             </div>
-
                             <div className="space-y-2">
                                 <label className="text-xs font-black text-slate-500 uppercase tracking-widest">URL da Imagem</label>
-                                <div className="flex gap-2">
-                                    <input 
-                                        className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none"
-                                        value={editingProduct.imageUrl}
-                                        onChange={(e) => setEditingProduct({...editingProduct, imageUrl: e.target.value})}
-                                    />
-                                    <div className="w-12 h-12 bg-slate-950 border border-slate-800 rounded-xl overflow-hidden flex items-center justify-center">
-                                        {editingProduct.imageUrl ? <img src={editingProduct.imageUrl} className="w-full h-full object-cover" /> : <ImageIcon className="text-slate-700" size={20} />}
-                                    </div>
-                                </div>
+                                <input className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none" value={editingProduct.imageUrl} onChange={(e) => setEditingProduct({...editingProduct, imageUrl: e.target.value})} />
                             </div>
-
                             <div className="space-y-2">
                                 <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Descrição</label>
-                                <textarea 
-                                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none h-32"
-                                    value={editingProduct.description}
-                                    onChange={(e) => setEditingProduct({...editingProduct, description: e.target.value})}
-                                />
+                                <textarea className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none h-32" value={editingProduct.description} onChange={(e) => setEditingProduct({...editingProduct, description: e.target.value})} />
                             </div>
-
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                                <button 
-                                    onClick={() => setEditingProduct({...editingProduct, isCustomizable: !editingProduct.isCustomizable})}
-                                    className={`p-4 rounded-xl border transition-all flex items-center gap-3 ${editingProduct.isCustomizable ? 'bg-brand-pink/10 border-brand-pink text-brand-pink' : 'bg-slate-950 border-slate-800 text-slate-600'}`}
-                                >
-                                    <PenTool size={20} />
-                                    <span className="font-bold text-sm uppercase">Personalizável</span>
-                                </button>
-                                <button 
-                                    onClick={() => setEditingProduct({...editingProduct, includesFreePage: !editingProduct.includesFreePage})}
-                                    className={`p-4 rounded-xl border transition-all flex items-center gap-3 ${editingProduct.includesFreePage ? 'bg-brand-yellow/10 border-brand-yellow text-brand-yellow' : 'bg-slate-950 border-slate-800 text-slate-600'}`}
-                                >
-                                    <Gift size={20} />
-                                    <span className="font-bold text-sm uppercase">Bônus CP Flix</span>
-                                </button>
+                                <button onClick={() => setEditingProduct({...editingProduct, isCustomizable: !editingProduct.isCustomizable})} className={`p-4 rounded-xl border transition-all flex items-center gap-3 ${editingProduct.isCustomizable ? 'bg-brand-pink/10 border-brand-pink text-brand-pink' : 'bg-slate-950 border-slate-800 text-slate-600'}`}><PenTool size={20} /><span className="font-bold text-sm uppercase">Personalizável</span></button>
+                                <button onClick={() => setEditingProduct({...editingProduct, includesFreePage: !editingProduct.includesFreePage})} className={`p-4 rounded-xl border transition-all flex items-center gap-3 ${editingProduct.includesFreePage ? 'bg-brand-yellow/10 border-brand-yellow text-brand-yellow' : 'bg-slate-950 border-slate-800 text-slate-600'}`}><Gift size={20} /><span className="font-bold text-sm uppercase">Bônus CP Flix</span></button>
                             </div>
                         </div>
-
                         <div className="sticky bottom-0 bg-slate-900 border-t border-slate-800 p-8 flex justify-end gap-4">
                             <button onClick={() => setIsModalOpen(false)} className="px-6 py-2.5 rounded-xl font-bold text-slate-500 hover:text-white transition-all uppercase tracking-widest text-xs">Cancelar</button>
-                            <button onClick={handleSave} className="bg-brand-blue text-slate-950 px-8 py-2.5 rounded-xl font-black uppercase tracking-widest text-xs flex items-center gap-2 shadow-lg shadow-brand-blue/30 hover:scale-105 transition-all">
-                                <Save size={18} /> Salvar Alterações
-                            </button>
+                            <button onClick={handleSave} className="bg-brand-blue text-slate-950 px-8 py-2.5 rounded-xl font-black uppercase tracking-widest text-xs flex items-center gap-2 shadow-lg shadow-brand-blue/30 hover:scale-105 transition-all"><Save size={18} /> Salvar Alterações</button>
                         </div>
                     </div>
                 </div>
