@@ -117,9 +117,22 @@ export const Products: React.FC = () => {
                 ))}
             </section>
 
-            {/* PRODUCT GRID */}
-            <section className="container mx-auto px-6 py-12 pb-32 relative z-10">
-                <div className="w-full h-px bg-white/5 mb-12"></div>
+            {/* PRODUCT GRID - SWISS MINIMALIST HEADER */}
+            <section className="container mx-auto px-6 pt-24 pb-32 relative z-10">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16 animate-fade-in">
+                    <div className="space-y-2">
+                        <span className="text-brand-blue font-black uppercase tracking-[0.5em] text-[10px] block opacity-80">Premium Collection</span>
+                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-[-0.05em] leading-none text-white">
+                            Catálogo
+                        </h2>
+                    </div>
+                    <div className="flex items-center gap-4 text-slate-500">
+                        <div className="h-px w-12 bg-white/10 hidden md:block"></div>
+                        <span className="text-[10px] font-mono font-bold tracking-widest uppercase">
+                            [ {filteredProducts.length} itens disponíveis ]
+                        </span>
+                    </div>
+                </div>
 
                 {filteredProducts.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
