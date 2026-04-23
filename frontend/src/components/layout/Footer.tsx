@@ -195,14 +195,7 @@ export const Footer: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-20 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-                                <div className="flex gap-4">
-                                    <div className="flex flex-col"><span className="text-white font-black text-3xl">100%</span><span className="text-slate-500 text-xs uppercase font-bold tracking-widest">Digital & Físico</span></div>
-                                    <div className="w-px h-10 bg-white/10"></div>
-                                    <div className="flex flex-col"><span className="text-white font-black text-3xl">Japão</span><span className="text-slate-500 text-xs uppercase font-bold tracking-widest">Sede em Nagoya</span></div>
-                                </div>
-                                <button onClick={() => setIsAboutModalOpen(false)} className="w-full md:w-auto bg-white text-slate-950 font-black uppercase tracking-widest px-12 py-5 rounded-2xl shadow-2xl hover:scale-105 transition-all">Fechar História</button>
-                            </div>
+                            {/* Seção de estatísticas e botão removidos para um visual mais limpo */}
                         </div>
                     </div>
                 </div>
