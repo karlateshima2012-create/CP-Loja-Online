@@ -40,28 +40,40 @@ export const Products: React.FC = () => {
     
     const footerSensorRef = useRef<HTMLDivElement>(null);
 
+    // Função para checar se a página é curta e forçar visibilidade do Dock
+    const checkVisibility = () => {
+        const isShortPage = document.documentElement.scrollHeight <= window.innerHeight + 150;
+        if (isShortPage) {
+            setIsVisible(true);
+        }
+    };
+
     useEffect(() => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
 
         const observer = new IntersectionObserver(
             ([entry]) => {
-                const isShortPage = document.body.scrollHeight <= window.innerHeight + 100;
+                const isShortPage = document.documentElement.scrollHeight <= window.innerHeight + 150;
                 if (isShortPage) {
                     setIsVisible(true);
                 } else {
                     setIsVisible(!entry.isIntersecting);
                 }
             },
-            { threshold: 0.5 }
+            { threshold: 0.1 }
         );
         
         if (footerSensorRef.current) observer.observe(footerSensorRef.current);
 
         const handleViewportChange = () => {
             if (window.visualViewport) {
+                // No mobile, o teclado muda o visualViewport.height
                 const offset = window.innerHeight - window.visualViewport.height;
                 setKeyboardOffset(offset > 0 ? offset : 0);
+                
+                // Força visibilidade se o teclado estiver aberto
+                if (offset > 0) setIsVisible(true);
             }
         };
 
@@ -78,6 +90,11 @@ export const Products: React.FC = () => {
             }
         };
     }, []);
+
+    // Re-checar visibilidade toda vez que os produtos filtrados mudarem (ex: clicar em Soluções)
+    useEffect(() => {
+        setTimeout(checkVisibility, 100);
+    }, [catParam, subParam, searchTerm]);
 
     useEffect(() => {
         const anchor = document.getElementById('product-grid-anchor');
@@ -154,9 +171,8 @@ export const Products: React.FC = () => {
                     </div>
                 </div>
 
-                {/* CARROSSEL MULTI-LINHA (AJUSTE FINAL DE BRILHO E VELOCIDADE) */}
+                {/* CARROSSEL MULTI-LINHA */}
                 <div className="w-full flex flex-col gap-4 md:gap-8 opacity-50 md:opacity-30 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-                    {/* Linha 1 - Moderada */}
                     <div className="flex gap-4 animate-[marquee_60s_linear_infinite] w-max">
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
                             <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
@@ -164,7 +180,6 @@ export const Products: React.FC = () => {
                             </div>
                         ))}
                     </div>
-                    {/* Linha 2 - Lenta (Sentido Inverso) */}
                     <div className="flex gap-4 animate-[marquee_80s_linear_infinite] w-max ml-[-100px] md:ml-[-200px]" style={{ animationDirection: 'reverse' }}>
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
                             <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
@@ -172,7 +187,6 @@ export const Products: React.FC = () => {
                             </div>
                         ))}
                     </div>
-                    {/* Linha 3 - Rápida (30s Global) */}
                     <div className="flex gap-4 animate-[marquee_30s_linear_infinite] w-max ml-[50px] md:ml-[100px]">
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
                             <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
@@ -185,7 +199,7 @@ export const Products: React.FC = () => {
 
             <div id="product-grid-anchor" className="h-0" />
 
-            {/* DIVISOR GRADIENTE E CATEGORIAS */}
+            {/* CATALOGO E DOCK */}
             <div className="relative w-full bg-[#020617] pt-1">
                 <div className="w-full h-[2px] bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue opacity-80 mb-8 shadow-[0_0_15px_rgba(56,182,255,0.3)]"></div>
                 
@@ -200,7 +214,6 @@ export const Products: React.FC = () => {
                                 ))}
                             </div>
 
-                            {/* SUBCATEGORIAS DESKTOP */}
                             {availableSubcategories.length > 0 && (
                                 <div className="flex flex-wrap items-center gap-2 animate-fade-in">
                                     {availableSubcategories.map(sub => (
@@ -217,7 +230,6 @@ export const Products: React.FC = () => {
                 </div>
             </div>
 
-            {/* CATALOGO */}
             <div className="container mx-auto px-6 py-12 md:py-16 pb-48 flex-grow">
                 <div className="flex items-center gap-3 mb-10 animate-fade-in">
                     <div className="w-2 h-2 rounded-full bg-brand-blue shadow-[0_0_10px_rgba(56,182,255,0.8)]"></div>
@@ -228,54 +240,52 @@ export const Products: React.FC = () => {
                         <ProductCard key={product.id} product={product} />
                     ))}
                 </div>
-                <div className="hidden md:flex justify-center mt-20">
-                    <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="group flex flex-col items-center gap-4 text-white/30 hover:text-brand-blue transition-all duration-500">
-                        <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-brand-blue transition-all"><ArrowLeft className="rotate-90" size={20} /></div>
-                        <span className="text-[10px] font-black uppercase tracking-[0.3em]">Voltar ao Topo</span>
-                    </button>
-                </div>
             </div>
 
             {/* Sensor de Rodapé */}
-            <div ref={footerSensorRef} className="h-20 w-full pointer-events-none" />
+            <div ref={footerSensorRef} className="h-40 w-full pointer-events-none" />
 
-            {/* DOCK MOBILE */}
+            {/* DOCK MOBILE (CORREÇÃO DE RESPONSIVIDADE E TECLADO) */}
             <div
                 style={{ 
-                    transform: `translateY(${isVisible ? (keyboardOffset > 0 ? -keyboardOffset + 10 : 0) : '100%'}px)`,
+                    bottom: keyboardOffset > 0 ? `${keyboardOffset}px` : '0',
+                    transform: `translateY(${isVisible ? '0' : '100%'})`,
                     opacity: isVisible ? 1 : 0
                 }}
-                className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#03081a]/98 backdrop-blur-3xl border-t border-brand-blue/60 rounded-t-[2.5rem] transition-all duration-300 ease-out"
+                className="md:hidden fixed left-0 right-0 z-[100] bg-[#03081a]/98 backdrop-blur-3xl border-t border-brand-blue/60 rounded-t-[2.5rem] transition-all duration-300 ease-out pb-[env(safe-area-inset-bottom,12px)]"
             >
-                <div className="container mx-auto px-4 py-4 pb-[env(safe-area-inset-bottom,12px)]">
+                <div className="container mx-auto px-4 py-4">
                     <div className="flex flex-col gap-4">
-                        {/* Subcategorias Mobile */}
+                        {/* Subcategorias Mobile (Mais Claras) */}
                         {availableSubcategories.length > 0 && (
                             <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar animate-fade-in">
                                 {availableSubcategories.map(sub => (
-                                    <button key={sub} onClick={() => handleSubcategoryChange(sub)} className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[9px] font-black border transition-all ${subParam === sub ? 'bg-brand-pink border-brand-pink text-white' : 'bg-slate-900 border-white/10 text-white/50'}`}>{sub}</button>
+                                    <button key={sub} onClick={() => handleSubcategoryChange(sub)} className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[9px] font-black border transition-all ${subParam === sub ? 'bg-brand-pink border-brand-pink text-white' : 'bg-slate-900 border-white/20 text-white/70'}`}>{sub}</button>
                                 ))}
                             </div>
                         )}
 
+                        {/* Ícones e Categorias (Mais Claras) */}
                         <div className="flex items-center justify-between gap-1">
-                            <button onClick={() => handleCategoryChange('Todos')} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${catParam === 'Todos' ? 'text-brand-blue' : 'text-white/40'}`}>
+                            <button onClick={() => handleCategoryChange('Todos')} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${catParam === 'Todos' ? 'text-brand-blue' : 'text-white/70'}`}>
                                 <Filter size={18} /><span className="text-[8px] font-black uppercase tracking-tighter">Todos</span>
                             </button>
                             {CATEGORIES.map(cat => {
                                 const isActive = catParam === cat.id;
                                 return (
-                                    <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${isActive ? 'text-brand-blue' : 'text-white/40'}`}>
+                                    <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${isActive ? 'text-brand-blue' : 'text-white/70'}`}>
                                         <cat.icon size={18} /><span className="text-[8px] font-black uppercase tracking-tighter leading-none text-center">{cat.label.split(' ')[0]}</span>
                                     </button>
                                 );
                             })}
-                            <button onClick={() => setIsSearchExpanded(!isSearchExpanded)} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${isSearchExpanded ? 'text-brand-blue' : 'text-white/40'}`}>
+                            <button onClick={() => setIsSearchExpanded(!isSearchExpanded)} className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 rounded-xl transition-all ${isSearchExpanded ? 'text-brand-blue' : 'text-white/70'}`}>
                                 <Search size={18} /><span className="text-[8px] font-black uppercase tracking-tighter">Busca</span>
                             </button>
                         </div>
                         {isSearchExpanded && (
-                            <input autoFocus type="text" placeholder="BUSCAR PRODUTOS..." value={searchTerm} onChange={e => handleSearch(e.target.value)} className="w-full h-11 bg-slate-900 text-white text-xs px-4 border border-brand-blue/50 rounded-xl outline-none" />
+                            <div className="animate-fade-in-up">
+                                <input autoFocus type="text" placeholder="BUSCAR PRODUTOS..." value={searchTerm} onChange={e => handleSearch(e.target.value)} className="w-full h-12 bg-slate-900 text-white text-xs px-4 border border-brand-blue/50 rounded-xl outline-none shadow-[0_0_20px_rgba(56,182,255,0.2)]" />
+                            </div>
                         )}
                     </div>
                 </div>
