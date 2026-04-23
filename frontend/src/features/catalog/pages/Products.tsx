@@ -35,12 +35,19 @@ export const Products: React.FC = () => {
 
     const [isDockDismissed, setIsDockDismissed] = useState(false);
 
+    const lastScrollY = useRef(0);
+
     useEffect(() => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
 
         const observer = new IntersectionObserver(
             ([entry]) => {
+                // Se sair do rodapé (entry.isIntersecting === false), reativa o dock
+                if (!entry.isIntersecting) {
+                    setIsDockDismissed(false);
+                }
+
                 if (isSearchExpanded || isDockDismissed) {
                     if (isDockDismissed) setIsVisible(false);
                     else setIsVisible(true);
@@ -54,7 +61,26 @@ export const Products: React.FC = () => {
         );
         
         if (footerSensorRef.current) observer.observe(footerSensorRef.current);
-        return () => observer.disconnect();
+
+        // Lógica de Scroll Up (Rolar para cima faz o dock voltar)
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            const deltaY = currentScrollY - lastScrollY.current;
+
+            // Se rolar para cima (deltaY < 0) e não estiver no topo absoluto
+            if (deltaY < -10 && currentScrollY > 100) {
+                setIsDockDismissed(false);
+            }
+            
+            lastScrollY.current = currentScrollY;
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, [isSearchExpanded, isDockDismissed]);
 
     // Re-habilitar o dock ao mudar de filtros
