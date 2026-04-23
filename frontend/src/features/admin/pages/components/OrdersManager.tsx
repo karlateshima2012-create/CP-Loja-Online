@@ -153,9 +153,18 @@ export const OrdersManager: React.FC = () => {
                 </div>
 
                 {view === 'ORDERS' && (
-                    <div className="flex gap-4 w-full md:w-auto">
-                        <input className="w-full md:w-64 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-brand-blue" placeholder="Buscar pedido, cliente..." value={search} onChange={e => setSearch(e.target.value)} />
-                        <select className="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-brand-blue" value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+                    <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+                        <input 
+                            className="w-full md:w-64 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-brand-blue" 
+                            placeholder="Buscar pedido, cliente..." 
+                            value={search} 
+                            onChange={e => setSearch(e.target.value)} 
+                        />
+                        <select 
+                            className="w-full md:w-auto bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-brand-blue appearance-none" 
+                            value={filterStatus} 
+                            onChange={e => setFilterStatus(e.target.value)}
+                        >
                             <option value="all">Todos os Status</option>
                             {Object.values(OrderStatus).map(s => <option key={s} value={s}>{translateStatus(s)}</option>)}
                         </select>
