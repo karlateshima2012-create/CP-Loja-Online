@@ -236,7 +236,7 @@ export const Products: React.FC = () => {
             >
                 <div className="container mx-auto px-4 py-4 pb-[env(safe-area-inset-bottom,12px)]">
                     <div className="flex flex-col gap-4">
-                        {/* Subcategorias Mobile (Aparecem flutuando acima dos botões principais) */}
+                        {/* Subcategorias Mobile */}
                         {availableSubcategories.length > 0 && (
                             <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar animate-fade-in">
                                 {availableSubcategories.map(sub => (
