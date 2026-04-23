@@ -12,35 +12,27 @@ export const CustomerDashboard: React.FC = () => {
     const [orders, setOrders] = useState<Order[]>([]);
     const [myReviews, setMyReviews] = useState<Testimonial[]>([]);
     const [myCoupons, setMyCoupons] = useState<Coupon[]>([]);
-    const [activeTab, setActiveTab] = useState<'orders' | 'profile' | 'coupons'>('orders');
+    const [activeTab, setActiveTab] = useState<'orders' | 'profile' | 'coupons' | 'pages'>('orders');
 
-    const [loadingId, setLoadingId] = useState<string | null>(null);
-    const [confirmingId, setConfirmingId] = useState<string | null>(null);
-    const [showThankYou, setShowThankYou] = useState(false);
+    // ... (rest of states)
 
-    const [isEditing, setIsEditing] = useState(false);
-    const [profileData, setProfileData] = useState<Partial<Customer>>({});
-
-    const [reviewModalOpen, setReviewModalOpen] = useState(false);
-    const [reviewOrderId, setReviewOrderId] = useState<string | null>(null);
-    const [reviewRating, setReviewRating] = useState(5);
-    const [reviewContent, setReviewContent] = useState('');
-    const [copiedId, setCopiedId] = useState<string | null>(null);
+    const [myPages, setMyPages] = useState<any[]>([]);
 
     useEffect(() => {
-        // Scroll to top on mount
-        window.scrollTo(0, 0);
-
-        if (user && user.id) {
-            const freshCustomer = mockService.getCustomerById(user.id);
-            if (freshCustomer) {
-                setProfileData({ ...freshCustomer });
-            }
-            loadOrders();
-            loadReviews();
-            loadCoupons();
+        // ... (previous effects)
+        if (user) {
+            loadPages();
         }
     }, [user]);
+
+    const loadPages = () => {
+        if (user) {
+            // Busca perfis Flix associados a este cliente (mock)
+            const allProfiles = mockService.getFlixProfiles();
+            // Em produção, filtraríamos por customerId. Aqui vamos simular:
+            setMyPages(allProfiles.slice(0, 1)); // Simula que o cliente tem 1 página
+        }
+    };
 
     const loadOrders = () => {
         if (user) {
@@ -202,6 +194,7 @@ export const CustomerDashboard: React.FC = () => {
                     </div>
                     <div className="space-y-2">
                         <button onClick={() => setActiveTab('orders')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeTab === 'orders' ? 'bg-brand-blue text-white shadow-lg shadow-brand-blue/20' : 'bg-slate-900 text-slate-400 hover:text-white'}`}><ShoppingBag size={18} /> Meus Pedidos</button>
+                        <button onClick={() => setActiveTab('pages')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeTab === 'pages' ? 'bg-brand-blue text-white shadow-lg shadow-brand-blue/20' : 'bg-slate-900 text-slate-400 hover:text-white'}`}><Globe size={18} /> Minhas Páginas</button>
                         <button onClick={() => setActiveTab('coupons')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeTab === 'coupons' ? 'bg-brand-blue text-white shadow-lg shadow-brand-blue/20' : 'bg-slate-900 text-slate-400 hover:text-white'}`}><Ticket size={18} /> Meus Cupons</button>
                         <button onClick={() => setActiveTab('profile')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeTab === 'profile' ? 'bg-brand-blue text-white shadow-lg shadow-brand-blue/20' : 'bg-slate-900 text-slate-400 hover:text-white'}`}><User size={18} /> Meus Dados</button>
                         <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-red-400 hover:bg-red-900/20 transition-all border border-transparent hover:border-red-900/50 mt-8"><LogOut size={18} /> LOGOUT</button>
@@ -324,6 +317,37 @@ export const CustomerDashboard: React.FC = () => {
                                                         <p className="text-sm text-white">{new Date(coupon.expirationDate).toLocaleDateString()}</p>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {activeTab === 'pages' && (
+                        <div className="space-y-6 animate-fade-in">
+                            <h2 className="text-2xl font-bold text-white mb-6">Minhas Páginas Digitais</h2>
+                            {myPages.length === 0 ? (
+                                <div className="bg-slate-900 p-12 rounded-3xl border border-slate-800 text-center">
+                                    <Globe size={48} className="text-slate-700 mx-auto mb-4" />
+                                    <p className="text-slate-400">Você ainda não possui nenhuma página CP Connect.</p>
+                                    <button onClick={() => navigate('/')} className="mt-4 text-brand-blue font-bold hover:underline">Comprar uma Página Digital</button>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 gap-4">
+                                    {myPages.map(page => (
+                                        <div key={page.id} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-16 h-16 bg-slate-800 rounded-xl overflow-hidden"><img src={page.profileImageUrl} className="w-full h-full object-cover" alt="" /></div>
+                                                <div>
+                                                    <h3 className="text-white font-bold text-lg">{page.displayName}</h3>
+                                                    <p className="text-brand-blue text-sm">creativprintjp.com/#/p/{page.slug}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex gap-3 w-full md:w-auto">
+                                                <button onClick={() => window.open(`/#/p/${page.slug}`, '_blank')} className="flex-1 md:flex-none bg-slate-800 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-slate-700 transition-all text-sm">Visualizar</button>
+                                                <button className="flex-1 md:flex-none bg-brand-blue text-slate-900 px-6 py-2.5 rounded-xl font-black hover:scale-105 transition-all text-sm uppercase tracking-widest">Editar Página</button>
                                             </div>
                                         </div>
                                     ))}
