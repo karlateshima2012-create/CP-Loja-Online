@@ -154,26 +154,26 @@ export const Products: React.FC = () => {
                     </div>
                 </div>
 
-                {/* CARROSSEL MULTI-LINHA (REFORÇADO) */}
-                <div className="w-full flex flex-col gap-4 md:gap-8 opacity-40 md:opacity-25 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
-                    {/* Linha 1 */}
-                    <div className="flex gap-4 animate-[marquee_50s_linear_infinite] w-max">
+                {/* CARROSSEL MULTI-LINHA (AJUSTE FINAL DE BRILHO E VELOCIDADE) */}
+                <div className="w-full flex flex-col gap-4 md:gap-8 opacity-65 md:opacity-30 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+                    {/* Linha 1 - Moderada */}
+                    <div className="flex gap-4 animate-[marquee_60s_linear_infinite] w-max">
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
                             <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
                                 <img src={img} className="w-full h-full object-cover" />
                             </div>
                         ))}
                     </div>
-                    {/* Linha 2 */}
-                    <div className="flex gap-4 animate-[marquee_70s_linear_infinite] w-max ml-[-100px] md:ml-[-200px]" style={{ animationDirection: 'reverse' }}>
+                    {/* Linha 2 - Lenta (Sentido Inverso) */}
+                    <div className="flex gap-4 animate-[marquee_80s_linear_infinite] w-max ml-[-100px] md:ml-[-200px]" style={{ animationDirection: 'reverse' }}>
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
                             <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
                                 <img src={img} className="w-full h-full object-cover" />
                             </div>
                         ))}
                     </div>
-                    {/* Linha 3 (Globalmente Acelerada em 40s) */}
-                    <div className="flex gap-4 animate-[marquee_40s_linear_infinite] w-max ml-[50px] md:ml-[100px]">
+                    {/* Linha 3 - Rápida (30s Global) */}
+                    <div className="flex gap-4 animate-[marquee_30s_linear_infinite] w-max ml-[50px] md:ml-[100px]">
                         {[...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
                             <div key={i} className="w-28 md:w-44 aspect-[4/5] bg-slate-900 rounded-xl overflow-hidden border border-white/5">
                                 <img src={img} className="w-full h-full object-cover" />
