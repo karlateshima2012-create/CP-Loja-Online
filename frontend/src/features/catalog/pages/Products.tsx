@@ -94,13 +94,16 @@ export const Products: React.FC = () => {
     };
 
     const filteredProducts = products.filter(p => {
-        const matchesSearch = searchTerm
-            ? p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              p.description?.toLowerCase().includes(searchTerm.toLowerCase())
-            : true;
+        // Se houver busca, ela tem prioridade total e ignora categoria/subcategoria
+        if (searchTerm) {
+            return p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                   p.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                   p.category.toLowerCase().includes(searchTerm.toLowerCase());
+        }
+
         const matchesCat = catParam === 'Todos' || p.category === catParam;
         const matchesSub = !subParam || (p as any).subcategory === subParam;
-        return matchesSearch && matchesCat && matchesSub;
+        return matchesCat && matchesSub;
     });
 
     const galleryImages = products.map(p => p.imageUrl);
@@ -171,13 +174,34 @@ export const Products: React.FC = () => {
             </div>
 
             <div className="container mx-auto px-6 py-12 md:py-16 pb-48 flex-grow">
-                <div className="flex items-center gap-3 mb-10 animate-fade-in">
-                    <div className="w-2 h-2 rounded-full bg-brand-blue shadow-[0_0_10px_rgba(56,182,255,0.8)]"></div>
-                    <h2 className="text-sm font-black uppercase tracking-[0.2em] text-white/50">Nossos Produtos</h2>
+                <div className="flex items-center justify-between mb-10 animate-fade-in">
+                    <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-brand-blue shadow-[0_0_10px_rgba(56,182,255,0.8)]"></div>
+                        <h2 className="text-sm font-black uppercase tracking-[0.2em] text-white/50">
+                            {searchTerm ? `Resultados para "${searchTerm}"` : 'Nossos Produtos'}
+                        </h2>
+                    </div>
+                    {searchTerm && (
+                        <button onClick={() => handleSearch('')} className="text-[10px] font-bold text-brand-pink uppercase tracking-widest flex items-center gap-1 hover:opacity-80">
+                            <X size={12} /> Limpar Busca
+                        </button>
+                    )}
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
-                    {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
-                </div>
+
+                {filteredProducts.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
+                        {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center justify-center py-20 text-center animate-fade-in">
+                        <div className="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center mb-6 border border-white/5">
+                            <Search size={32} className="text-slate-700" />
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-2">Nenhum produto encontrado</h3>
+                        <p className="text-slate-500 text-sm max-w-xs">Não encontramos nada para "{searchTerm}". Tente usar palavras-chave mais simples.</p>
+                        <button onClick={() => handleSearch('')} className="mt-8 text-brand-blue font-black uppercase tracking-widest text-xs border-b border-brand-blue/30 pb-1">Ver todos os produtos</button>
+                    </div>
+                )}
             </div>
 
             <div ref={footerSensorRef} className="h-40 w-full pointer-events-none" />
