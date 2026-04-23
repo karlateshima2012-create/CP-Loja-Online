@@ -62,13 +62,25 @@ export const Products: React.FC = () => {
         if (searchTerm) setIsSearchExpanded(true);
     }, []);
 
+    useEffect(() => {
+        if (searchTerm) setIsSearchExpanded(true);
+    }, []);
+
+    // EFEITO DE SCROLL AUTOMÁTICO PARA O TOPO DA VITRINE
+    useEffect(() => {
+        // Sempre que mudar Categoria, Subcategoria ou Busca, volta para o topo da vitrine
+        const anchor = document.getElementById('product-grid-anchor');
+        if (anchor) {
+            anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [catParam, subParam, searchTerm]);
+
     const handleCategoryChange = (cat: string) => {
         const p = new URLSearchParams();
         if (cat !== 'Todos') p.set('cat', cat);
         setSearchTerm('');
         setIsSearchExpanded(false);
         setSearchParams(p);
-        document.getElementById('product-grid-anchor')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     const handleSubcategoryChange = (sub: string) => {

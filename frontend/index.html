@@ -44,8 +44,13 @@
     }
   </script>
   <style>
-    /* 1. Cores e Fundo */
-    body { background-color: #020617; }
+    /* 1. Cores e Fundo - TRAVA DE MOVIMENTO LATERAL */
+    html, body { 
+        background-color: #020617; 
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
     
     /* 2. Animação das Estrelas (Twinkle) - EXATAMENTE COMO PEDIDO */
     @keyframes twinkle {
