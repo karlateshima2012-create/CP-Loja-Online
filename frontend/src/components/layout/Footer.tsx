@@ -29,9 +29,6 @@ export const Footer: React.FC = () => {
                             <Logo className="h-9" />
                             <h3 className="font-black text-2xl text-white tracking-tight">Creative Print</h3>
                         </div>
-                        <p className="text-brand-gray text-sm leading-relaxed">
-                            Revolucionando o mercado de empreendedores no Japão com tecnologia NFC, Impressão 3D e soluções digitais inteligentes.
-                        </p>
 
                         {/* Redes Sociais */}
                         <div className="flex gap-3 mt-2">
