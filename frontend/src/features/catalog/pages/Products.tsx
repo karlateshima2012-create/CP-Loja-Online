@@ -33,16 +33,17 @@ export const Products: React.FC = () => {
     
     const footerSensorRef = useRef<HTMLDivElement>(null);
 
+    const [isDockDismissed, setIsDockDismissed] = useState(false);
+
     useEffect(() => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
 
-        // Sensor de visibilidade (Esconde ao chegar no rodapé)
         const observer = new IntersectionObserver(
             ([entry]) => {
-                // Se a busca estiver aberta, ignore o sensor e mantenha visível
-                if (isSearchExpanded) {
-                    setIsVisible(true);
+                if (isSearchExpanded || isDockDismissed) {
+                    if (isDockDismissed) setIsVisible(false);
+                    else setIsVisible(true);
                     return;
                 }
                 
@@ -53,18 +54,18 @@ export const Products: React.FC = () => {
         );
         
         if (footerSensorRef.current) observer.observe(footerSensorRef.current);
-
         return () => observer.disconnect();
-    }, [isSearchExpanded]);
+    }, [isSearchExpanded, isDockDismissed]);
 
-    // Sempre que mudar a categoria, garantir que o dock apareça se a tela for curta
+    // Re-habilitar o dock ao mudar de filtros
     useEffect(() => {
+        setIsDockDismissed(false);
         const checkShortPage = () => {
             const isShortPage = document.documentElement.scrollHeight <= window.innerHeight + 200;
             if (isShortPage) setIsVisible(true);
         };
         setTimeout(checkShortPage, 150);
-    }, [catParam, searchTerm]);
+    }, [catParam, searchTerm, subParam]);
 
     const handleCategoryChange = (cat: string) => {
         const p = new URLSearchParams();
@@ -208,10 +209,18 @@ export const Products: React.FC = () => {
 
             {/* DOCK MOBILE ESTÁVEL (CORREÇÃO DE PULO) */}
             <div
-                className={`md:hidden fixed bottom-0 left-0 right-0 z-[100] bg-[#03081a] border-t border-brand-blue/60 rounded-t-[2.5rem] transition-all duration-300 ease-out ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
+                className={`md:hidden fixed bottom-0 left-0 right-0 z-[100] bg-[#03081a]/98 backdrop-blur-3xl border-t border-brand-blue/60 rounded-t-[2.5rem] transition-all duration-500 ease-in-out ${
+                    isVisible && !isDockDismissed ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
                 }`}
             >
+                {/* Botão X para fechar (Lado de fora, sutil) */}
+                <button 
+                    onClick={() => setIsDockDismissed(true)}
+                    className="absolute -top-12 right-6 w-10 h-10 bg-slate-900/50 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-all shadow-2xl"
+                >
+                    <X size={20} />
+                </button>
+
                 <div className="container mx-auto px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
                     <div className="flex flex-col gap-4">
                         {availableSubcategories.length > 0 && (
