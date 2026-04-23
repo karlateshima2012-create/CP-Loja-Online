@@ -53,30 +53,41 @@ export const Products: React.FC = () => {
             <Starfield />
 
             {/* TOP HEADER: Logo, Entrar, Carrinho */}
-            <header className="container mx-auto px-6 py-6 flex items-center justify-between border-b border-white/5 relative z-10">
-                <Link to="/" className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-brand-blue rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(36,155,203,0.4)]">
-                        <Box className="text-white" size={24} />
+            <header className="container mx-auto px-6 py-8 flex items-center justify-between border-b border-white/5 relative z-10">
+                <Link to="/" className="flex items-center gap-4 group">
+                    <div className="flex items-center gap-3">
+                        <div className="grid grid-cols-2 gap-0.5 w-9 h-9">
+                            <div className="bg-[#E5157A] rounded-sm"></div>
+                            <div className="bg-[#38B6FF] rounded-sm"></div>
+                            <div className="bg-[#FFDE59] rounded-sm"></div>
+                            <div className="bg-[#FFFFFF] rounded-sm"></div>
+                        </div>
+                        <div className="flex flex-col leading-none">
+                            <span className="text-xl font-black tracking-tighter uppercase text-white">Creative<span className="text-brand-blue">Print</span></span>
+                            <span className="text-[7px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-0.5">Tecnologia e Impressão 3D</span>
+                        </div>
                     </div>
-                    <span className="text-xl font-black tracking-tighter uppercase">Creative<span className="text-brand-blue">Print</span></span>
                 </Link>
 
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-8">
                     {user ? (
-                        <Link to={getDashboardLink()} className="flex items-center gap-2 hover:text-brand-blue transition-colors group">
-                            <div className="w-9 h-9 rounded-full bg-slate-800 border border-white/10 overflow-hidden group-hover:border-brand-blue/50 transition-all">
+                        <Link to={getDashboardLink()} className="flex items-center gap-3 hover:text-brand-blue transition-colors group">
+                            <div className="w-10 h-10 rounded-full bg-slate-800 border border-white/10 overflow-hidden group-hover:border-brand-blue/50 transition-all shadow-lg">
                                 <img src={user.avatar || "https://i.pravatar.cc/150?u=admin"} className="w-full h-full object-cover" alt="Profile" />
                             </div>
-                            <span className="text-xs font-bold hidden md:block">{user.name.split(' ')[0]}</span>
+                            <span className="text-xs font-black uppercase tracking-widest hidden md:block">{user.name.split(' ')[0]}</span>
                         </Link>
                     ) : (
-                        <Link to="/login" className="text-xs font-black uppercase tracking-widest hover:text-brand-blue transition-colors">Entrar</Link>
+                        <Link to="/login" className="bg-brand-blue/10 hover:bg-brand-blue/20 text-brand-blue px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all border border-brand-blue/20">Entrar</Link>
                     )}
-                    <Link to="/cart" className="relative p-2 hover:text-brand-blue transition-colors">
-                        <ShoppingBag size={22} />
+                    
+                    <Link to="/cart" className="relative group">
+                        <div className="w-12 h-12 bg-slate-900 rounded-full border border-white/10 flex items-center justify-center text-white group-hover:border-brand-blue group-hover:text-brand-blue transition-all shadow-xl">
+                            <ShoppingBag size={22} />
+                        </div>
                         {cart.length > 0 && (
-                            <span className="absolute -top-1 -right-1 bg-brand-pink text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(229,21,122,0.4)]">
-                                {cart.reduce((acc, i) => acc + i.quantity, 0)}
+                            <span className="absolute -top-1 -right-1 bg-brand-pink text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(229,21,122,0.6)] animate-pulse">
+                                {cart.reduce((acc, i) => acc + (Number(i.quantity) || 0), 0)}
                             </span>
                         )}
                     </Link>
@@ -84,30 +95,30 @@ export const Products: React.FC = () => {
             </header>
 
             {/* CATEGORY DOCK + SEARCH */}
-            <nav className="bg-slate-900/50 backdrop-blur-md sticky top-0 z-40 border-b border-white/5 shadow-2xl">
-                <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-8 overflow-x-auto no-scrollbar py-2">
+            <nav className="bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40 border-b border-white/5 shadow-2xl">
+                <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+                    <div className="flex items-center gap-10 overflow-x-auto no-scrollbar py-2">
                         {CATEGORIES.map(cat => (
                             <button 
                                 key={cat.id} 
                                 onClick={() => handleCategoryChange(cat.id)}
-                                className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${catParam === cat.id ? 'text-brand-blue' : 'text-white/40 hover:text-white'}`}
+                                className={`text-xs font-black uppercase tracking-[0.25em] transition-all whitespace-nowrap pb-1 border-b-2 ${catParam === cat.id ? 'text-brand-blue border-brand-blue' : 'text-white/30 border-transparent hover:text-white'}`}
                             >
                                 {cat.label}
                             </button>
                         ))}
                     </div>
-                    <div className="flex items-center gap-4 border-l border-white/10 pl-6 ml-4">
-                        <div className="hidden md:flex items-center bg-slate-950 border border-white/10 rounded-lg px-3 py-1.5 focus-within:border-brand-blue/50 transition-all">
-                            <Search size={14} className="text-slate-500" />
+                    <div className="flex items-center gap-4 border-l border-white/10 pl-8 ml-4">
+                        <div className="hidden lg:flex items-center bg-slate-900 border border-white/10 rounded-2xl px-5 py-2.5 focus-within:border-brand-blue/50 focus-within:ring-4 focus-within:ring-brand-blue/10 transition-all w-80">
+                            <Search size={18} className="text-slate-500" />
                             <input 
-                                className="bg-transparent border-none text-xs text-white outline-none pl-2 w-32" 
-                                placeholder="Buscar..." 
+                                className="bg-transparent border-none text-xs text-white outline-none pl-3 w-full font-bold placeholder:text-slate-600" 
+                                placeholder="BUSCAR PRODUTOS..." 
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
                             />
                         </div>
-                        <button className="text-white/40 hover:text-brand-blue"><Search size={18} className="md:hidden" /></button>
+                        <button className="text-white/40 hover:text-brand-blue lg:hidden p-2"><Search size={24} /></button>
                     </div>
                 </div>
             </nav>
