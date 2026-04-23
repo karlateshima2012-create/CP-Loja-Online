@@ -330,15 +330,27 @@ export const FlixManager: React.FC = () => {
                                 <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
                                     <SectionHeader icon={Type} title="Informações Básicas" />
                                     <div className="p-4 space-y-4">
+                                        {editForm.template_key === 'landing_page' && (
+                                            <div className="bg-brand-blue/5 border border-brand-blue/20 p-4 rounded-xl mb-4 animate-fade-in">
+                                                <h4 className="text-[10px] font-black text-brand-blue uppercase mb-2">Foco da Landing Page</h4>
+                                                <p className="text-[10px] text-slate-500 mb-4">Este modelo foca em converter visitantes. Capriche no Slogan e no Poster.</p>
+                                            </div>
+                                        )}
                                         <div><label className="text-xs font-bold text-slate-700 mb-1 block">Nome do Perfil</label><input className="w-full bg-white border border-slate-200 rounded px-3 py-2 text-slate-800 shadow-sm outline-none" value={editForm.displayName || ''} onChange={e => setEditForm(prev => ({ ...prev, displayName: e.target.value }))} /></div>
-                                        <div><label className="text-xs font-bold text-slate-700 mb-1 block">Nome da Empresa</label><input className="w-full bg-white border border-slate-200 rounded px-3 py-2 text-slate-800 shadow-sm outline-none" value={editForm.companyName || ''} onChange={e => setEditForm(prev => ({ ...prev, companyName: e.target.value }))} /></div>
+                                        {editForm.template_key === 'landing_page' ? (
+                                            <div><label className="text-xs font-bold text-slate-700 mb-1 block">Título da Landing (Headline)</label><input className="w-full bg-white border border-brand-blue/30 rounded px-3 py-2 text-slate-800 shadow-md outline-none focus:border-brand-blue" placeholder="Ex: O melhor serviço de..." value={editForm.slogan || ''} onChange={e => setEditForm(prev => ({ ...prev, slogan: e.target.value }))} /></div>
+                                        ) : (
+                                            <div><label className="text-xs font-bold text-slate-700 mb-1 block">Nome da Empresa</label><input className="w-full bg-white border border-slate-200 rounded px-3 py-2 text-slate-800 shadow-sm outline-none" value={editForm.companyName || ''} onChange={e => setEditForm(prev => ({ ...prev, companyName: e.target.value }))} /></div>
+                                        )}
                                         <div><label className="text-xs font-bold text-slate-700 mb-1 block">WhatsApp / Telefone</label><input className="w-full bg-white border border-slate-200 rounded px-3 py-2 text-slate-800 shadow-sm outline-none" value={editForm.phone || ''} onChange={e => setEditForm(prev => ({ ...prev, phone: e.target.value }))} /></div>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div><label className="text-xs font-bold text-slate-700 mb-1 block">Cidade</label><input className="w-full bg-white border border-slate-200 rounded px-3 py-2 text-slate-800 shadow-sm outline-none" value={editForm.city || ''} onChange={e => setEditForm(prev => ({ ...prev, city: e.target.value }))} /></div>
                                             <div><label className="text-xs font-bold text-slate-700 mb-1 block">Província</label><input className="w-full bg-white border border-slate-200 rounded px-3 py-2 text-slate-800 shadow-sm outline-none" value={editForm.province || ''} onChange={e => setEditForm(prev => ({ ...prev, province: e.target.value }))} /></div>
                                         </div>
-                                        <div><label className="text-xs font-bold text-slate-700 mb-1 block">Slogan</label><input className="w-full bg-white border border-slate-200 rounded px-3 py-2 text-slate-800 shadow-sm outline-none" value={editForm.slogan || ''} onChange={e => setEditForm(prev => ({ ...prev, slogan: e.target.value }))} /></div>
-                                        <div><label className="text-xs font-bold text-slate-700 mb-1 block">Bio Completa</label><textarea className="w-full bg-white border border-slate-200 rounded px-3 py-2 text-slate-800 shadow-sm outline-none h-24" value={editForm.fullBio || ''} onChange={e => setEditForm(prev => ({ ...prev, fullBio: e.target.value }))} /></div>
+                                        {editForm.template_key !== 'landing_page' && (
+                                            <div><label className="text-xs font-bold text-slate-700 mb-1 block">Slogan</label><input className="w-full bg-white border border-slate-200 rounded px-3 py-2 text-slate-800 shadow-sm outline-none" value={editForm.slogan || ''} onChange={e => setEditForm(prev => ({ ...prev, slogan: e.target.value }))} /></div>
+                                        )}
+                                        <div><label className="text-xs font-bold text-slate-700 mb-1 block">Descrição / Bio</label><textarea className="w-full bg-white border border-slate-200 rounded px-3 py-2 text-slate-800 shadow-sm outline-none h-24" value={editForm.fullBio || ''} onChange={e => setEditForm(prev => ({ ...prev, fullBio: e.target.value }))} /></div>
                                     </div>
                                 </div>
                                 <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
@@ -359,8 +371,24 @@ export const FlixManager: React.FC = () => {
 
                         {activeTab === 'CONTENT' && (
                             <div className="space-y-6 animate-fade-in">
+                                {editForm.template_key === 'landing_page' && (
+                                    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                                        <SectionHeader icon={MousePointerClick} title="Botão de Destaque (CTA)" />
+                                        <div className="p-4 space-y-4">
+                                            <p className="text-[10px] text-slate-500">Este é o botão principal que fica centralizado na Landing Page.</p>
+                                            <div>
+                                                <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Texto do Botão</label>
+                                                <input className="w-full bg-slate-50 border border-slate-200 rounded px-3 py-2 text-sm font-bold text-brand-blue" placeholder="Ex: QUERO MEU PROJETO" value={editForm.ctaLabel || ''} onChange={e => setEditForm(prev => ({ ...prev, ctaLabel: e.target.value }))} />
+                                            </div>
+                                            <div>
+                                                <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Link de Destino</label>
+                                                <input className="w-full bg-slate-50 border border-slate-200 rounded px-3 py-2 text-sm" placeholder="https://..." value={editForm.ctaUrl || ''} onChange={e => setEditForm(prev => ({ ...prev, ctaUrl: e.target.value }))} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                                 <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                                    <SectionHeader icon={Link2} title="Gerenciar Conteúdo" />
+                                    <SectionHeader icon={Link2} title={editForm.template_key === 'landing_page' ? "Outros Links e Recursos" : "Gerenciar Conteúdo"} />
                                     <div className="p-4 space-y-3">
                                         <button onClick={handleAddLink} className="w-full bg-brand-blue text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2"><Plus size={18} /> Novo Link</button>
                                         <button onClick={handleAddHeader} className="w-full bg-slate-100 text-slate-600 py-3 rounded-xl font-bold flex items-center justify-center gap-2"><Plus size={18} /> Nova Seção</button>
@@ -736,18 +764,36 @@ const PreviewFrame: React.FC<{ profile: FlixProfile }> = ({ profile }) => {
         }
     };
 
+    const isLandingPage = profile.template_key === 'landing_page';
+    
     return (
         <div className={`w-full h-full overflow-y-auto no-scrollbar ${fontClass}`} style={{ backgroundColor: style.backgroundColor, color: style.textColor }}>
             <div className="w-full h-48 bg-slate-200 relative overflow-hidden">{profile.coverImageUrl && <img src={profile.coverImageUrl} className="w-full h-full object-cover" />}</div>
             <div className="px-4 pb-12 flex flex-col items-center -mt-16">
                 <div className="relative mb-4 w-32 h-32 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-slate-100">{profile.profileImageUrl && <img src={profile.profileImageUrl} className="w-full h-full object-cover" />}</div>
-                <h1 className={`${currentFont.name} font-bold mb-1`} style={{ textTransform: transform as any }}>{profile.displayName || 'Nome do Perfil'}</h1>
+                <h1 className={`${currentFont.name} font-bold mb-1 text-center`} style={{ textTransform: transform as any }}>{profile.displayName || 'Nome do Perfil'}</h1>
                 <p className={`${currentFont.bio} opacity-70 text-center px-4 mb-6`} style={{ textTransform: transform as any }}>{profile.slogan}</p>
+                
                 <div className="w-full space-y-3">
+                    {isLandingPage && (
+                        <div className="w-full mb-6 animate-fade-in">
+                            {profile.posterImageUrl && (
+                                <div className="w-full aspect-[2/3] rounded-2xl overflow-hidden mb-4 shadow-2xl border border-white/20 bg-slate-100">
+                                    <img src={profile.posterImageUrl} className="w-full h-full object-cover" />
+                                </div>
+                            )}
+                            {profile.ctaLabel && (
+                                <div className={`${shapeClass} w-full py-4 px-4 text-center font-black text-lg shadow-2xl transform hover:scale-[1.02] transition-all`} style={{ backgroundColor: style.buttonTextColor === '#ffffff' ? '#000000' : style.buttonColor, color: style.buttonTextColor === '#ffffff' ? '#ffffff' : '#000000' }}>
+                                    {profile.ctaLabel.toUpperCase()}
+                                </div>
+                            )}
+                        </div>
+                    )}
+
                     {profile.links?.sort((a, b) => a.order - b.order).map(l => (
                         l.type === 'header'
                             ? <h3 key={l.id} className={`${currentFont.header} font-bold uppercase tracking-widest text-center mt-6 mb-2 opacity-50`} style={{ textTransform: transform as any }}>{l.label}</h3>
-                            : <div key={l.id} className={`${shapeClass} w-full py-3 px-4 text-center font-bold flex items-center justify-center`} style={getBtnStyle()}>{l.label}</div>
+                            : <div key={l.id} className={`${shapeClass} w-full py-3 px-4 text-center font-bold flex items-center justify-center transition-all`} style={getBtnStyle()}>{l.label}</div>
                     ))}
                 </div>
             </div>
