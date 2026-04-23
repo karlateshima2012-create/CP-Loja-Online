@@ -14,9 +14,27 @@ import { Starfield } from '../../../components/ui/Starfield';
 // CATEGORIAS
 // ============================================================
 const CATEGORIES = [
-    { id: 'Impressão 3D', label: 'Impressão 3D', icon: Box, color: 'brand-pink' },
-    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', icon: Cpu, color: 'brand-blue' },
-    { id: 'Soluções Digitais', label: 'Soluções Digitais', icon: Monitor, color: 'brand-yellow' },
+    {
+        id: 'Impressão 3D',
+        label: 'Impressão 3D',
+        icon: Box,
+        color: 'brand-pink',
+        subcategories: ['Chaveiros 3D', 'Displays / Suportes', 'Letreiros personalizados', 'Outros acessórios 3D'],
+    },
+    {
+        id: 'Tecnologia NFC',
+        label: 'Tecnologia NFC',
+        icon: Cpu,
+        color: 'brand-blue',
+        subcategories: ['Chaveiros com NFC', 'Displays com NFC'],
+    },
+    {
+        id: 'Soluções Digitais',
+        label: 'Soluções Digitais',
+        icon: Monitor,
+        color: 'brand-yellow',
+        subcategories: [],
+    },
 ];
 
 // ============================================================
@@ -30,7 +48,6 @@ export const Products: React.FC = () => {
     const catParam = searchParams.get('cat') || 'Todos';
     const subParam = searchParams.get('sub') || '';
     const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
-    const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
     useEffect(() => {
@@ -38,6 +55,7 @@ export const Products: React.FC = () => {
         setProducts(mockService.getProducts());
     }, []);
 
+    // EFEITO DE SCROLL AUTOMÁTICO PARA O TOPO DA VITRINE
     useEffect(() => {
         const anchor = document.getElementById('product-grid-anchor');
         if (anchor && (catParam !== 'Todos' || subParam || searchTerm)) {
@@ -100,11 +118,10 @@ export const Products: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#020617] flex flex-col overflow-x-hidden">
             
-
             {/* HERO SECTION */}
             <section
                 id="hero"
-                className="relative min-h-[70vh] flex items-center justify-center pt-20 pb-12 px-6 md:px-12 overflow-hidden bg-[#020617]"
+                className="relative min-h-[75vh] flex items-center justify-center pt-24 pb-12 px-6 md:px-12 overflow-hidden bg-[#020617]"
             >
                 <Starfield />
                 <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-brand-blue/5 rounded-full blur-[150px] -z-10 pointer-events-none"></div>
@@ -123,6 +140,7 @@ export const Products: React.FC = () => {
                         </p>
                     </div>
 
+                    {/* GALERIA CACHOEIRA */}
                     <div className="hidden md:block relative h-[500px] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
                         <div className="grid grid-cols-3 gap-4 h-full">
                             <div className="flex flex-col gap-4 animate-[marquee-vertical_40s_linear_infinite]">
@@ -154,21 +172,24 @@ export const Products: React.FC = () => {
             <div id="product-grid-anchor" className="h-0" />
 
             {/* ============================================================
-                DIVISOR DE CATEGORIAS (Sticky Bottom no Mobile, Divider no Desktop)
+                DIVISOR DE CATEGORIAS PREMIUM GLOW (Sticky Bottom no Mobile)
             ============================================================ */}
             <div
-                className="sticky md:relative top-20 md:top-auto bottom-0 md:bottom-auto z-40 bg-[#020617]/95 backdrop-blur-2xl border-y border-brand-blue/20 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] md:shadow-none mt-auto md:mt-0 order-last md:order-none"
+                className="sticky md:relative top-20 md:top-auto bottom-0 md:bottom-auto z-40 bg-[#020617]/95 backdrop-blur-2xl border-y border-brand-blue/30 shadow-[0_-15px_45px_rgba(0,0,0,0.9)] md:shadow-none mt-auto md:mt-0 order-last md:order-none"
             >
-                <div className="container mx-auto px-3 py-4 md:py-6">
-                    <div className="relative h-11 w-full max-w-5xl mx-auto">
+                {/* Efeito Glow Azul de fundo */}
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/5 via-transparent to-brand-blue/5 pointer-events-none"></div>
+                
+                <div className="container mx-auto px-3 py-4 md:py-6 relative z-10">
+                    <div className="relative h-12 w-full max-w-5xl mx-auto">
                         {!isSearchExpanded ? (
-                            <div className="grid grid-cols-5 gap-2.5 animate-fade-in w-full h-full">
+                            <div className="grid grid-cols-5 gap-3 animate-fade-in w-full h-full">
                                 <button
                                     onClick={() => handleCategoryChange('Todos')}
-                                    className={`h-11 flex items-center justify-center px-1 rounded-xl text-[9px] md:text-[11px] font-black uppercase tracking-widest transition-all border-2 ${
+                                    className={`h-12 flex items-center justify-center px-1 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all border-2 ${
                                         catParam === 'Todos'
-                                            ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
-                                            : 'bg-slate-900/50 border-white/5 text-white hover:border-brand-blue/40'
+                                            ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                                            : 'bg-slate-900/50 border-white/20 text-white hover:border-brand-blue/50 hover:bg-brand-blue/10'
                                     }`}
                                 >
                                     Todos
@@ -176,64 +197,82 @@ export const Products: React.FC = () => {
 
                                 {CATEGORIES.map(cat => {
                                     const isActive = catParam === cat.id;
+                                    const colorMap: Record<string, string> = {
+                                        'brand-blue': 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]',
+                                        'brand-pink': 'bg-brand-pink border-brand-pink text-white shadow-[0_0_15px_rgba(229,21,122,0.4)]',
+                                        'brand-yellow': 'bg-brand-yellow border-brand-yellow text-slate-950 shadow-[0_0_15px_rgba(255,242,0,0.4)]',
+                                    };
                                     return (
                                         <button
                                             key={cat.id}
                                             onClick={() => handleCategoryChange(cat.id)}
-                                            className={`h-11 flex flex-col md:flex-row items-center justify-center gap-1.5 px-1 rounded-xl text-[9px] md:text-[11px] font-black uppercase tracking-widest transition-all border-2 ${
+                                            className={`h-12 flex flex-col md:flex-row items-center justify-center gap-2 px-1 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all border-2 ${
                                                 isActive
-                                                    ? 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]'
-                                                    : 'bg-slate-900/50 border-white/5 text-white hover:border-brand-blue/40'
+                                                    ? colorMap[cat.color]
+                                                    : 'bg-slate-900/50 border-white/20 text-white hover:border-brand-blue/50 hover:bg-brand-blue/10'
                                             }`}
                                         >
-                                            <cat.icon size={16} className="flex-shrink-0" />
+                                            <cat.icon size={18} className="flex-shrink-0" />
                                             <span className="hidden md:inline">{cat.label}</span>
-                                            <span className="md:hidden text-[8px] text-center">{cat.label.split(' ')[0]}</span>
+                                            <span className="md:hidden text-[9px] text-center">{cat.label.split(' ')[0]}</span>
                                         </button>
                                     );
                                 })}
 
                                 <button
                                     onClick={() => setIsSearchExpanded(true)}
-                                    className="h-11 flex items-center justify-center bg-slate-900/60 border-2 border-brand-blue/20 text-white rounded-xl hover:border-brand-blue transition-all"
+                                    className="h-12 flex items-center justify-center bg-slate-900/60 border-2 border-brand-blue/40 text-brand-blue rounded-xl hover:bg-brand-blue/10 transition-all shadow-[0_0_15px_rgba(56,182,255,0.1)]"
                                 >
-                                    <Search size={20} />
+                                    <Search size={22} />
                                 </button>
                             </div>
                         ) : (
+                            /* BUSCA EXPANSÍVEL MODO PREMIUM */
                             <div className="flex items-center gap-3 animate-fade-in w-full h-full">
                                 <button 
-                                    onClick={() => setIsSearchExpanded(false)}
-                                    className="h-11 w-11 flex items-center justify-center bg-slate-900 text-white rounded-xl border-2 border-brand-blue/30"
+                                    onClick={() => {
+                                        setIsSearchExpanded(false);
+                                        if (!searchTerm) resetFilters();
+                                    }}
+                                    className="h-12 w-12 flex items-center justify-center bg-slate-900 text-white rounded-xl border-2 border-brand-blue/50 shadow-[0_0_15px_rgba(56,182,255,0.2)]"
                                 >
-                                    <ArrowLeft size={22} />
+                                    <ArrowLeft size={24} />
                                 </button>
                                 <div className="relative flex-1 h-full">
-                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-blue" size={18} />
+                                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-blue" size={20} />
                                     <input
                                         autoFocus
                                         type="text"
                                         placeholder="O QUE VOCÊ PROCURA?"
                                         value={searchTerm}
                                         onChange={e => handleSearch(e.target.value)}
-                                        className="w-full h-full bg-slate-900 text-white text-xs pl-11 pr-11 border-2 border-brand-blue/40 rounded-xl outline-none focus:border-brand-blue shadow-xl font-bold uppercase tracking-widest"
+                                        className="w-full h-full bg-slate-900/80 text-white text-sm pl-12 pr-12 border-2 border-brand-blue/60 rounded-xl outline-none focus:border-brand-blue shadow-[0_0_20px_rgba(56,182,255,0.3)] font-black uppercase tracking-widest"
                                     />
+                                    {searchTerm && (
+                                        <button
+                                            onClick={() => handleSearch('')}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-slate-800 p-1.5 rounded-full"
+                                        >
+                                            <X size={14} />
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         )}
                     </div>
 
-                    {/* Subcategorias */}
+                    {/* Subcategorias Premium */}
                     {!isSearchExpanded && activeCategoryData && activeCategoryData.subcategories.length > 0 && (
-                        <div className="flex flex-wrap items-center justify-center gap-2 mt-5 pt-5 border-t border-brand-blue/20 animate-fade-in">
+                        <div className="flex flex-wrap items-center justify-center gap-3 mt-6 pt-6 border-t border-brand-blue/30 animate-fade-in relative">
+                            <div className="absolute inset-0 bg-brand-blue/5 blur-2xl pointer-events-none"></div>
                             {activeCategoryData.subcategories.map(sub => (
                                 <button
                                     key={sub}
                                     onClick={() => handleSubcategoryChange(sub)}
-                                    className={`px-4 py-2 rounded-xl text-[10px] md:text-xs font-black whitespace-nowrap border-2 transition-all ${
+                                    className={`px-5 py-2.5 rounded-xl text-[11px] md:text-sm font-black whitespace-nowrap border-2 transition-all relative z-10 ${
                                         subParam === sub
-                                            ? 'bg-brand-blue/30 border-brand-blue text-white shadow-[0_0_15px_rgba(56,182,255,0.3)]'
-                                            : 'bg-slate-900/60 border-white/10 text-white hover:border-brand-blue/30'
+                                            ? 'bg-brand-blue/40 border-brand-blue text-white shadow-[0_0_20px_rgba(56,182,255,0.4)]'
+                                            : 'bg-slate-900/80 border-white/10 text-white hover:border-brand-blue/40 hover:bg-brand-blue/10'
                                     }`}
                                 >
                                     {sub}
@@ -245,15 +284,15 @@ export const Products: React.FC = () => {
             </div>
 
             {/* CATALOGO */}
-            <div className="container mx-auto px-4 py-12 md:py-20 pb-32 flex-grow">
+            <div className="container mx-auto px-4 py-16 pb-32 flex-grow">
                 {isFiltering && (
-                    <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-4 border-l-4 border-brand-blue pl-5 py-2">
-                        <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">
+                    <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-4 border-l-4 border-brand-blue pl-6 py-2">
+                        <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight">
                             {catParam !== 'Todos' ? catParam : 'Resultados'}
-                            {subParam && <span className="text-brand-pink ml-3">/ {subParam}</span>}
+                            {subParam && <span className="text-brand-pink ml-4">/ {subParam}</span>}
                         </h2>
-                        <button onClick={resetFilters} className="px-4 py-2 rounded-xl bg-slate-800 text-white text-xs font-black uppercase border border-white/10">
-                            <X size={14} /> Limpar
+                        <button onClick={resetFilters} className="px-5 py-2.5 rounded-xl bg-slate-800 text-white text-[10px] font-black uppercase border-2 border-white/10 shadow-xl">
+                            <X size={16} /> Limpar Filtros
                         </button>
                     </div>
                 )}
@@ -269,12 +308,12 @@ export const Products: React.FC = () => {
 };
 
 const EmptyState: React.FC<{ onReset: () => void }> = ({ onReset }) => (
-    <div className="text-center py-24 w-full animate-fade-in">
-        <div className="w-20 h-20 rounded-3xl bg-slate-800/30 border-2 border-brand-blue/20 flex items-center justify-center mx-auto mb-8">
-            <Filter className="opacity-20 text-brand-blue" size={40} />
+    <div className="text-center py-32 w-full animate-fade-in">
+        <div className="w-24 h-24 rounded-[2rem] bg-slate-800/40 border-2 border-brand-blue/30 flex items-center justify-center mx-auto mb-10 shadow-inner">
+            <Filter className="opacity-30 text-brand-blue" size={48} />
         </div>
-        <h3 className="text-xl font-black text-white mb-3 uppercase tracking-tight">Nenhum resultado</h3>
-        <button onClick={onReset} className="px-8 py-4 rounded-2xl bg-brand-blue text-slate-950 font-black uppercase text-xs shadow-lg">
+        <h3 className="text-2xl font-black text-white mb-5 uppercase tracking-tight">Nenhum produto encontrado</h3>
+        <button onClick={onReset} className="px-10 py-5 rounded-2xl bg-brand-blue text-slate-950 font-black uppercase text-xs shadow-[0_0_30px_rgba(56,182,255,0.4)] hover:scale-105 transition-transform">
             Ver tudo
         </button>
     </div>
