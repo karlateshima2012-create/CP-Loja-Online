@@ -11,7 +11,7 @@ import { ProductCard } from './components/ProductCard';
 import { Starfield } from '../../../components/ui/Starfield';
 
 // ============================================================
-// CATEGORIAS E SUBCATEGORIAS
+// CATEGORIAS
 // ============================================================
 const CATEGORIES = [
     {
@@ -19,24 +19,18 @@ const CATEGORIES = [
         label: 'Impressão 3D',
         icon: Box,
         color: 'brand-pink',
-        emoji: '🔥',
-        subcategories: ['Chaveiros 3D', 'Displays / Suportes', 'Letreiros personalizados', 'Outros acessórios 3D'],
     },
     {
         id: 'Tecnologia NFC',
         label: 'Tecnologia NFC',
         icon: Cpu,
         color: 'brand-blue',
-        emoji: '⚡',
-        subcategories: ['Chaveiros com NFC', 'Displays com NFC'],
     },
     {
         id: 'Soluções Digitais',
         label: 'Soluções Digitais',
         icon: Monitor,
         color: 'brand-yellow',
-        emoji: '🖥️',
-        subcategories: [],
     },
 ];
 
@@ -51,7 +45,6 @@ export const Products: React.FC = () => {
     const catParam = searchParams.get('cat') || 'Todos';
     const subParam = searchParams.get('sub') || '';
     const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
-    const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
     useEffect(() => {
@@ -118,149 +111,97 @@ export const Products: React.FC = () => {
     const isFiltering = catParam !== 'Todos' || !!searchTerm || !!subParam;
 
     return (
-        <div className="min-h-screen bg-[#020617] flex flex-col">
-            {/* HERO SECTION — COM FUNDO CLARO E ESTRELAS */}
+        <div className="min-h-screen bg-[#020617] flex flex-col overflow-x-hidden">
+            {/* HERO SECTION — MAIS ALTA E COM BOTÕES INTERNOS */}
             <section
                 id="hero"
-                className="relative min-h-[60vh] flex flex-col items-center justify-center pt-28 pb-10 px-4 overflow-hidden text-center animate-fade-in"
+                className="relative min-h-[85vh] flex flex-col items-center justify-center pt-32 pb-20 px-4 overflow-hidden text-center animate-fade-in"
             >
-                {/* Imagem de Fundo Clara (com overlay para ler o texto) */}
-                <div 
-                    className="absolute inset-0 bg-cover bg-center -z-20 opacity-40 mix-blend-overlay"
-                    style={{ backgroundImage: 'url(/hero_banner_light_tech_1776904747906.png)' }}
-                ></div>
+                {/* Fundo Claro Tecnológico (Ice Blue / White) */}
+                <div className="absolute inset-0 bg-[#f8fafc] -z-30"></div>
+                <div className="absolute inset-0 opacity-[0.03] -z-20" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
                 
-                {/* Starfield por cima da imagem */}
+                {/* Starfield (Estrelas Escuras para fundo claro) */}
                 <Starfield />
 
-                {/* Efeitos de Luz Blue/Pink */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-b from-[#020617]/40 via-transparent to-[#020617] -z-10"></div>
-                <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-[#38b6ff] rounded-full blur-[120px] opacity-10 animate-pulse-slow -z-10 pointer-events-none"></div>
+                {/* Efeitos de Luz Suaves */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-b from-white via-transparent to-[#f8fafc] -z-10"></div>
+                <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-brand-blue/10 rounded-full blur-[120px] -z-10"></div>
 
-                <div className="relative z-10 max-w-5xl mx-auto w-full">
-                    <h1 className="text-5xl md:text-8xl font-black text-white mb-6 leading-[1.05] tracking-tight animate-fade-in-up">
-                        <span className="bg-gradient-to-r from-[#38b6ff] to-[#E5157A] bg-clip-text text-transparent filter drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
-                            Conheça nossos produtos
+                <div className="relative z-10 max-w-6xl mx-auto w-full">
+                    <h1 className="text-6xl md:text-[100px] font-black text-slate-900 mb-8 leading-[0.95] tracking-tighter animate-fade-in-up">
+                        Conheça nossos<br/>
+                        <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">
+                            produtos
                         </span>
                     </h1>
-                    <p className="text-xl md:text-2xl text-slate-200 font-bold max-w-2xl mx-auto drop-shadow-md animate-fade-in-up">
+                    
+                    <p className="text-xl md:text-2xl text-slate-500 font-medium max-w-2xl mx-auto mb-16 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                         Soluções digitais, NFC e Impressão 3D com tecnologia de ponta.
                     </p>
-                </div>
-            </section>
 
-            {/* ============================================================
-                DIVISOR UI/UX: VALUE BAR (Marquee Corrigido e Animado)
-            ============================================================ */}
-            <div className="bg-slate-900 border-y border-white/10 py-5 overflow-hidden relative z-20">
-                <div className="animate-marquee whitespace-nowrap flex items-center w-max">
-                    {/* Lista Duplicada para o Loop Infinito */}
-                    {[1, 2].map((i) => (
-                        <div key={i} className="flex items-center gap-16 px-8">
-                            <div className="flex items-center gap-3 text-brand-blue text-[11px] font-black uppercase tracking-[0.2em]">
-                                <Truck size={16} /> Envio para todo Japão
-                            </div>
-                            <div className="flex items-center gap-3 text-brand-pink text-[11px] font-black uppercase tracking-[0.2em]">
-                                <ShieldCheck size={16} /> Tecnologia NFC 2.0
-                            </div>
-                            <div className="flex items-center gap-3 text-brand-yellow text-[11px] font-black uppercase tracking-[0.2em]">
-                                <Box size={16} /> Impressão 3D PLA+ Premium
-                            </div>
-                            <div className="flex items-center gap-3 text-white/60 text-[11px] font-black uppercase tracking-[0.2em]">
-                                <Clock size={16} /> Suporte 24/7
-                            </div>
-                            <div className="flex items-center gap-3 text-brand-blue text-[11px] font-black uppercase tracking-[0.2em]">
-                                <Award size={16} /> Qualidade Garantida
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                {/* Linha Neon centralizada */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/4 h-[2px] bg-brand-blue shadow-[0_0_10px_#38b6ff] z-30"></div>
-            </div>
-
-            <div id="product-grid-anchor" className="h-0" />
-
-            {/* BARRA DE CATEGORIAS + BUSCA DINÂMICA */}
-            <div
-                className="sticky top-20 md:top-20 bottom-0 md:bottom-auto z-40 bg-[#020617]/98 backdrop-blur-2xl border-y border-brand-blue/30 shadow-[0_-15px_35px_rgba(0,0,0,0.9)] md:shadow-[0_15px_35px_rgba(0,0,0,0.9)] mt-auto md:mt-0 order-last md:order-none"
-            >
-                <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/5 via-transparent to-brand-blue/5 pointer-events-none"></div>
-                
-                <div className="container mx-auto px-3 py-4 md:py-5 relative z-10">
-                    <div className="relative h-11 w-full">
+                    {/* BOTÕES DE CATEGORIA COMPACTOS (DENTRO DA HERO) */}
+                    <div className="max-w-4xl mx-auto w-full animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                        {/* Grade de 5 Itens */}
                         {!isSearchExpanded ? (
-                            <div className="grid grid-cols-5 gap-2.5 animate-fade-in w-full h-full">
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                                 <button
                                     onClick={() => handleCategoryChange('Todos')}
-                                    className={`h-11 flex items-center justify-center px-1 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all border-2 ${
+                                    className={`h-14 flex items-center justify-center rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2 ${
                                         catParam === 'Todos'
-                                            ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
-                                            : 'bg-slate-900/50 border-white/10 text-white hover:border-brand-blue/40'
+                                            ? 'bg-slate-900 text-white border-slate-900 shadow-xl scale-105'
+                                            : 'bg-white/80 backdrop-blur-sm border-slate-200 text-slate-600 hover:border-brand-blue hover:text-brand-blue shadow-sm'
                                     }`}
                                 >
-                                    Todos
+                                    Todos os produtos
                                 </button>
 
-                                {CATEGORIES.map(cat => {
-                                    const Icon = cat.icon;
-                                    const isActive = catParam === cat.id;
-                                    const colorMap: Record<string, string> = {
-                                        'brand-blue': 'bg-brand-blue border-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]',
-                                        'brand-pink': 'bg-brand-pink border-brand-pink text-white shadow-[0_0_15px_rgba(229,21,122,0.4)]',
-                                        'brand-yellow': 'bg-brand-yellow border-brand-yellow text-slate-950 shadow-[0_0_15px_rgba(255,242,0,0.4)]',
-                                    };
-                                    return (
-                                        <button
-                                            key={cat.id}
-                                            onClick={() => handleCategoryChange(cat.id)}
-                                            className={`h-11 flex flex-col md:flex-row items-center justify-center gap-1.5 px-1 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all border-2 ${
-                                                isActive
-                                                    ? colorMap[cat.color]
-                                                    : 'bg-slate-900/50 border-white/10 text-white hover:border-brand-blue/40'
-                                            }`}
-                                        >
-                                            <Icon size={16} className="flex-shrink-0" />
-                                            <span className="hidden md:inline">{cat.label}</span>
-                                            <span className="md:hidden text-[9px] text-center">{cat.label.split(' ')[0]}</span>
-                                        </button>
-                                    );
-                                })}
+                                {CATEGORIES.map(cat => (
+                                    <button
+                                        key={cat.id}
+                                        onClick={() => handleCategoryChange(cat.id)}
+                                        className={`h-14 flex items-center justify-center gap-2 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2 ${
+                                            catParam === cat.id
+                                                ? 'bg-slate-900 text-white border-slate-900 shadow-xl scale-105'
+                                                : 'bg-white/80 backdrop-blur-sm border-slate-200 text-slate-600 hover:border-brand-blue hover:text-brand-blue shadow-sm'
+                                        }`}
+                                    >
+                                        <cat.icon size={16} />
+                                        <span className="hidden sm:inline">{cat.label}</span>
+                                        <span className="sm:hidden">{cat.label.split(' ')[0]}</span>
+                                    </button>
+                                ))}
 
                                 <button
                                     onClick={() => setIsSearchExpanded(true)}
-                                    className="h-11 flex items-center justify-center bg-slate-900/60 border-2 border-brand-blue/20 text-white rounded-xl hover:border-brand-blue transition-all"
+                                    className="h-14 flex items-center justify-center bg-white/80 backdrop-blur-sm border-2 border-slate-200 text-slate-400 rounded-2xl hover:border-brand-blue hover:text-brand-blue shadow-sm transition-all"
                                 >
                                     <Search size={20} />
                                 </button>
                             </div>
                         ) : (
-                            <div className="flex items-center gap-3 animate-fade-in w-full h-full">
+                            /* Modo Busca na Hero */
+                            <div className="flex items-center gap-3 animate-fade-in">
                                 <button 
-                                    onClick={() => {
-                                        setIsSearchExpanded(false);
-                                        if (!searchTerm) resetFilters();
-                                    }}
-                                    className="h-11 w-11 flex items-center justify-center bg-slate-900/80 text-white rounded-xl border-2 border-brand-blue/30 hover:border-brand-blue transition-all"
+                                    onClick={() => setIsSearchExpanded(false)}
+                                    className="h-14 w-14 flex items-center justify-center bg-white border-2 border-slate-200 text-slate-400 rounded-2xl hover:border-brand-blue hover:text-brand-blue"
                                 >
-                                    <ArrowLeft size={22} />
+                                    <ArrowLeft size={24} />
                                 </button>
-                                <div className="relative flex-1 h-full">
-                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-blue" size={18} />
+                                <div className="relative flex-1">
+                                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-blue" size={20} />
                                     <input
                                         autoFocus
                                         type="text"
-                                        placeholder="O QUE VOCÊ PROCURA?"
+                                        placeholder="O QUE VOCÊ ESTÁ PROCURANDO HOJE?"
                                         value={searchTerm}
                                         onChange={e => handleSearch(e.target.value)}
-                                        onFocus={() => setIsSearchFocused(true)}
-                                        onBlur={() => setIsSearchFocused(false)}
-                                        className="w-full h-full bg-slate-900/80 text-white text-sm pl-11 pr-11 border-2 border-brand-blue/40 rounded-xl outline-none focus:border-brand-blue shadow-[0_0_20px_rgba(56,182,255,0.2)] font-bold uppercase tracking-widest placeholder-slate-600"
+                                        className="w-full h-14 bg-white text-slate-900 text-sm pl-14 pr-12 border-2 border-brand-blue/30 rounded-2xl outline-none focus:border-brand-blue shadow-xl font-bold uppercase tracking-widest placeholder-slate-400"
                                     />
                                     {searchTerm && (
                                         <button
                                             onClick={() => handleSearch('')}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-slate-800 p-1.5 rounded-full"
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-600 bg-slate-100 p-1.5 rounded-full"
                                         >
                                             <X size={14} />
                                         </button>
@@ -269,38 +210,51 @@ export const Products: React.FC = () => {
                             </div>
                         )}
                     </div>
+                </div>
+            </section>
 
-                    {/* Subcategorias */}
-                    {!isSearchExpanded && activeCategoryData && activeCategoryData.subcategories.length > 0 && (
-                        <div className="flex flex-wrap items-center justify-center gap-2 mt-5 pt-5 border-t border-brand-blue/20 animate-fade-in relative">
-                            <div className="absolute inset-0 bg-brand-blue/5 blur-xl pointer-events-none"></div>
-                            {activeCategoryData.subcategories.map(sub => (
-                                <button
-                                    key={sub}
-                                    onClick={() => handleSubcategoryChange(sub)}
-                                    className={`px-4 py-2 rounded-xl text-[11px] md:text-sm font-black whitespace-nowrap border-2 transition-all relative z-10 ${
-                                        subParam === sub
-                                            ? 'bg-brand-blue/30 border-brand-blue text-white shadow-[0_0_15px_rgba(56,182,255,0.3)]'
-                                            : 'bg-slate-900/60 border-white/10 text-white hover:border-brand-blue/30'
-                                    }`}
-                                >
-                                    {sub}
-                                </button>
-                            ))}
+            {/* ============================================================
+                VALUE BAR (Marquee Compacto e Estreito)
+            ============================================================ */}
+            <div className="bg-slate-900 border-y border-white/5 py-3 overflow-hidden relative z-20">
+                <div className="animate-marquee whitespace-nowrap flex items-center w-max">
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className="flex items-center gap-12 px-6">
+                            <div className="flex items-center gap-2 text-brand-blue text-[9px] font-black uppercase tracking-widest opacity-80">
+                                <Truck size={12} /> Envio para todo Japão
+                            </div>
+                            <div className="flex items-center gap-2 text-brand-pink text-[9px] font-black uppercase tracking-widest opacity-80">
+                                <ShieldCheck size={12} /> Tecnologia NFC 2.0
+                            </div>
+                            <div className="flex items-center gap-2 text-brand-yellow text-[9px] font-black uppercase tracking-widest opacity-80">
+                                <Box size={12} /> Impressão 3D PLA+
+                            </div>
+                            <div className="flex items-center gap-2 text-white/40 text-[9px] font-black uppercase tracking-widest">
+                                <Clock size={12} /> Suporte 24/7
+                            </div>
+                            <div className="flex items-center gap-2 text-brand-blue text-[9px] font-black uppercase tracking-widest opacity-80">
+                                <Award size={12} /> Qualidade Garantida
+                            </div>
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
 
-            {/* GRID DE PRODUTOS */}
-            <div className="container mx-auto px-4 py-8 md:py-12 pb-24 flex-grow">
+            <div id="product-grid-anchor" className="h-0" />
+
+            {/* ============================================================
+                GRID DE PRODUTOS (INÍCIO DO CATÁLOGO)
+            ============================================================ */}
+            <div className="container mx-auto px-4 py-16 pb-32 flex-grow">
+                {/* Header de Resultados (SÓ APARECE AO FILTRAR) */}
                 {isFiltering && (
-                    <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-4 border-l-4 border-brand-blue pl-5 py-2">
+                    <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-4 border-l-4 border-brand-blue pl-6 py-2">
                         <div>
-                            <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">
-                                {catParam !== 'Todos' ? activeCategoryData?.label || catParam : 'Todos os Produtos'}
+                            <h2 className="text-3xl font-black text-white uppercase tracking-tight">
+                                {catParam !== 'Todos' ? catParam : 'Todos os Produtos'}
                                 {subParam && <span className="text-brand-pink ml-3">/ {subParam}</span>}
                             </h2>
+                            <p className="text-slate-500 font-medium">{filteredProducts.length} itens encontrados</p>
                         </div>
                         <button
                             onClick={resetFilters}
@@ -312,7 +266,7 @@ export const Products: React.FC = () => {
                 )}
 
                 {filteredProducts.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-10">
                         {filteredProducts.map(product => (
                             <ProductCard
                                 key={product.id}
