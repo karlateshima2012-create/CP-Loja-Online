@@ -30,23 +30,20 @@ export const Footer: React.FC = () => {
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-16">
 
-                    {/* 1. Marca/Sobre */}
-                    <div className="flex flex-col items-start gap-6">
-                        <div className="flex flex-col gap-3">
-                            <Logo className="h-12 md:h-9" />
-                            <h3 className="font-black text-2xl text-white tracking-tight">Creative Print</h3>
-                        </div>
+                    {/* 1. Marca (Logo e Redes) */}
+                    <div className="flex flex-col items-start gap-8">
+                        <Logo className="h-16 md:h-14" />
 
-                        {/* Redes Sociais */}
-                        <div className="flex gap-3 mt-2">
-                            <a href="https://www.instagram.com/creativeprint.jp" target="_blank" rel="noreferrer" className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-red-500 hover:to-purple-500 hover:text-white transition-all duration-300 shadow-lg group">
-                                <Instagram size={20} className="group-hover:scale-110 transition-transform" />
+                        {/* Redes Sociais Ampliadas */}
+                        <div className="flex gap-4 mt-2">
+                            <a href="https://www.instagram.com/creativeprint.jp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-red-500 hover:to-purple-500 hover:text-white transition-all duration-300 shadow-lg group">
+                                <Instagram size={24} className="group-hover:scale-110 transition-transform" />
                             </a>
-                            <a href="https://www.facebook.com/share/1Zo7P5Zhc5/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-lg group">
-                                <Facebook size={20} className="group-hover:scale-110 transition-transform" />
+                            <a href="https://www.facebook.com/share/1Zo7P5Zhc5/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-lg group">
+                                <Facebook size={24} className="group-hover:scale-110 transition-transform" />
                             </a>
-                            <a href="https://wa.me/819011886491" target="_blank" rel="noreferrer" className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-all duration-300 shadow-lg group">
-                                <MessageCircle size={20} className="group-hover:scale-110 transition-transform" />
+                            <a href="https://wa.me/819011886491" target="_blank" rel="noreferrer" className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-all duration-300 shadow-lg group">
+                                <MessageCircle size={24} className="group-hover:scale-110 transition-transform" />
                             </a>
                         </div>
                     </div>
@@ -164,48 +161,30 @@ export const Footer: React.FC = () => {
                 </div>
             </div>
 
-            {/* MODAL SOBRE NÓS (MAIOR E ELEGANTE) */}
+            {/* MODAIS (MANTIDOS CONFORME SOLICITADO) */}
             {isAboutModalOpen && (
                 <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8">
-                    <div 
-                        className="absolute inset-0 bg-slate-950/90 backdrop-blur-xl animate-fade-in" 
-                        onClick={() => setIsAboutModalOpen(false)}
-                    />
+                    <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-xl animate-fade-in" onClick={() => setIsAboutModalOpen(false)} />
                     <div className="relative bg-slate-900 border border-brand-blue/20 w-full max-w-5xl h-fit max-h-[90vh] rounded-[2.5rem] shadow-[0_0_100px_rgba(36,155,203,0.2)] overflow-y-auto animate-zoom-in no-scrollbar">
                         <div className="sticky top-0 h-2 w-full bg-gradient-to-r from-brand-blue via-brand-pink to-brand-blue z-20"></div>
-                        <button 
-                            onClick={() => setIsAboutModalOpen(false)}
-                            className="absolute top-8 right-8 text-slate-500 hover:text-white transition-all bg-slate-800/50 p-2 rounded-full z-20"
-                        >
-                            <X size={28} />
-                        </button>
-                        
+                        <button onClick={() => setIsAboutModalOpen(false)} className="absolute top-8 right-8 text-slate-500 hover:text-white transition-all bg-slate-800/50 p-2 rounded-full z-20"><X size={28} /></button>
                         <div className="p-8 md:p-20">
                             <div className="flex flex-col md:flex-row gap-12 items-center mb-16">
                                 <div className="w-32 h-32 md:w-48 md:h-48 rounded-3xl bg-gradient-to-br from-brand-blue to-brand-pink p-1">
-                                    <div className="w-full h-full bg-slate-900 rounded-[calc(1.5rem-4px)] flex items-center justify-center">
-                                        <Logo className="h-16 md:h-24" />
-                                    </div>
+                                    <div className="w-full h-full bg-slate-900 rounded-[calc(1.5rem-4px)] flex items-center justify-center"><Logo className="h-16 md:h-24" /></div>
                                 </div>
                                 <div className="text-center md:text-left flex-1">
                                     <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter mb-4 leading-none">Sobre nós</h2>
                                     <p className="text-brand-blue font-black text-lg md:text-2xl uppercase tracking-[0.2em] opacity-80">Revolução Criativa no Japão</p>
                                 </div>
                             </div>
-
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-slate-300 leading-relaxed text-lg">
                                 <div className="space-y-6">
-                                    <p className="first-letter:text-5xl first-letter:font-black first-letter:text-brand-blue first-letter:mr-3 first-letter:float-left">
-                                        A <strong className="text-white">Creative Print</strong> nasceu da paixão por inovação e do desejo de oferecer soluções exclusivas para empreendedores e entusiastas no Japão. Unimos o que há de melhor em tecnologia para transformar ideias em objetos físicos e conexões digitais.
-                                    </p>
-                                    <p>
-                                        Especializados em <strong className="text-brand-blue">Impressão 3D de alta precisão</strong> e <strong className="text-brand-pink">Tecnologia NFC</strong>, criamos produtos que conectam o mundo físico ao digital de forma mágica e eficiente.
-                                    </p>
+                                    <p className="first-letter:text-5xl first-letter:font-black first-letter:text-brand-blue first-letter:mr-3 first-letter:float-left">A <strong className="text-white">Creative Print</strong> nasceu da paixão por inovação e do desejo de oferecer soluções exclusivas para empreendedores e entusiastas no Japão.</p>
+                                    <p>Especializados em <strong className="text-brand-blue">Impressão 3D de alta precisão</strong> e <strong className="text-brand-pink">Tecnologia NFC</strong>, criamos produtos que conectam o mundo físico ao digital.</p>
                                 </div>
                                 <div className="space-y-6">
-                                    <p>
-                                        Nossa missão é fornecer ferramentas que impulsionem negócios, automatizem processos e encantem clientes, sempre com um padrão de qualidade premium e atendimento personalizado em português e japonês.
-                                    </p>
+                                    <p>Nossa missão é fornecer ferramentas que impulsionem negócios, automatizem processos e encantem clientes com qualidade premium.</p>
                                     <div className="bg-slate-800/50 border border-white/5 p-8 rounded-3xl mt-8">
                                         <h4 className="text-white font-black uppercase tracking-widest text-sm mb-4">Nossos Valores</h4>
                                         <ul className="space-y-3 text-sm">
@@ -216,80 +195,40 @@ export const Footer: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="mt-20 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
                                 <div className="flex gap-4">
-                                    <div className="flex flex-col">
-                                        <span className="text-white font-black text-3xl">100%</span>
-                                        <span className="text-slate-500 text-xs uppercase font-bold tracking-widest">Digital & Físico</span>
-                                    </div>
+                                    <div className="flex flex-col"><span className="text-white font-black text-3xl">100%</span><span className="text-slate-500 text-xs uppercase font-bold tracking-widest">Digital & Físico</span></div>
                                     <div className="w-px h-10 bg-white/10"></div>
-                                    <div className="flex flex-col">
-                                        <span className="text-white font-black text-3xl">Japão</span>
-                                        <span className="text-slate-500 text-xs uppercase font-bold tracking-widest">Sede em Nagoya</span>
-                                    </div>
+                                    <div className="flex flex-col"><span className="text-white font-black text-3xl">Japão</span><span className="text-slate-500 text-xs uppercase font-bold tracking-widest">Sede em Nagoya</span></div>
                                 </div>
-                                <button 
-                                    onClick={() => setIsAboutModalOpen(false)}
-                                    className="w-full md:w-auto bg-white text-slate-950 font-black uppercase tracking-widest px-12 py-5 rounded-2xl shadow-2xl hover:scale-105 transition-all"
-                                >
-                                    Fechar História
-                                </button>
+                                <button onClick={() => setIsAboutModalOpen(false)} className="w-full md:w-auto bg-white text-slate-950 font-black uppercase tracking-widest px-12 py-5 rounded-2xl shadow-2xl hover:scale-105 transition-all">Fechar História</button>
                             </div>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* MODAL FAQ / DÚVIDAS */}
             {isFAQModalOpen && (
                 <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-                    <div 
-                        className="absolute inset-0 bg-slate-950/80 backdrop-blur-md animate-fade-in" 
-                        onClick={() => setIsFAQModalOpen(false)}
-                    />
+                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={() => setIsFAQModalOpen(false)} />
                     <div className="relative bg-slate-900 border border-white/10 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden animate-zoom-in">
                         <div className="h-2 w-full bg-brand-yellow"></div>
-                        <button 
-                            onClick={() => setIsFAQModalOpen(false)}
-                            className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"
-                        >
-                            <X size={24} />
-                        </button>
-                        
+                        <button onClick={() => setIsFAQModalOpen(false)} className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"><X size={24} /></button>
                         <div className="p-8 md:p-12">
                             <div className="flex items-center gap-4 mb-8">
-                                <div className="p-3 rounded-2xl bg-brand-yellow/10 border border-brand-yellow/20 text-brand-yellow">
-                                    <HelpCircle size={32} />
-                                </div>
-                                <div>
-                                    <h2 className="text-3xl font-black text-white tracking-tighter">Dúvidas Frequentes</h2>
-                                    <p className="text-brand-yellow font-bold text-xs uppercase tracking-widest">Central de Ajuda Creative Print</p>
-                                </div>
+                                <div className="p-3 rounded-2xl bg-brand-yellow/10 border border-brand-yellow/20 text-brand-yellow"><HelpCircle size={32} /></div>
+                                <div><h2 className="text-3xl font-black text-white tracking-tighter">Dúvidas Frequentes</h2><p className="text-brand-yellow font-bold text-xs uppercase tracking-widest">Central de Ajuda</p></div>
                             </div>
-
                             <div className="space-y-4">
                                 {faqs.map((faq, idx) => (
                                     <div key={idx} className="bg-slate-950/50 border border-slate-800 rounded-2xl p-5 group">
-                                        <h4 className="text-white font-bold text-sm mb-2 flex items-start gap-2">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-brand-yellow mt-1.5 shrink-0"></div>
-                                            {faq.q}
-                                        </h4>
+                                        <h4 className="text-white font-bold text-sm mb-2 flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-brand-yellow mt-1.5 shrink-0"></div>{faq.q}</h4>
                                         <p className="text-slate-400 text-sm leading-relaxed pl-3.5 italic">{faq.a}</p>
                                     </div>
                                 ))}
                             </div>
-
                             <div className="mt-10 flex flex-col items-center gap-4 text-center">
-                                <p className="text-slate-500 text-xs font-bold uppercase">Não encontrou o que precisava?</p>
-                                <a 
-                                    href="https://wa.me/819011886491" 
-                                    target="_blank" 
-                                    rel="noreferrer"
-                                    className="w-full bg-brand-yellow text-slate-950 font-black uppercase tracking-widest py-4 rounded-xl shadow-lg hover:shadow-brand-yellow/20 transition-all flex items-center justify-center gap-2"
-                                >
-                                    <MessageCircle size={18} /> Chamar no Suporte
-                                </a>
+                                <a href="https://wa.me/819011886491" target="_blank" rel="noreferrer" className="w-full bg-brand-yellow text-slate-950 font-black uppercase tracking-widest py-4 rounded-xl shadow-lg hover:shadow-brand-yellow/20 transition-all flex items-center justify-center gap-2"><MessageCircle size={18} /> Chamar no Suporte</a>
                             </div>
                         </div>
                     </div>
