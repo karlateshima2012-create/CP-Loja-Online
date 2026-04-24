@@ -63,56 +63,58 @@ export const Products: React.FC = () => {
             <div className="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/5 rounded-full blur-[180px] pointer-events-none z-0"></div>
             <div className="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-pink/3 rounded-full blur-[180px] pointer-events-none z-0"></div>
 
-            {/* CATEGORY NAV - GLASSMORPHIC TAB BAR (Option 3) */}
-            <nav className="sticky top-16 z-40 py-4 px-6 animate-fade-in">
-                <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-6 bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[2rem] p-2 pr-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                    
-                    {/* Tabs Area (Clean) */}
-                    <div className="flex items-center gap-1 overflow-x-auto p-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                        <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
-                        <div className="flex items-center gap-1 no-scrollbar">
-                            {CATEGORIES.map(cat => (
-                            <button 
-                                key={cat.id} 
-                                onClick={() => handleCategoryChange(cat.id)}
-                                className={`px-6 py-3 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${catParam === cat.id ? 'bg-brand-blue text-slate-950 shadow-[0_0_20px_rgba(56,182,255,0.4)]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
-                            >
-                                {cat.label}
-                            </button>
-                        ))}
-                        </div>
-                    </div>
-
-                    {/* Integrated Search */}
-                    <div className="flex items-center gap-4 w-full lg:w-auto">
-                        <div className="flex items-center bg-black/40 border border-white/5 rounded-full px-5 py-2.5 focus-within:border-brand-blue/30 transition-all w-full lg:w-72">
-                            <Search size={16} className="text-slate-500" />
-                            <input 
-                                className="bg-transparent border-none text-[11px] text-white outline-none pl-3 w-full font-bold placeholder:text-slate-700 uppercase tracking-widest" 
-                                placeholder="Procurar no catálogo..." 
-                                value={searchTerm}
-                                onChange={e => setSearchTerm(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            {/* MAIN BANNER (Full Width) */}
-            <section className="w-full relative z-10">
-                <div className="w-full aspect-[16/10] md:aspect-[2.8/1] bg-slate-900 border-y border-white/5 overflow-hidden relative group shadow-2xl">
-                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent z-10"></div>
+            {/* IMMERSIVE HERO SECTION (Banner + Floating Dock) */}
+            <section className="relative w-full overflow-hidden">
+                {/* Main Banner Image */}
+                <div className="w-full h-[60vh] md:h-[70vh] bg-slate-900 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/90 z-10"></div>
                     <img 
-                        src="https://images.unsplash.com/photo-1635332309325-189f7f45b546?q=80&w=2500&auto=format&fit=crop" 
-                        className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000" 
-                        alt="Banner"
+                        src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2500&auto=format&fit=crop" 
+                        className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000" 
+                        alt="Creative Print Store Banner"
                     />
-                    <div className="absolute inset-0 z-20 flex flex-col justify-center px-8 md:px-16">
-                        <span className="text-brand-blue font-black uppercase tracking-[0.3em] text-[10px] md:text-xs mb-4 animate-fade-in">Novidades 2026</span>
-                        <h2 className="text-3xl md:text-6xl font-black text-white leading-tight uppercase tracking-tighter">
-                            Tecnologia de Ponta<br/>
-                            <span className="bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent">para sua Empresa.</span>
-                        </h2>
+                    
+                    {/* Floating Content Over Banner */}
+                    <div className="absolute inset-0 z-20 flex flex-col items-center">
+                        {/* THE DOCK - NOW FLOATING OVER BANNER */}
+                        <nav className="w-full py-8 px-6 animate-fade-in-down">
+                            <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-6 bg-white/[0.05] backdrop-blur-3xl border border-white/10 rounded-[2rem] p-2 pr-6 shadow-2xl">
+                                <div className="flex items-center gap-1 overflow-x-auto p-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                                    <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
+                                    <div className="flex items-center gap-1 no-scrollbar">
+                                        {CATEGORIES.map(cat => (
+                                            <button 
+                                                key={cat.id} 
+                                                onClick={() => handleCategoryChange(cat.id)}
+                                                className={`px-6 py-3 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${catParam === cat.id ? 'bg-brand-blue text-slate-950 shadow-[0_0_20px_rgba(56,182,255,0.4)]' : 'text-white/70 hover:text-white hover:bg-white/10'}`}
+                                            >
+                                                {cat.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4 w-full lg:w-auto">
+                                    <div className="flex items-center bg-black/40 border border-white/10 rounded-full px-5 py-2.5 focus-within:border-brand-blue/30 transition-all w-full lg:w-72">
+                                        <Search size={16} className="text-brand-blue" />
+                                        <input 
+                                            className="bg-transparent border-none text-[11px] text-white outline-none pl-3 w-full font-bold placeholder:text-white/20 uppercase tracking-widest" 
+                                            placeholder="Explorar Catálogo..." 
+                                            value={searchTerm}
+                                            onChange={e => setSearchTerm(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+
+                        {/* Banner Text */}
+                        <div className="flex-1 flex flex-col justify-center items-center text-center px-6">
+                            <span className="text-brand-blue font-black uppercase tracking-[0.5em] text-xs mb-6 animate-fade-in">Inovação & Design</span>
+                            <h2 className="text-4xl md:text-7xl font-black text-white leading-none uppercase tracking-tighter max-w-4xl">
+                                Tecnologia de <span className="bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">Ponta</span><br/>
+                                <span className="text-brand-blue drop-shadow-[0_0_15px_rgba(56,182,255,0.5)]">Para sua Empresa.</span>
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </section>
