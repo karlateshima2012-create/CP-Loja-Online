@@ -80,6 +80,7 @@ export const Products: React.FC = () => {
                                 {cat.label}
                             </button>
                         ))}
+                        </div>
                     </div>
 
                     {/* Integrated Search */}
