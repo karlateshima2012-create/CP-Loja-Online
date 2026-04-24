@@ -94,6 +94,17 @@ export const Products: React.FC = () => {
                 </div>
 
                 <div className="container mx-auto relative z-10">
+                    {/* TÍTULO DE IMPACTO (UI/UX SUGGESTION) */}
+                    <div className="mb-12 text-center animate-fade-in-up">
+                        <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-3">
+                            Exclusividade em <span className="text-brand-blue">Cada Detalhe</span>
+                        </h1>
+                        <p className="text-slate-500 text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] max-w-2xl mx-auto leading-relaxed">
+                            Tecnologia NFC & Impressão 3D de Alta Precisão
+                        </p>
+                        <div className="w-12 h-[2px] bg-brand-blue mx-auto mt-8 rounded-full shadow-[0_0_10px_rgba(56,182,255,0.5)]"></div>
+                    </div>
+
                     {/* CABEÇALHO DE NAVEGAÇÃO INSPIRADO NO LAYOUT CINEMÁTICO - AGORA NO TOPO */}
                     <div className="mb-16 text-center animate-fade-in">
                         <div className="flex flex-col md:flex-row items-center justify-center gap-6">
