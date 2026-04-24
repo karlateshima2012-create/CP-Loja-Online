@@ -120,7 +120,7 @@ export const Products: React.FC = () => {
                                         className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 border ${
                                             catParam === cat.id 
                                             ? 'bg-brand-blue/10 border-brand-blue text-brand-blue shadow-[0_0_15px_rgba(56,182,255,0.3)]' 
-                                            : 'bg-white/5 border-white/10 text-white/40 hover:text-white hover:border-white/30'
+                                            : 'bg-white/5 border-white/10 text-white/70 hover:text-white hover:border-white/30'
                                         }`}
                                     >
                                         {cat.label}
@@ -128,15 +128,15 @@ export const Products: React.FC = () => {
                                 ))}
                             </div>
 
-                            {/* BARRA DE BUSCA DISCRETA */}
-                            <div className="relative group w-full md:w-64">
-                                <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-brand-blue transition-colors" />
+                            {/* BARRA DE BUSCA COM MAIOR DESTAQUE */}
+                            <div className="relative group w-full md:w-80">
+                                <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-brand-blue transition-colors" />
                                 <input 
                                     type="text"
                                     placeholder="BUSCAR PRODUTO..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-11 pr-4 text-[10px] font-black text-white placeholder:text-white/20 focus:outline-none focus:border-brand-blue/50 focus:bg-white/10 transition-all uppercase tracking-widest"
+                                    className="w-full bg-white/10 border border-white/20 rounded-full py-3 pl-11 pr-4 text-[11px] font-black text-white/70 placeholder:text-white/30 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/50 focus:bg-white/15 transition-all uppercase tracking-[0.2em] shadow-lg"
                                 />
                             </div>
                         </div>
