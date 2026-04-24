@@ -52,7 +52,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         {/* DESCRIÇÃO/SUBTÍTULO (REGULAR 400 - CINZA) */}
         <p className="text-slate-400 text-[10px] md:text-xs font-normal mb-4 line-clamp-2">
-          {product.description}
+          {product.shortDescription || product.description}
         </p>
 
         {/* Rodapé — Unificado para vertical em todos os dispositivos */}

@@ -36,6 +36,7 @@ export const ProductsManager: React.FC = () => {
         setEditingProduct(product ? { ...product } : {
             name: '',
             description: '',
+            shortDescription: '',
             price: 0,
             imageUrl: '',
             category: 'Impressão 3D',
@@ -130,7 +131,11 @@ export const ProductsManager: React.FC = () => {
                                 <input className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none" value={editingProduct.imageUrl} onChange={(e) => setEditingProduct({...editingProduct, imageUrl: e.target.value})} />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Descrição</label>
+                                <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Descrição Breve (Cards)</label>
+                                <textarea className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none h-20" value={editingProduct.shortDescription || ''} onChange={(e) => setEditingProduct({...editingProduct, shortDescription: e.target.value})} placeholder="Aparece nos cards da loja..." />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Descrição Completa (Página)</label>
                                 <textarea className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-brand-blue transition-all outline-none h-32" value={editingProduct.description} onChange={(e) => setEditingProduct({...editingProduct, description: e.target.value})} />
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
