@@ -143,13 +143,13 @@ export const Products: React.FC = () => {
                 {/* The 'Tray' Layer (Restored to Deep Dark) */}
                 <div className="bg-slate-900/90 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,1)] pt-12 pb-32 px-6 relative overflow-hidden">
                     
-                    {/* REFERENCE NEBULA GLOW (Matching CP Agenda Vibe) */}
+                    {/* REFERENCE NEBULA GLOW (Restored & Subtle) */}
                     <div className="absolute inset-0 pointer-events-none z-0">
                         {/* Primary Nebula - Left Top */}
-                        <div className="absolute top-0 -left-[20%] w-[1000px] h-[1000px] bg-brand-blue/15 blur-[200px] rounded-full animate-pulse" style={{ animationDuration: '8s' }}></div>
+                        <div className="absolute top-0 -left-[20%] w-[1000px] h-[1000px] bg-brand-blue/12 blur-[200px] rounded-full animate-pulse" style={{ animationDuration: '10s' }}></div>
                         
                         {/* Secondary Nebula - Right Bottom */}
-                        <div className="absolute bottom-0 -right-[20%] w-[1000px] h-[1000px] bg-indigo-600/15 blur-[200px] rounded-full animate-pulse" style={{ animationDelay: '2s', animationDuration: '8s' }}></div>
+                        <div className="absolute bottom-0 -right-[20%] w-[1000px] h-[1000px] bg-brand-blue/10 blur-[200px] rounded-full animate-pulse" style={{ animationDelay: '3s', animationDuration: '10s' }}></div>
                     </div>
                     <div className="container mx-auto">
                         
