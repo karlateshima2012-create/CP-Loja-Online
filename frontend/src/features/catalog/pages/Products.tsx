@@ -140,35 +140,35 @@ export const Products: React.FC = () => {
 
             {/* PRODUCT GRID - ILLUMINATED LAYER */}
             <section id="catalog-results" className="relative z-20 mt-8 overflow-hidden">
-                {/* The 'Tray' Layer (Lightened) */}
-                <div className="bg-slate-900/60 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/20 shadow-[0_-30px_80px_rgba(0,0,0,0.8)] pt-12 pb-32 px-6 relative overflow-hidden">
+                {/* The 'Tray' Layer (Restored to Deep Dark) */}
+                <div className="bg-slate-900/80 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/20 shadow-[0_-30px_80px_rgba(0,0,0,0.8)] pt-12 pb-32 px-6 relative overflow-hidden">
                     
-                    {/* HIGH-POWER WAVE-FLOW DYNAMIC LIGHTS */}
+                    {/* SUBTLE WAVE-FLOW DYNAMIC LIGHTS */}
                     <div className="absolute inset-0 pointer-events-none z-0">
                         <style>{`
-                            @keyframes wave-flow-intense {
-                                0%, 100% { transform: scale(1); opacity: 0.3; filter: blur(100px); }
-                                50% { transform: scale(1.6); opacity: 0.7; filter: blur(140px); }
+                            @keyframes wave-flow-subtle {
+                                0%, 100% { transform: scale(1); opacity: 0.1; }
+                                50% { transform: scale(1.4); opacity: 0.25; }
                             }
-                            .animate-wave-intense {
-                                animation: wave-flow-intense 6s ease-in-out infinite;
+                            .animate-wave-subtle {
+                                animation: wave-flow-subtle 10s ease-in-out infinite;
                             }
                         `}</style>
                         
                         {/* Top Left */}
-                        <div className="absolute -top-20 -left-20 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-cyan-400/60 blur-[120px] rounded-full animate-wave-intense"></div>
+                        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-brand-blue/20 blur-[140px] rounded-full animate-wave-subtle"></div>
                         
                         {/* Top Right */}
-                        <div className="absolute -top-20 -right-20 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-brand-blue/50 blur-[120px] rounded-full animate-wave-intense" style={{ animationDelay: '1.5s' }}></div>
+                        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-brand-blue/15 blur-[140px] rounded-full animate-wave-subtle" style={{ animationDelay: '2s' }}></div>
                         
-                        {/* Central Sun (Maximum Intensity) */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[900px] h-[600px] md:h-[900px] bg-cyan-300/40 blur-[160px] rounded-full animate-wave-intense" style={{ animationDelay: '3s' }}></div>
+                        {/* Central Sun (Softened) */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-brand-blue/10 blur-[180px] rounded-full animate-wave-subtle" style={{ animationDelay: '4s' }}></div>
                         
                         {/* Bottom Left */}
-                        <div className="absolute -bottom-20 -left-20 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-brand-blue/50 blur-[120px] rounded-full animate-wave-intense" style={{ animationDelay: '4.5s' }}></div>
+                        <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-brand-blue/15 blur-[140px] rounded-full animate-wave-subtle" style={{ animationDelay: '6s' }}></div>
                         
                         {/* Bottom Right */}
-                        <div className="absolute -bottom-20 -right-20 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-cyan-400/60 blur-[120px] rounded-full animate-wave-intense" style={{ animationDelay: '0.8s' }}></div>
+                        <div className="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-brand-blue/20 blur-[140px] rounded-full animate-wave-subtle" style={{ animationDelay: '1s' }}></div>
                     </div>
                     <div className="container mx-auto">
                         
