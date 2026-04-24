@@ -87,8 +87,8 @@ export const Products: React.FC = () => {
 
             {/* IMMERSIVE HERO SECTION (Banner + Floating Dock) */}
             <section className="relative w-full overflow-hidden">
-                {/* THEMATIC BANNER (Mother's Day) */}
-                <div className="w-full h-[400px] md:h-[450px] bg-[#E5E1DA] relative overflow-hidden group">
+                {/* THEMATIC BANNER (Mother's Day) - Responsive Height */}
+                <div className="w-full h-[250px] md:h-[450px] bg-[#E5E1DA] relative overflow-hidden group">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#E5E1DA]/60 via-transparent to-transparent z-10"></div>
                     <img 
                         src="https://images.unsplash.com/photo-1554034483-04fda0d3507b?q=80&w=2500&auto=format&fit=crop" 
@@ -135,30 +135,31 @@ export const Products: React.FC = () => {
                 <div className="flex gap-4 animate-scroll whitespace-nowrap w-fit">
                     {/* Render twice for infinite loop effect */}
                     {[...SUBCATEGORIES, ...SUBCATEGORIES].map((cat, idx) => (
-                        <button 
-                            key={`${cat.id}-${idx}`}
-                            onClick={() => handleCategoryChange(cat.id)}
-                            className="w-[220px] md:w-[300px] h-32 md:h-40 bg-slate-900 rounded-2xl border border-white/10 relative overflow-hidden flex-shrink-0 group/card transition-all hover:border-brand-blue/50"
-                        >
-                            <div className="absolute inset-0 bg-black/40 group-hover/card:bg-black/20 z-10 transition-colors"></div>
-                            <img src={cat.img} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/card:scale-110 transition-transform duration-1000" alt={cat.label} />
-                            <div className="absolute inset-0 z-20 flex items-center justify-center p-6">
-                                <span className="text-sm md:text-base font-black uppercase tracking-widest text-white text-center drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
-                                    {cat.label}
-                                </span>
-                            </div>
-                        </button>
+                                <button 
+                                    key={`${cat.id}-${idx}`}
+                                    onClick={() => handleCategoryChange(cat.id)}
+                                    className="w-[180px] md:w-[280px] h-32 md:h-40 bg-white/5 backdrop-blur-md rounded-2xl border border-white/20 relative overflow-hidden flex-shrink-0 group/card transition-all hover:border-brand-blue/50 shadow-xl"
+                                >
+                                    <div className="absolute inset-0 bg-black/30 group-hover/card:bg-black/10 z-10 transition-colors"></div>
+                                    <img src={cat.img} className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover/card:scale-110 transition-transform duration-1000" alt={cat.label} />
+                                    <div className="absolute inset-0 z-20 flex items-center justify-center p-4">
+                                        <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-white text-center drop-shadow-[0_2px_15px_rgba(0,0,0,1)] leading-tight">
+                                            {cat.label}
+                                        </span>
+                                    </div>
+                                </button>
                     ))}
                 </div>
             </section>
 
-            {/* PRODUCT GRID - DEEP LAYER CONTRAST (More Compact) */}
+            {/* PRODUCT GRID - ILLUMINATED LAYER */}
             <section id="catalog-results" className="relative z-20 mt-8">
-                {/* STRATEGIC LIGHT POINT BEHIND TRAY */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-40 bg-brand-blue/20 blur-[100px] -z-10"></div>
+                {/* POWERFUL RADIANT LIGHT (To brighten the section) */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-white/[0.07] blur-[160px] -z-10 rounded-full"></div>
+                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[60%] h-60 bg-brand-blue/30 blur-[120px] -z-10"></div>
                 
-                {/* The 'Tray' Layer */}
-                <div className="bg-slate-900/60 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,0.9)] pt-8 pb-32 px-6">
+                {/* The 'Tray' Layer (Lightened) */}
+                <div className="bg-slate-900/80 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/20 shadow-[0_-30px_80px_rgba(0,0,0,0.8)] pt-12 pb-32 px-6">
                     <div className="container mx-auto">
                         
                         {/* MINIMALIST SECTION HEADER */}
