@@ -12,7 +12,7 @@ import { Product, UserRole } from '@/src/types';
 import { useAuth } from '@/src/features/auth/context/AuthContext';
 import {
     Search, ShoppingCart, Box, X,
-    LayoutGrid, ChevronRight, Cpu, Monitor, ExternalLink
+    LayoutGrid, ChevronRight, Cpu, Monitor, ExternalLink, ArrowUp
 } from 'lucide-react';
 import { useCart } from '../../cart/CartContext';
 import { ProductCard } from './components/ProductCard';
@@ -144,9 +144,23 @@ export const Products: React.FC = () => {
 
                     {/* PRODUCT GRID */}
                     {filteredProducts.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                            {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
-                        </div>
+                        <>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
+                            </div>
+                            
+                            {/* BOTÃO VOLTAR AO TOPO */}
+                            <div className="flex justify-center mt-20">
+                                <button 
+                                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                                    className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white transition-all group"
+                                >
+                                    <span className="w-8 h-[1px] bg-white/10 group-hover:bg-brand-blue group-hover:w-12 transition-all"></span>
+                                    Voltar ao Topo
+                                    <ArrowUp size={14} className="group-hover:-translate-y-1 transition-transform text-brand-blue" />
+                                </button>
+                            </div>
+                        </>
                     ) : (
                         <div className="py-40 text-center">
                             <div className="inline-block p-8 rounded-full bg-white/5 border border-white/10 mb-6">
