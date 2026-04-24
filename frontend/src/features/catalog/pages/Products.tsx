@@ -39,23 +39,40 @@ export const Products: React.FC = () => {
         setProducts(mockService.getProducts());
     }, []);
 
+    const scrollToResults = () => {
+        const resultsSection = document.getElementById('catalog-results');
+        if (resultsSection) {
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
     // Auto-scroll to results when searching
     useEffect(() => {
         if (searchTerm.length > 0) {
-            const resultsSection = document.getElementById('catalog-results');
-            if (resultsSection) {
-                const rect = resultsSection.getBoundingClientRect();
-                if (rect.top > 150) { 
-                    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }
+            scrollToResults();
         }
     }, [searchTerm]);
+
+    const [showFloatingButton, setShowFloatingButton] = useState(false);
+    
+    // Monitor scroll for Floating Button activation
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 600) {
+                setShowFloatingButton(true);
+            } else {
+                setShowFloatingButton(false);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const handleCategoryChange = (cat: string) => {
         const p = new URLSearchParams();
         if (cat !== 'Todos') p.set('cat', cat);
         setSearchParams(p);
+        scrollToResults();
     };
 
     const filteredProducts = products.filter(p => {
@@ -219,7 +236,18 @@ export const Products: React.FC = () => {
                     </div>
                 </div>
             </section>
-
+            {/* FLOATING ACTION BUTTON (FAB) - Search */}
+            <div className={`fixed bottom-8 right-8 z-[100] transition-all duration-500 transform ${showFloatingButton ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'}`}>
+                <button 
+                    onClick={() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        setTimeout(() => setIsSearchExpanded(true), 600);
+                    }}
+                    className="w-16 h-16 bg-brand-blue text-slate-950 rounded-full shadow-[0_0_30px_rgba(56,182,255,0.5)] flex items-center justify-center group active:scale-95 transition-all border-4 border-black/20"
+                >
+                    <Search size={28} className="group-hover:scale-110 transition-transform" />
+                </button>
+            </div>
         </div>
     );
 };
