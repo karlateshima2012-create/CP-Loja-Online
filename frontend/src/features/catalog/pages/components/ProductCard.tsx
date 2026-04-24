@@ -35,13 +35,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           className="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-500 opacity-100 md:opacity-90 md:group-hover:opacity-100"
         />
 
-        {/* PERSONALIZÁVEL TAG */}
-        {product.isCustomizable && (
-          <div className="absolute top-3 right-3 z-20 backdrop-blur-md bg-white/10 border border-white/20 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 shadow-xl">
-            <PenTool size={10} className="text-brand-pink" />
-            <span className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tighter">Personalizável</span>
-          </div>
-        )}
 
         {/* BEST SELLER BADGE */}
         {product.isBestSeller && (
@@ -52,7 +45,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       <div className="p-4 md:p-6 flex-1 flex flex-col">
-        <div className="text-[10px] md:text-xs text-brand-blue/60 font-bold uppercase tracking-wider mb-1">{product.category}</div>
+        {/* Category hidden as per request */}
         <h3 className="font-bold text-white text-base md:text-lg mb-4 leading-tight md:group-hover:text-brand-blue transition-colors line-clamp-2">{product.name}</h3>
 
         {/* Rodapé — Unificado para vertical em todos os dispositivos */}
