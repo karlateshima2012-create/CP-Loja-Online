@@ -17,8 +17,6 @@ import {
 import { useCart } from '../../cart/CartContext';
 import { ProductCard } from './components/ProductCard';
 import { Starfield } from '../../../components/ui/Starfield';
-import './Products.css';
-
 const CATEGORIES = [
     { id: 'Todos', label: 'Todos', short: 'Todos' },
     { id: 'Impressão 3D', label: 'Impressão 3D', short: '3D' },
