@@ -85,31 +85,17 @@ export const Products: React.FC = () => {
             <div className="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/5 rounded-full blur-[180px] pointer-events-none z-0"></div>
             <div className="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-pink/3 rounded-full blur-[180px] pointer-events-none z-0"></div>
 
-            {/* IMMERSIVE HERO SECTION (Banner + Floating Dock) */}
-            <section className="relative w-full overflow-hidden">
-                {/* THEMATIC BANNER (Father's Day) - Responsive Scaling */}
-                <div className="w-full h-[180px] sm:h-[250px] md:h-[450px] lg:h-[500px] bg-slate-900 relative overflow-hidden group">
-                    <img 
-                        src="https://midias.creativeprintjp.com/wp-content/uploads/2026/04/Preto-Azul-e-Branco-Moderno-Mes-dos-Pais-Banner.png" 
-                        className="absolute inset-0 w-full h-full object-cover md:object-center group-hover:scale-105 transition-transform duration-[10s]" 
-                        alt="Especial Mês dos Pais"
-                    />
-                </div>
-            </section>
-
             {/* UNIFIED RESULTS SECTION */}
-            <section id="catalog-results" className="relative z-20 pb-32 px-4 overflow-hidden min-h-screen">
+            <section id="catalog-results" className="relative z-20 pb-32 px-4 overflow-hidden min-h-screen pt-24 md:pt-32">
                 {/* REFERENCE NEBULA GLOW (Unified & Immersive) */}
                 <div className="absolute inset-0 pointer-events-none z-0">
                     <div className="absolute top-0 -left-[20%] w-[1000px] h-[1000px] bg-brand-blue/12 blur-[200px] rounded-full animate-pulse" style={{ animationDuration: '10s' }}></div>
                     <div className="absolute bottom-0 -right-[20%] w-[1000px] h-[1000px] bg-brand-blue/10 blur-[200px] rounded-full animate-pulse" style={{ animationDelay: '3s', animationDuration: '10s' }}></div>
                 </div>
 
-                <div className="container mx-auto relative z-10 pt-10">
-                    {/* CABEÇALHO DE NAVEGAÇÃO INSPIRADO NO LAYOUT CINEMÁTICO */}
+                <div className="container mx-auto relative z-10">
+                    {/* CABEÇALHO DE NAVEGAÇÃO INSPIRADO NO LAYOUT CINEMÁTICO - AGORA NO TOPO */}
                     <div className="mb-16 text-center animate-fade-in">
-
-                        
                         <div className="flex flex-col md:flex-row items-center justify-center gap-6">
                             {/* CATEGORY PILLS (FILTROS PEQUENOS E DISCRETOS) */}
                             <div className="flex flex-wrap justify-center gap-2">
@@ -142,11 +128,39 @@ export const Products: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* PRODUCT GRID */}
+                    {/* PRODUCT GRID WITH INLINE BANNER */}
                     {filteredProducts.length > 0 ? (
                         <>
                             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                                {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
+                                {filteredProducts.map((product, index) => (
+                                    <React.Fragment key={product.id}>
+                                        <ProductCard product={product} />
+                                        
+                                        {/* UI/UX SPECIALIST: INLINE BANNER PLACEMENT (After 4 products) */}
+                                        {index === 3 && filteredProducts.length > 4 && (
+                                            <div className="col-span-full my-12 animate-fade-in-up">
+                                                <div className="relative w-full h-[180px] md:h-[350px] rounded-[2.5rem] overflow-hidden group border border-white/5 shadow-2xl">
+                                                    <img 
+                                                        src="https://midias.creativeprintjp.com/wp-content/uploads/2026/04/Preto-Azul-e-Branco-Moderno-Mes-dos-Pais-Banner.png" 
+                                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[10s]" 
+                                                        alt="Promoção Especial"
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent flex items-center p-8 md:p-20">
+                                                        <div className="max-w-xl">
+                                                            <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-brand-blue mb-4 block">Campanha Oficial</span>
+                                                            <h3 className="text-2xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none mb-6">
+                                                                Mês dos Pais <br/> <span className="text-brand-blue">Creative Print</span>
+                                                            </h3>
+                                                            <p className="text-white/60 text-xs md:text-base font-medium max-w-sm hidden md:block">
+                                                                Presentes exclusivos com tecnologia NFC e Impressão 3D de alta precisão.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </React.Fragment>
+                                ))}
                             </div>
                             
                             {/* BOTÃO VOLTAR AO TOPO */}
