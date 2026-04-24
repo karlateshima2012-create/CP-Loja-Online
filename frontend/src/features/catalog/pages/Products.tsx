@@ -87,11 +87,11 @@ export const Products: React.FC = () => {
 
             {/* IMMERSIVE HERO SECTION (Banner + Floating Dock) */}
             <section className="relative w-full overflow-hidden">
-                {/* THEMATIC BANNER (Father's Day) - Responsive Height */}
-                <div className="w-full h-[250px] md:h-[450px] bg-slate-900 relative overflow-hidden group">
+                {/* THEMATIC BANNER (Father's Day) - Responsive Scaling */}
+                <div className="w-full h-[180px] sm:h-[250px] md:h-[450px] lg:h-[500px] bg-slate-900 relative overflow-hidden group">
                     <img 
                         src="https://midias.creativeprintjp.com/wp-content/uploads/2026/04/Preto-Azul-e-Branco-Moderno-Mes-dos-Pais-Banner.png" 
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+                        className="absolute inset-0 w-full h-full object-cover md:object-center group-hover:scale-105 transition-transform duration-[10s]" 
                         alt="Especial Mês dos Pais"
                     />
                 </div>
@@ -114,8 +114,8 @@ export const Products: React.FC = () => {
                                 onClick={() => handleCategoryChange(cat.id)}
                                 className={`group relative h-24 md:h-40 rounded-2xl overflow-hidden border transition-all duration-700 ${catParam === cat.id ? 'border-brand-blue ring-2 ring-brand-blue/20 scale-[1.02]' : 'border-white/10 hover:border-white/30'}`}
                             >
-                                <div className={`absolute inset-0 z-10 transition-colors duration-700 ${catParam === cat.id ? 'bg-brand-blue/20' : 'bg-black/50 group-hover:bg-black/30'}`}></div>
-                                <img src={cat.img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={cat.label} />
+                                <div className={`absolute inset-0 z-10 transition-colors duration-700 ${catParam === cat.id ? 'bg-brand-blue/20' : 'bg-black/20 md:bg-black/50 md:group-hover:bg-black/30'}`}></div>
+                                <img src={cat.img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 md:group-hover:scale-110" alt={cat.label} />
                                 <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-4 text-center">
                                     <span className={`text-[8px] font-black uppercase tracking-[0.4em] mb-2 transition-colors ${catParam === cat.id ? 'text-white' : 'text-brand-blue'}`}>Explorar</span>
                                     <h3 className="text-sm md:text-xl font-black uppercase tracking-[0.1em] text-white drop-shadow-lg">
