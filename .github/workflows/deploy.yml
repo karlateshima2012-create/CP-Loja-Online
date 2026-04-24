@@ -125,16 +125,5 @@ jobs:
             cd /home/u176367625/domains/creativeprintjp.com/public_html/cp-loja-online/backend
             echo "Rodando migrações em $(pwd)..."
             php artisan migrate --force
-
-      - name: Backend Setup via SSH (Password)
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            cd public_html/cp-loja-online/backend
-            echo "Rodando migrações em $(pwd)..."
-            php artisan migrate --force
-
+            php artisan config:cache
+            php artisan route:cache
