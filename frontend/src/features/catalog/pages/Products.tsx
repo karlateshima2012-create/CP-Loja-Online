@@ -145,7 +145,7 @@ export const Products: React.FC = () => {
 
                     {/* PRODUCT GRID */}
                     {filteredProducts.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-12">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                             {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
                         </div>
                     ) : (
