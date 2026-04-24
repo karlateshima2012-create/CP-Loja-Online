@@ -98,11 +98,11 @@ export const Products: React.FC = () => {
                 <div className="container mx-auto relative z-10">
                     {/* TÍTULO DE IMPACTO (UI/UX SUGGESTION) */}
                     <div className="mb-12 text-center animate-fade-in-up">
-                        <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-3">
-                            Sua Marca em uma <span className="text-brand-blue">Nova Dimensão</span>
+                        <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
+                            Creative Print <span className="text-brand-blue">Tecnologia NFC & Impressão 3D</span>
                         </h1>
-                        <p className="text-slate-500 text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] max-w-2xl mx-auto leading-relaxed">
-                            Conectando o mundo físico ao digital com NFC e Impressão 3D
+                        <p className="text-slate-500 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] max-w-3xl mx-auto leading-relaxed">
+                            Personalização 3D com tecnologia NFC. O presente corporativo que une design, tecnologia e conexão digital.
                         </p>
                         <div className="w-[80%] max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-brand-blue to-transparent mx-auto mt-12 opacity-40"></div>
                     </div>
