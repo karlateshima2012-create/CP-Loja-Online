@@ -164,20 +164,20 @@ export const Products: React.FC = () => {
                         
                         {/* SHOWROOM SECTION HEADER */}
                         <div className="flex flex-col items-center mb-12 animate-fade-in relative">
-                            {/* Animated Bio-Lights (Pulsating Blue Spots) */}
-                            <div className="absolute top-0 -left-20 w-40 h-40 bg-brand-blue/15 blur-[80px] rounded-full animate-pulse"></div>
-                            <div className="absolute bottom-0 -right-20 w-40 h-40 bg-brand-blue/10 blur-[80px] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                            {/* Animated Bio-Lights (Intensified) */}
+                            <div className="absolute top-0 -left-32 w-64 h-64 bg-brand-blue/30 blur-[100px] rounded-full animate-pulse"></div>
+                            <div className="absolute bottom-0 -right-32 w-64 h-64 bg-brand-blue/20 blur-[100px] rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
                             
                             {/* Premium Badge */}
-                            <div className="bg-brand-blue/10 border border-brand-blue/30 px-4 py-1 rounded-full mb-6 shadow-[0_0_15px_rgba(56,182,255,0.2)]">
+                            <div className="bg-brand-blue/10 border border-brand-blue/30 px-4 py-1 rounded-full mb-6 shadow-[0_0_15px_rgba(56,182,255,0.3)]">
                                 <span className="text-brand-blue text-[9px] font-black uppercase tracking-[0.3em]">Exclusivo</span>
                             </div>
 
                             <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-white text-center leading-tight">
-                                Conheça os <span className="font-light opacity-80">Produtos</span> <br className="md:hidden" />
-                                <span className="text-brand-blue drop-shadow-[0_0_10px_rgba(56,182,255,0.3)]">Creative Print</span>
+                                Conheça os <span className="text-brand-blue">Produtos</span> <br className="md:hidden" />
+                                <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">Creative Print</span>
                             </h2>
-                            <div className="w-12 h-1 bg-gradient-to-r from-transparent via-brand-blue to-transparent rounded-full mt-6 opacity-60"></div>
+                            <div className="w-12 h-1 bg-gradient-to-r from-transparent via-brand-blue to-transparent rounded-full mt-6 opacity-80 shadow-[0_0_10px_rgba(56,182,255,0.5)]"></div>
                         </div>
 
                         {/* DOCK - Now fits perfectly under the header */}
