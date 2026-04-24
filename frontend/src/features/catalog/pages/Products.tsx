@@ -152,7 +152,7 @@ export const Products: React.FC = () => {
                                         {/* UI/UX SPECIALIST: INLINE BANNER PLACEMENT (After 4 products) */}
                                         {index === 3 && filteredProducts.length > 4 && bannerConfig?.active && (
                                             <div className="col-span-full my-12 animate-fade-in-up">
-                                                <div className="relative w-full h-[180px] md:h-[350px] rounded-2xl overflow-hidden group border border-white/5 shadow-2xl">
+                                                <div className="relative w-full h-[180px] md:h-[350px] rounded-3xl overflow-hidden group border border-white/5 shadow-2xl">
                                                     <img 
                                                         src={bannerConfig.imageUrl} 
                                                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[10s]" 

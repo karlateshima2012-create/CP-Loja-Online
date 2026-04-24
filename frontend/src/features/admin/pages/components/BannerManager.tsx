@@ -132,7 +132,7 @@ export const BannerManager: React.FC = () => {
                             <h3 className="font-black text-white uppercase tracking-widest text-xs">Preview em Tempo Real</h3>
                         </div>
 
-                        <div className={`relative w-full h-[180px] md:h-[300px] rounded-2xl overflow-hidden group border border-white/5 shadow-2xl transition-all ${!banner.active ? 'opacity-30 grayscale' : ''}`}>
+                        <div className={`relative w-full h-[180px] md:h-[300px] rounded-3xl overflow-hidden group border border-white/5 shadow-2xl transition-all ${!banner.active ? 'opacity-30 grayscale' : ''}`}>
                             <img 
                                 src={banner.imageUrl} 
                                 className="absolute inset-0 w-full h-full object-cover" 

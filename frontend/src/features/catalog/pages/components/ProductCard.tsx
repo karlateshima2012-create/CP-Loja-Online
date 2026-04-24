@@ -25,7 +25,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <Link
       to={`/produto/${product.id}`}
-      className="group bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 md:hover:border-brand-blue/50 transition-all duration-300 md:hover:shadow-[0_0_30px_rgba(36,155,203,0.15)] flex flex-col h-full animate-fade-in-up border-brand-blue/20 md:border-slate-800"
+      className="group bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 md:hover:border-brand-blue/50 transition-all duration-300 md:hover:shadow-[0_0_30px_rgba(36,155,203,0.15)] flex flex-col h-full animate-fade-in-up border-brand-blue/20 md:border-slate-800"
     >
       <div className="aspect-square bg-slate-950 overflow-hidden relative">
         <div className="absolute inset-0 bg-brand-blue/10 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
