@@ -46,7 +46,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
       <div className="p-4 md:p-6 flex-1 flex flex-col">
         {/* Category hidden as per request */}
-        <h3 className="font-bold text-white text-base md:text-lg mb-4 leading-tight md:group-hover:text-brand-blue transition-colors line-clamp-2">{product.name}</h3>
+        <h3 className="font-bold text-slate-400 text-base md:text-lg mb-4 leading-tight md:group-hover:text-brand-blue transition-colors line-clamp-2">{product.name}</h3>
 
         {/* Rodapé — Unificado para vertical em todos os dispositivos */}
         <div className="flex flex-col justify-between mt-auto pt-5 border-t border-white/5 gap-3">
