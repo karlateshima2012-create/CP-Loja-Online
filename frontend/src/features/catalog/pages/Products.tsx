@@ -28,6 +28,7 @@ export const Products: React.FC = () => {
     const { user, role } = useAuth();
     const { cart } = useCart();
     const [products, setProducts] = useState<Product[]>([]);
+    const [bannerConfig, setBannerConfig] = useState<any>(null);
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
     
@@ -37,6 +38,7 @@ export const Products: React.FC = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
+        setBannerConfig(mockService.getStoreBanner());
     }, []);
 
     const scrollToResults = () => {
@@ -148,22 +150,22 @@ export const Products: React.FC = () => {
                                         <ProductCard product={product} />
                                         
                                         {/* UI/UX SPECIALIST: INLINE BANNER PLACEMENT (After 4 products) */}
-                                        {index === 3 && filteredProducts.length > 4 && (
+                                        {index === 3 && filteredProducts.length > 4 && bannerConfig?.active && (
                                             <div className="col-span-full my-12 animate-fade-in-up">
-                                                <div className="relative w-full h-[180px] md:h-[350px] rounded-[2.5rem] overflow-hidden group border border-white/5 shadow-2xl">
+                                                <div className="relative w-full h-[180px] md:h-[350px] rounded-2xl overflow-hidden group border border-white/5 shadow-2xl">
                                                     <img 
-                                                        src="https://midias.creativeprintjp.com/wp-content/uploads/2026/04/Preto-Azul-e-Branco-Moderno-Mes-dos-Pais-Banner.png" 
+                                                        src={bannerConfig.imageUrl} 
                                                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[10s]" 
                                                         alt="Promoção Especial"
                                                     />
                                                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent flex items-center p-8 md:p-20">
                                                         <div className="max-w-xl">
-                                                            <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-brand-blue mb-4 block">Campanha Oficial</span>
+                                                            <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-brand-blue mb-4 block">{bannerConfig.tagline}</span>
                                                             <h3 className="text-2xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none mb-6">
-                                                                Mês dos Pais <br/> <span className="text-brand-blue">Creative Print</span>
+                                                                {bannerConfig.title} <br/> <span className="text-brand-blue">{bannerConfig.subtitle}</span>
                                                             </h3>
                                                             <p className="text-white/60 text-xs md:text-base font-medium max-w-sm hidden md:block">
-                                                                Presentes exclusivos com tecnologia NFC e Impressão 3D de alta precisão.
+                                                                {bannerConfig.description}
                                                             </p>
                                                         </div>
                                                     </div>

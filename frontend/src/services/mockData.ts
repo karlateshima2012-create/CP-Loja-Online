@@ -4,7 +4,7 @@ import {
     Testimonial, TestimonialSource, Coupon,
     RawMaterial, SystemSettings, SiteTexts,
     PaymentMethod, AbandonedCart, CartItem,
-    FlixProfile
+    FlixProfile, StoreBanner
 } from '../types';
 
 // --- MOCK DATA STORAGE (In-Memory) ---
@@ -321,6 +321,14 @@ let TESTIMONIALS: Testimonial[] = [
 ];
 let COUPONS: Coupon[] = [];
 let ABANDONED_CARTS: AbandonedCart[] = [];
+let STORE_BANNER: StoreBanner = {
+    imageUrl: 'https://midias.creativeprintjp.com/wp-content/uploads/2026/04/Preto-Azul-e-Branco-Moderno-Mes-dos-Pais-Banner.png',
+    tagline: 'Campanha Oficial',
+    title: 'Mês dos Pais',
+    subtitle: 'Creative Print',
+    description: 'Presentes exclusivos com tecnologia NFC e Impressão 3D de alta precisão.',
+    active: true
+};
 
 // --- SERVICE IMPLEMENTATION ---
 
@@ -451,6 +459,10 @@ export const mockService = {
         else { p.id = `flix-${Date.now()}`; FLIX_PROFILES.push(p); }
     },
     deleteFlixProfile: (id: string) => { FLIX_PROFILES = FLIX_PROFILES.filter(p => p.id !== id); },
+
+    // BANNER
+    getStoreBanner: () => STORE_BANNER,
+    updateStoreBanner: (banner: StoreBanner) => { STORE_BANNER = banner; },
 
     // UTILS
     testTelegramNotification: async () => true

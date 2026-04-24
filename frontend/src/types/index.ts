@@ -301,3 +301,12 @@ export interface SystemSettings {
 export interface SiteTexts {
   [key: string]: string;
 }
+
+export interface StoreBanner {
+  imageUrl: string;
+  tagline: string;
+  title: string;
+  subtitle: string;
+  description?: string;
+  active: boolean;
+}

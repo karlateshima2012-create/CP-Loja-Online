@@ -17,7 +17,8 @@ import {
   FileText,
   Globe,
   Layers,
-  X
+  X,
+  Image as ImageIcon
 } from 'lucide-react';
 import { AdminOverview } from './components/AdminOverview';
 import { OrdersManager } from './components/OrdersManager';
@@ -29,9 +30,10 @@ import { CouponsManager } from './components/CouponsManager';
 import { MaterialsManager } from './components/MaterialsManager';
 import { FlixManager } from './components/FlixManager';
 import { ContentManager } from './components/ContentManager';
+import { BannerManager } from './components/BannerManager';
 import { useNavigate } from 'react-router-dom';
 
-type TabType = 'overview' | 'orders' | 'customers' | 'connect' | 'products' | 'stock' | 'testimonials' | 'coupons' | 'settings';
+type TabType = 'overview' | 'orders' | 'customers' | 'connect' | 'products' | 'banner' | 'stock' | 'testimonials' | 'coupons' | 'settings';
 
 export const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
@@ -45,6 +47,7 @@ export const AdminDashboard: React.FC = () => {
     { id: 'customers', label: 'Clientes', icon: Users },
     { id: 'connect', label: 'Connect', icon: Globe },
     { id: 'products', label: 'Produtos', icon: Package },
+    { id: 'banner', label: 'Banner Loja', icon: ImageIcon },
     { id: 'stock', label: 'Estoque', icon: Layers },
     { id: 'testimonials', label: 'Depoimentos', icon: Star },
     { id: 'coupons', label: 'Cupons', icon: Ticket },
@@ -70,6 +73,7 @@ export const AdminDashboard: React.FC = () => {
       case 'customers': return <CustomersManager />;
       case 'connect': return <FlixManager />;
       case 'products': return <ProductsManager />;
+      case 'banner': return <BannerManager />;
       case 'stock': return <MaterialsManager />;
       case 'testimonials': return <TestimonialsManager />;
       case 'coupons': return <CouponsManager />;
