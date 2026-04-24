@@ -110,7 +110,7 @@ export const Products: React.FC = () => {
                     {/* CABEÇALHO DE NAVEGAÇÃO INSPIRADO NO LAYOUT CINEMÁTICO - AGORA NO TOPO */}
                     <div className="mb-16 text-center animate-fade-in">
                         <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-                            {/* CATEGORY PILLS (FILTROS PEQUENOS E DISCRETOS) */}
+                            {/* CATEGORY PILLS (FILTROS COM BORDA AZUL UNIFICADA) */}
                             <div className="flex flex-wrap justify-center gap-2">
                                 {CATEGORIES.map((cat) => (
                                     <button
@@ -118,8 +118,8 @@ export const Products: React.FC = () => {
                                         onClick={() => handleCategoryChange(cat.id)}
                                         className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 border ${
                                             catParam === cat.id 
-                                            ? 'bg-brand-blue/10 border-brand-blue text-brand-blue shadow-[0_0_15px_rgba(56,182,255,0.3)]' 
-                                            : 'bg-white/5 border-white/10 text-white/70 hover:text-white hover:border-white/30'
+                                            ? 'bg-brand-blue/10 border-brand-blue text-brand-blue shadow-[0_0_15px_rgba(56,182,255,0.2)]' 
+                                            : 'bg-brand-blue/5 border-brand-blue/30 text-white/70 hover:text-white hover:border-brand-blue/60 hover:bg-brand-blue/10'
                                         }`}
                                     >
                                         {cat.label}
@@ -127,7 +127,7 @@ export const Products: React.FC = () => {
                                 ))}
                             </div>
 
-                            {/* BARRA DE BUSCA COM MAIOR DESTAQUE */}
+                            {/* BARRA DE BUSCA COM FUNDO AZUL NAVBAR */}
                             <div className="relative group w-full md:w-80">
                                 <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-blue/60 group-focus-within:text-brand-blue transition-colors" />
                                 <input 
@@ -135,7 +135,7 @@ export const Products: React.FC = () => {
                                     placeholder="BUSCAR PRODUTO..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full bg-white/10 border border-brand-blue/30 rounded-full py-3 pl-11 pr-4 text-[11px] font-black text-white/70 placeholder:text-white/30 focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 focus:bg-white/15 transition-all uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(56,182,255,0.15)] focus:shadow-[0_0_25px_rgba(56,182,255,0.4)]"
+                                    className="w-full bg-brand-blue/10 border border-brand-blue/30 rounded-full py-3 pl-11 pr-4 text-[11px] font-black text-white/70 placeholder:text-white/30 focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 focus:bg-brand-blue/20 transition-all uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(56,182,255,0.15)] focus:shadow-[0_0_25px_rgba(56,182,255,0.4)]"
                                 />
                             </div>
                         </div>
