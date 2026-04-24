@@ -106,41 +106,42 @@ export const Products: React.FC = () => {
                 </div>
 
                 <div className="container mx-auto relative z-10 pt-10">
-                    {/* THREE MAIN CATEGORY CARDS (Slim Version) */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16 animate-fade-in">
-                        {CATEGORIES.filter(c => c.id !== 'Todos').map((cat) => (
-                            <button 
-                                key={cat.id}
-                                onClick={() => handleCategoryChange(cat.id)}
-                                className={`group relative h-24 md:h-40 rounded-2xl overflow-hidden border transition-all duration-700 ${catParam === cat.id ? 'border-brand-blue ring-2 ring-brand-blue/20 scale-[1.02]' : 'border-white/10 hover:border-white/30'}`}
-                            >
-                                <div className={`absolute inset-0 z-10 transition-colors duration-700 ${catParam === cat.id ? 'bg-brand-blue/20' : 'bg-black/20 md:bg-black/50 md:group-hover:bg-black/30'}`}></div>
-                                <img src={cat.img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 md:group-hover:scale-110" alt={cat.label} />
-                                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-4 text-center">
-                                    <span className={`text-[8px] font-black uppercase tracking-[0.4em] mb-2 transition-colors ${catParam === cat.id ? 'text-white' : 'text-brand-blue'}`}>Explorar</span>
-                                    <h3 className="text-sm md:text-xl font-black uppercase tracking-[0.1em] text-white drop-shadow-lg">
+                    {/* CABEÇALHO DE NAVEGAÇÃO INSPIRADO NO LAYOUT CINEMÁTICO */}
+                    <div className="mb-16 text-center animate-fade-in">
+                        <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tight uppercase">
+                            Conheça nossos produtos
+                        </h2>
+                        
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+                            {/* CATEGORY PILLS (FILTROS PEQUENOS E DISCRETOS) */}
+                            <div className="flex flex-wrap justify-center gap-2">
+                                {CATEGORIES.map((cat) => (
+                                    <button
+                                        key={cat.id}
+                                        onClick={() => handleCategoryChange(cat.id)}
+                                        className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 border ${
+                                            catParam === cat.id 
+                                            ? 'bg-brand-blue/10 border-brand-blue text-brand-blue shadow-[0_0_15px_rgba(56,182,255,0.3)]' 
+                                            : 'bg-white/5 border-white/10 text-white/40 hover:text-white hover:border-white/30'
+                                        }`}
+                                    >
                                         {cat.label}
-                                    </h3>
-                                </div>
-                            </button>
-                        ))}
-                    </div>
+                                    </button>
+                                ))}
+                            </div>
 
-                    {/* ACTIVE CATEGORY INDICATOR */}
-                    <div className="flex items-center gap-4 mb-10">
-                        <div className="h-[2px] w-8 bg-brand-blue shadow-[0_0_10px_rgba(56,182,255,0.5)]"></div>
-                        <span className="text-xs font-black uppercase tracking-[0.3em] text-brand-blue">
-                            {catParam === 'Todos' ? 'Catálogo Completo' : catParam}
-                        </span>
-                        {catParam !== 'Todos' && (
-                            <button 
-                                onClick={() => handleCategoryChange('Todos')}
-                                className="ml-auto text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-all flex items-center gap-2 group"
-                            >
-                                <span className="group-hover:mr-1 transition-all">Ver Tudo</span>
-                                <div className="w-4 h-[1px] bg-white/30 group-hover:bg-white group-hover:w-6 transition-all"></div>
-                            </button>
-                        )}
+                            {/* BARRA DE BUSCA DISCRETA */}
+                            <div className="relative group w-full md:w-64">
+                                <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-brand-blue transition-colors" />
+                                <input 
+                                    type="text"
+                                    placeholder="BUSCAR PRODUTO..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-11 pr-4 text-[10px] font-black text-white placeholder:text-white/20 focus:outline-none focus:border-brand-blue/50 focus:bg-white/10 transition-all uppercase tracking-widest"
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     {/* PRODUCT GRID */}
