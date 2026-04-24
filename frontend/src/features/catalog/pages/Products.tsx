@@ -141,34 +141,15 @@ export const Products: React.FC = () => {
             {/* PRODUCT GRID - ILLUMINATED LAYER */}
             <section id="catalog-results" className="relative z-20 mt-8 overflow-hidden">
                 {/* The 'Tray' Layer (Restored to Deep Dark) */}
-                <div className="bg-slate-900/80 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/20 shadow-[0_-30px_80px_rgba(0,0,0,0.8)] pt-12 pb-32 px-6 relative overflow-hidden">
+                <div className="bg-slate-900/90 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,1)] pt-12 pb-32 px-6 relative overflow-hidden">
                     
-                    {/* SUBTLE WAVE-FLOW DYNAMIC LIGHTS */}
+                    {/* REFERENCE NEBULA GLOW (Matching CP Agenda Vibe) */}
                     <div className="absolute inset-0 pointer-events-none z-0">
-                        <style>{`
-                            @keyframes wave-flow-subtle {
-                                0%, 100% { transform: scale(1); opacity: 0.1; }
-                                50% { transform: scale(1.4); opacity: 0.25; }
-                            }
-                            .animate-wave-subtle {
-                                animation: wave-flow-subtle 10s ease-in-out infinite;
-                            }
-                        `}</style>
+                        {/* Primary Nebula - Left Side */}
+                        <div className="absolute top-0 -left-[20%] w-[1000px] h-[1000px] bg-brand-blue/15 blur-[200px] rounded-full animate-pulse" style={{ animationDuration: '15s' }}></div>
                         
-                        {/* Top Left */}
-                        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-brand-blue/20 blur-[140px] rounded-full animate-wave-subtle"></div>
-                        
-                        {/* Top Right */}
-                        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-brand-blue/15 blur-[140px] rounded-full animate-wave-subtle" style={{ animationDelay: '2s' }}></div>
-                        
-                        {/* Central Sun (Softened) */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-brand-blue/10 blur-[180px] rounded-full animate-wave-subtle" style={{ animationDelay: '4s' }}></div>
-                        
-                        {/* Bottom Left */}
-                        <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-brand-blue/15 blur-[140px] rounded-full animate-wave-subtle" style={{ animationDelay: '6s' }}></div>
-                        
-                        {/* Bottom Right */}
-                        <div className="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-brand-blue/20 blur-[140px] rounded-full animate-wave-subtle" style={{ animationDelay: '1s' }}></div>
+                        {/* Secondary Support Glow - Right Bottom */}
+                        <div className="absolute bottom-0 -right-[10%] w-[600px] h-[600px] bg-indigo-600/5 blur-[150px] rounded-full"></div>
                     </div>
                     <div className="container mx-auto">
                         
