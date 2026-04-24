@@ -18,10 +18,10 @@ import { useCart } from '../../cart/CartContext';
 import { ProductCard } from './components/ProductCard';
 import { Starfield } from '../../../components/ui/Starfield';
 const CATEGORIES = [
-    { id: 'Todos', label: 'Todos', short: 'Todos' },
-    { id: 'Impressão 3D', label: 'Impressão 3D', short: 'IMPRESSÃO 3D' },
-    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', short: 'NFC' },
-    { id: 'Soluções Digitais', label: 'Soluções Digitais', short: 'SOLUÇÕES' }
+    { id: 'Todos', label: 'Todos', short: 'Todos', img: '' },
+    { id: 'Impressão 3D', label: 'Impressão 3D', short: 'IMPRESSÃO 3D', img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1200&auto=format&fit=crop' },
+    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', short: 'NFC', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop' },
+    { id: 'Soluções Digitais', label: 'Soluções Digitais', short: 'SOLUÇÕES', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop' }
 ];
 
 export const Products: React.FC = () => {
