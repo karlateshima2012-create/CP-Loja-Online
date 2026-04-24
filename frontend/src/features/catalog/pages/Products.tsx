@@ -53,6 +53,13 @@ export const Products: React.FC = () => {
         }
     }, [searchTerm]);
 
+    // Auto-scroll when category changes via URL (Navbar)
+    useEffect(() => {
+        if (catParam !== 'Todos') {
+            scrollToResults();
+        }
+    }, [catParam]);
+
     const handleCategoryChange = (cat: string) => {
         const p = new URLSearchParams();
         if (cat !== 'Todos') p.set('cat', cat);
@@ -154,22 +161,15 @@ export const Products: React.FC = () => {
                 <div className="bg-slate-900/60 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,0.9)] pt-8 pb-32 px-6">
                     <div className="container mx-auto">
                         
-                        {/* PREMIUM SECTION HEADER */}
+                        {/* MINIMALIST SECTION HEADER */}
                         <div className="flex flex-col items-center mb-12 animate-fade-in relative">
                             {/* Ambient Light Behind Header */}
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-24 bg-brand-blue/10 blur-[60px] -z-10"></div>
                             
-                            <span className="text-brand-blue font-black uppercase tracking-[0.4em] text-[9px] mb-3 opacity-80">Store Catalog</span>
-                            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4">
-                                Catálogo <span className="text-brand-blue">Creative</span>
+                            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">
+                                Nossos <span className="text-white">Produtos</span>
                             </h2>
-                            <div className="flex items-center gap-4">
-                                <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-white/20"></div>
-                                <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] bg-white/[0.03] px-4 py-1.5 rounded-full border border-white/5">
-                                    Explorando <span className="text-white">[{filteredProducts.length}]</span> Produtos
-                                </p>
-                                <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-white/20"></div>
-                            </div>
+                            <div className="w-12 h-1 bg-brand-blue rounded-full mt-6 opacity-50"></div>
                         </div>
 
                         {/* DOCK - Now fits perfectly under the header */}
