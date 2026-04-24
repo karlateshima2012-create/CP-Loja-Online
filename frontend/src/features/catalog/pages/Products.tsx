@@ -105,31 +105,22 @@ export const Products: React.FC = () => {
                     <div className="absolute bottom-0 -right-[20%] w-[1000px] h-[1000px] bg-brand-blue/10 blur-[200px] rounded-full animate-pulse" style={{ animationDelay: '3s', animationDuration: '10s' }}></div>
                 </div>
 
-                <div className="container mx-auto relative z-10 pt-20">
-                    {/* MINIMALIST HEADER */}
-                    <div className="flex flex-col items-center mb-16 animate-fade-in">
-                        <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white text-center leading-tight drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]">
-                            Creative Print
-                        </h2>
-                        <div className="w-16 h-1 bg-brand-blue rounded-full mt-6 opacity-80 shadow-[0_0_10px_rgba(56,182,255,0.5)]"></div>
-                    </div>
-
-                    {/* THREE MAIN CATEGORY CARDS (Replacing Marquee & Dock) */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24 animate-fade-in">
+                <div className="container mx-auto relative z-10 pt-10">
+                    {/* THREE MAIN CATEGORY CARDS (Slim Version) */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 animate-fade-in">
                         {CATEGORIES.filter(c => c.id !== 'Todos').map((cat) => (
                             <button 
                                 key={cat.id}
                                 onClick={() => handleCategoryChange(cat.id)}
-                                className={`group relative h-48 md:h-80 rounded-[2.5rem] overflow-hidden border transition-all duration-700 ${catParam === cat.id ? 'border-brand-blue ring-4 ring-brand-blue/20 scale-[1.03]' : 'border-white/10 hover:border-white/30 hover:scale-[1.01]'}`}
+                                className={`group relative h-24 md:h-40 rounded-[1.5rem] overflow-hidden border transition-all duration-700 ${catParam === cat.id ? 'border-brand-blue ring-2 ring-brand-blue/20 scale-[1.02]' : 'border-white/10 hover:border-white/30'}`}
                             >
                                 <div className={`absolute inset-0 z-10 transition-colors duration-700 ${catParam === cat.id ? 'bg-brand-blue/20' : 'bg-black/50 group-hover:bg-black/30'}`}></div>
                                 <img src={cat.img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={cat.label} />
-                                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 text-center">
-                                    <span className={`text-[10px] font-black uppercase tracking-[0.4em] mb-4 transition-colors ${catParam === cat.id ? 'text-white' : 'text-brand-blue'}`}>Explorar</span>
-                                    <h3 className="text-xl md:text-3xl font-black uppercase tracking-[0.15em] text-white drop-shadow-lg">
+                                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-4 text-center">
+                                    <span className={`text-[8px] font-black uppercase tracking-[0.4em] mb-2 transition-colors ${catParam === cat.id ? 'text-white' : 'text-brand-blue'}`}>Explorar</span>
+                                    <h3 className="text-sm md:text-xl font-black uppercase tracking-[0.1em] text-white drop-shadow-lg">
                                         {cat.label}
                                     </h3>
-                                    <div className={`w-10 h-1 bg-white rounded-full mt-4 transition-all duration-500 ${catParam === cat.id ? 'opacity-100 w-16' : 'opacity-0'}`}></div>
                                 </div>
                             </button>
                         ))}
