@@ -53,21 +53,6 @@ export const Products: React.FC = () => {
         }
     }, [searchTerm]);
 
-    const [showFloatingButton, setShowFloatingButton] = useState(false);
-    
-    // Monitor scroll for Floating Button activation
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 600) {
-                setShowFloatingButton(true);
-            } else {
-                setShowFloatingButton(false);
-            }
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
     const handleCategoryChange = (cat: string) => {
         const p = new URLSearchParams();
         if (cat !== 'Todos') p.set('cat', cat);
@@ -95,8 +80,8 @@ export const Products: React.FC = () => {
 
             {/* IMMERSIVE HERO SECTION (Banner + Floating Dock) */}
             <section className="relative w-full overflow-hidden">
-                {/* Main Banner Image */}
-                <div className="w-full h-[60vh] md:h-[70vh] bg-slate-900 relative overflow-hidden group">
+                {/* Main Banner Image (Compact) */}
+                <div className="w-full h-[40vh] md:h-[50vh] bg-slate-900 relative overflow-hidden group">
                     <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/90 z-10"></div>
                     <img 
                         src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2500&auto=format&fit=crop" 
@@ -224,18 +209,6 @@ export const Products: React.FC = () => {
                     </div>
                 </div>
             </section>
-            {/* FLOATING ACTION BUTTON (FAB) - Search */}
-            <div className={`fixed bottom-8 right-8 z-[100] transition-all duration-500 transform ${showFloatingButton ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'}`}>
-                <button 
-                    onClick={() => {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                        setTimeout(() => setIsSearchExpanded(true), 600);
-                    }}
-                    className="w-16 h-16 bg-brand-blue text-slate-950 rounded-full shadow-[0_0_30px_rgba(56,182,255,0.5)] flex items-center justify-center group active:scale-95 transition-all border-4 border-black/20"
-                >
-                    <Search size={28} className="group-hover:scale-110 transition-transform" />
-                </button>
-            </div>
         </div>
     );
 };
