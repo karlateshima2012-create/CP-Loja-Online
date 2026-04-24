@@ -80,22 +80,26 @@ export const Products: React.FC = () => {
 
             {/* IMMERSIVE HERO SECTION (Banner + Floating Dock) */}
             <section className="relative w-full overflow-hidden">
-                {/* Main Banner Image (Compact) */}
-                <div className="w-full h-[40vh] md:h-[50vh] bg-slate-900 relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/90 z-10"></div>
+                {/* THEMATIC BANNER (Mother's Day) */}
+                <div className="w-full h-[400px] md:h-[450px] bg-[#E5E1DA] relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#E5E1DA]/60 via-transparent to-transparent z-10"></div>
                     <img 
-                        src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2500&auto=format&fit=crop" 
-                        className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000" 
-                        alt="Creative Print Store Banner"
+                        src="https://images.unsplash.com/photo-1554034483-04fda0d3507b?q=80&w=2500&auto=format&fit=crop" 
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+                        alt="Especial Dia das Mães"
                     />
                     
-                    {/* Floating Content Over Banner */}
-                    <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-center px-6">
-                        <span className="text-brand-blue font-black uppercase tracking-[0.5em] text-xs mb-6 animate-fade-in">Inovação & Design</span>
-                        <h2 className="text-4xl md:text-7xl font-black text-white leading-none uppercase tracking-tighter max-w-4xl">
-                            Tecnologia de <span className="bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">Ponta</span><br/>
-                            <span className="text-brand-blue drop-shadow-[0_0_15px_rgba(56,182,255,0.5)]">Para sua Empresa.</span>
-                        </h2>
+                    {/* Thematic Content */}
+                    <div className="absolute inset-0 z-20 flex flex-col justify-center px-8 md:px-24">
+                        <span className="text-brand-pink font-black uppercase tracking-[0.4em] text-[10px] md:text-xs mb-4 animate-fade-in">Especial Dia das Mães</span>
+                        <div className="relative">
+                            <h2 className="text-4xl md:text-7xl font-light text-slate-800 leading-none tracking-tighter max-w-2xl italic">
+                                Mãe é sinônimo de <br/>
+                                <span className="font-black text-brand-pink drop-shadow-sm not-italic">amor sem fim.</span>
+                            </h2>
+                            {/* Decorative line similar to the image */}
+                            <div className="absolute -bottom-6 left-0 w-32 h-1 bg-brand-pink/20 rounded-full"></div>
+                        </div>
                     </div>
                 </div>
             </section>
