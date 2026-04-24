@@ -54,8 +54,8 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
   return (
     <div className="min-h-screen flex flex-col bg-black text-white font-sans selection:bg-brand-blue/30">
       
-      {/* Header (Black Glass - Matched with Cards) */}
-      <header className="bg-black/80 backdrop-blur-2xl sticky top-0 z-50">
+      {/* Header (Slate 900 Glass - Matched with Cards) */}
+      <header className="bg-slate-900/80 backdrop-blur-2xl sticky top-0 z-50 border-b border-white/5">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
 
           {/* Logo Area */}
