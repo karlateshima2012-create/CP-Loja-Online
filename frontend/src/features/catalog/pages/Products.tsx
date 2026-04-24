@@ -192,21 +192,6 @@ export const Products: React.FC = () => {
                 </div>
             </section>
 
-            {/* FOOTER AREA (Simple for now) */}
-            <footer className="bg-black py-12 border-t border-white/5 relative z-10">
-                <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-                    <div className="flex items-center gap-3">
-                        <Box className="text-brand-blue" size={24} />
-                        <span className="text-lg font-black uppercase tracking-tighter">Creative<span className="text-brand-blue">Print</span></span>
-                    </div>
-                    <div className="flex gap-8 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                        <a href="#" className="hover:text-white transition-colors">Sobre Nós</a>
-                        <a href="#" className="hover:text-white transition-colors">Termos</a>
-                        <a href="#" className="hover:text-white transition-colors">Contato</a>
-                    </div>
-                    <span className="text-[10px] text-slate-700 font-mono">© 2026 CREATIVE PRINT JP</span>
-                </div>
-            </footer>
         </div>
     );
 };
