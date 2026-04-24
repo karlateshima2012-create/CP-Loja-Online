@@ -97,140 +97,74 @@ export const Products: React.FC = () => {
                 </div>
             </section>
 
-            {/* SUBCATEGORY INFINITE MARQUEE */}
-            <section className="w-full overflow-hidden py-8 relative z-10 group">
-                <style>{`
-                    @keyframes scroll {
-                        0% { transform: translateX(0); }
-                        100% { transform: translateX(calc(-220px * 5 - 1rem * 5)); }
-                    }
-                    @media (min-width: 768px) {
-                        @keyframes scroll {
-                            0% { transform: translateX(0); }
-                            100% { transform: translateX(calc(-300px * 5 - 1rem * 5)); }
-                        }
-                    }
-                    .animate-scroll {
-                        animation: scroll 35s linear infinite;
-                    }
-                    .animate-scroll:hover {
-                        animation-play-state: paused;
-                    }
-                `}</style>
-                
-                <div className="flex gap-4 animate-scroll whitespace-nowrap w-fit">
-                    {/* Render twice for infinite loop effect */}
-                    {[...SUBCATEGORIES, ...SUBCATEGORIES].map((cat, idx) => (
-                                <button 
-                                    key={`${cat.id}-${idx}`}
-                                    onClick={() => handleCategoryChange(cat.id)}
-                                    className="w-[180px] md:w-[280px] h-32 md:h-40 bg-white/5 backdrop-blur-md rounded-2xl border border-white/20 relative overflow-hidden flex-shrink-0 group/card transition-all hover:border-brand-blue/50 shadow-xl"
-                                >
-                                    <div className="absolute inset-0 bg-black/10 group-hover/card:bg-black/5 z-10 transition-colors"></div>
-                                    <img src={cat.img} className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover/card:scale-110 transition-transform duration-1000" alt={cat.label} />
-                                    <div className="absolute inset-0 z-20 flex items-center justify-center p-4">
-                                        <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-white text-center drop-shadow-[0_2px_15px_rgba(0,0,0,1)] leading-tight">
-                                            {cat.label}
-                                        </span>
-                                    </div>
-                                </button>
-                    ))}
+            {/* UNIFIED RESULTS SECTION */}
+            <section id="catalog-results" className="relative z-20 pb-32 px-6 overflow-hidden min-h-screen">
+                {/* REFERENCE NEBULA GLOW (Unified & Immersive) */}
+                <div className="absolute inset-0 pointer-events-none z-0">
+                    <div className="absolute top-0 -left-[20%] w-[1000px] h-[1000px] bg-brand-blue/12 blur-[200px] rounded-full animate-pulse" style={{ animationDuration: '10s' }}></div>
+                    <div className="absolute bottom-0 -right-[20%] w-[1000px] h-[1000px] bg-brand-blue/10 blur-[200px] rounded-full animate-pulse" style={{ animationDelay: '3s', animationDuration: '10s' }}></div>
                 </div>
-            </section>
 
-            {/* PRODUCT GRID - ILLUMINATED LAYER */}
-            <section id="catalog-results" className="relative z-20 mt-8 overflow-hidden">
-                {/* The 'Tray' Layer (Restored to Deep Dark) */}
-                <div className="bg-slate-900/90 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,1)] pt-12 pb-32 px-6 relative overflow-hidden">
-                    
-                    {/* REFERENCE NEBULA GLOW (Restored & Subtle) */}
-                    <div className="absolute inset-0 pointer-events-none z-0">
-                        {/* Primary Nebula - Left Top */}
-                        <div className="absolute top-0 -left-[20%] w-[1000px] h-[1000px] bg-brand-blue/12 blur-[200px] rounded-full animate-pulse" style={{ animationDuration: '10s' }}></div>
-                        
-                        {/* Secondary Nebula - Right Bottom */}
-                        <div className="absolute bottom-0 -right-[20%] w-[1000px] h-[1000px] bg-brand-blue/10 blur-[200px] rounded-full animate-pulse" style={{ animationDelay: '3s', animationDuration: '10s' }}></div>
+                <div className="container mx-auto relative z-10 pt-20">
+                    {/* MINIMALIST HEADER */}
+                    <div className="flex flex-col items-center mb-16 animate-fade-in">
+                        <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white text-center leading-tight drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]">
+                            Creative Print
+                        </h2>
+                        <div className="w-16 h-1 bg-brand-blue rounded-full mt-6 opacity-80 shadow-[0_0_10px_rgba(56,182,255,0.5)]"></div>
                     </div>
-                    <div className="container mx-auto">
-                        
-                        {/* SHOWROOM SECTION HEADER */}
-                        <div className="flex flex-col items-center mb-12 animate-fade-in relative">
-                            {/* Premium Badge */}
-                            <div className="bg-brand-blue/10 border border-brand-blue/30 px-4 h-6 rounded-full mb-6 shadow-[0_0_15px_rgba(56,182,255,0.3)] flex items-center justify-center">
-                                <span className="text-brand-blue text-[9px] font-black uppercase tracking-[0.3em] leading-none">Exclusivo</span>
-                            </div>
 
-                            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white text-center leading-tight drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]">
-                                Creative Print
-                            </h2>
-                            <div className="w-12 h-1 bg-gradient-to-r from-transparent via-brand-blue to-transparent rounded-full mt-6 opacity-80 shadow-[0_0_10px_rgba(56,182,255,0.5)]"></div>
-                        </div>
-
-                        {/* DOCK - Narrower Version */}
-                        <nav className="sticky top-20 z-40 py-2 mb-10 animate-fade-in">
-                            <div className={`flex items-center justify-between transition-all duration-500 bg-white/[0.05] backdrop-blur-3xl border border-white/10 rounded-full p-1 shadow-2xl ${isSearchExpanded ? 'pr-6' : 'pr-4'}`}>
-                                
-                                {!isSearchExpanded && (
-                                    <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" style={{ scrollbarWidth: 'none' }}>
-                                        <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
-                                        {CATEGORIES.map(cat => (
-                                            <button 
-                                                key={cat.id} 
-                                                onClick={() => handleCategoryChange(cat.id)}
-                                                className={`px-3 md:px-8 py-2.5 md:py-4 rounded-full text-[9px] md:text-[12px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${catParam === cat.id ? 'bg-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]' : 'text-white/80 hover:text-white hover:bg-white/5'}`}
-                                            >
-                                                <span className="md:hidden">{cat.short}</span>
-                                                <span className="hidden md:inline">{cat.label}</span>
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-
-                                <div className={`flex items-center gap-2 ${isSearchExpanded ? 'w-full' : 'w-auto'}`}>
-                                    {isSearchExpanded ? (
-                                        <div className="flex items-center bg-black/60 border border-white/20 rounded-full px-5 py-2.5 w-full animate-fade-in shadow-2xl">
-                                            <Search size={14} className="text-brand-blue" />
-                                            <input 
-                                                autoFocus
-                                                className="bg-transparent border-none text-[10px] md:text-xs text-white outline-none pl-3 w-full font-black placeholder:text-white/40 uppercase tracking-widest" 
-                                                placeholder="BUSCAR PRODUTOS..." 
-                                                value={searchTerm}
-                                                onChange={e => setSearchTerm(e.target.value)}
-                                                onBlur={() => !searchTerm && setIsSearchExpanded(false)}
-                                            />
-                                            <button onClick={() => {setSearchTerm(''); setIsSearchExpanded(false);}} className="text-white/60 hover:text-white"><X size={16}/></button>
-                                        </div>
-                                    ) : (
-                                        <button 
-                                            onClick={() => setIsSearchExpanded(true)}
-                                            className="p-3.5 bg-brand-blue/10 hover:bg-brand-blue/20 rounded-full text-brand-blue transition-all border border-brand-blue/30"
-                                        >
-                                            <Search size={18} />
-                                        </button>
-                                    )}
+                    {/* THREE MAIN CATEGORY CARDS (Replacing Marquee & Dock) */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24 animate-fade-in">
+                        {CATEGORIES.filter(c => c.id !== 'Todos').map((cat) => (
+                            <button 
+                                key={cat.id}
+                                onClick={() => handleCategoryChange(cat.id)}
+                                className={`group relative h-48 md:h-80 rounded-[2.5rem] overflow-hidden border transition-all duration-700 ${catParam === cat.id ? 'border-brand-blue ring-4 ring-brand-blue/20 scale-[1.03]' : 'border-white/10 hover:border-white/30 hover:scale-[1.01]'}`}
+                            >
+                                <div className={`absolute inset-0 z-10 transition-colors duration-700 ${catParam === cat.id ? 'bg-brand-blue/20' : 'bg-black/50 group-hover:bg-black/30'}`}></div>
+                                <img src={cat.img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={cat.label} />
+                                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 text-center">
+                                    <span className={`text-[10px] font-black uppercase tracking-[0.4em] mb-4 transition-colors ${catParam === cat.id ? 'text-white' : 'text-brand-blue'}`}>Explorar</span>
+                                    <h3 className="text-xl md:text-3xl font-black uppercase tracking-[0.15em] text-white drop-shadow-lg">
+                                        {cat.label}
+                                    </h3>
+                                    <div className={`w-10 h-1 bg-white rounded-full mt-4 transition-all duration-500 ${catParam === cat.id ? 'opacity-100 w-16' : 'opacity-0'}`}></div>
                                 </div>
-                            </div>
-                        </nav>
+                            </button>
+                        ))}
+                    </div>
 
-                        {/* ACTIVE CATEGORY INDICATOR */}
-                        <div className="flex items-center gap-3 mb-6 animate-fade-in">
-                            <div className="h-[2px] w-4 bg-brand-blue"></div>
-                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-brand-blue">
-                                {catParam === 'Todos' ? 'Nossos Produtos' : catParam}
-                            </span>
-                        </div>
-
-                        {filteredProducts.length > 0 ? (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
-                                {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
-                            </div>
-                        ) : (
-                            <div className="py-20 text-center bg-slate-950/50 rounded-3xl border border-white/5">
-                                <p className="text-slate-500 font-bold">Nenhum produto encontrado para "{searchTerm}"</p>
-                                <button onClick={() => {setSearchTerm(''); handleCategoryChange('Todos');}} className="mt-4 text-brand-blue text-xs font-black uppercase tracking-widest border-b border-brand-blue/30 pb-1">Ver Tudo</button>
-                            </div>
+                    {/* ACTIVE CATEGORY INDICATOR */}
+                    <div className="flex items-center gap-4 mb-10">
+                        <div className="h-[2px] w-8 bg-brand-blue shadow-[0_0_10px_rgba(56,182,255,0.5)]"></div>
+                        <span className="text-xs font-black uppercase tracking-[0.3em] text-brand-blue">
+                            {catParam === 'Todos' ? 'Catálogo Completo' : catParam}
+                        </span>
+                        {catParam !== 'Todos' && (
+                            <button 
+                                onClick={() => handleCategoryChange('Todos')}
+                                className="ml-auto text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-all flex items-center gap-2 group"
+                            >
+                                <span className="group-hover:mr-1 transition-all">Ver Tudo</span>
+                                <div className="w-4 h-[1px] bg-white/30 group-hover:bg-white group-hover:w-6 transition-all"></div>
+                            </button>
                         )}
                     </div>
+
+                    {/* PRODUCT GRID */}
+                    {filteredProducts.length > 0 ? (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-12">
+                            {filteredProducts.map(product => <ProductCard key={product.id} product={product} />)}
+                        </div>
+                    ) : (
+                        <div className="py-40 text-center">
+                            <div className="inline-block p-8 rounded-full bg-white/5 border border-white/10 mb-6">
+                                <Search size={32} className="text-white/20" />
+                            </div>
+                            <p className="text-white/30 font-black uppercase tracking-[0.4em] text-sm">Nenhum produto disponível</p>
+                        </div>
+                    )}
                 </div>
             </section>
         </div>
