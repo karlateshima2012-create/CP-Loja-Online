@@ -108,9 +108,7 @@ export const Products: React.FC = () => {
                 <div className="container mx-auto relative z-10 pt-10">
                     {/* CABEÇALHO DE NAVEGAÇÃO INSPIRADO NO LAYOUT CINEMÁTICO */}
                     <div className="mb-16 text-center animate-fade-in">
-                        <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tight uppercase">
-                            Conheça nossos produtos
-                        </h2>
+
                         
                         <div className="flex flex-col md:flex-row items-center justify-center gap-6">
                             {/* CATEGORY PILLS (FILTROS PEQUENOS E DISCRETOS) */}
