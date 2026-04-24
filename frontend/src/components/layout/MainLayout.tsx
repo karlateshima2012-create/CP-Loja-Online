@@ -63,8 +63,21 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
             <Logo className="h-14 md:h-16" withText={true} />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
-            {/* Links de categorias removidos para evitar redundância */}
+          <nav className="hidden md:flex items-center gap-10">
+            {[
+              { label: 'Impressão 3D', cat: 'Impressão 3D' },
+              { label: 'Tecnologia NFC', cat: 'Tecnologia NFC' },
+              { label: 'Soluções Digitais', cat: 'Soluções Digitais' }
+            ].map((item) => (
+              <Link 
+                key={item.cat}
+                to={`/?cat=${item.cat}`}
+                className="text-[11px] font-black uppercase tracking-[0.2em] text-white/70 hover:text-white transition-all duration-300 relative group"
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-brand-blue transition-all duration-300 group-hover:w-full shadow-[0_0_10px_rgba(56,182,255,0.8)]"></span>
+              </Link>
+            ))}
           </nav>
 
           <div className="flex items-center gap-5 md:gap-4">
