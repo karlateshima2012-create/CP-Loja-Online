@@ -26,51 +26,45 @@ export const Footer: React.FC = () => {
     ];
 
     return (
-        <footer className="bg-slate-900 border-t border-brand-blue/20 pt-20 pb-10 scroll-mt-20 relative">
+        <footer className="bg-slate-900 border-t border-brand-blue/20 pt-12 pb-8 scroll-mt-20 relative">
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
 
                     {/* 1. Marca (Logo e Redes) */}
-                    <div className="flex flex-col items-start gap-8">
-                        <Logo className="h-16 md:h-14" />
+                    <div className="flex flex-col items-start gap-6">
+                        <Logo className="h-14 md:h-12" />
 
-                        {/* Redes Sociais Ampliadas */}
-                        <div className="flex gap-4 mt-2">
-                            <a href="https://www.instagram.com/creativeprint.jp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-red-500 hover:to-purple-500 hover:text-white transition-all duration-300 shadow-lg group">
-                                <Instagram size={24} className="group-hover:scale-110 transition-transform" />
+                        {/* Redes Sociais */}
+                        <div className="flex gap-3 mt-1">
+                            <a href="https://www.instagram.com/creativeprint.jp" target="_blank" rel="noreferrer" className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 shadow-lg group">
+                                <Instagram size={20} className="group-hover:scale-110 transition-transform" />
                             </a>
-                            <a href="https://www.facebook.com/share/1Zo7P5Zhc5/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-lg group">
-                                <Facebook size={24} className="group-hover:scale-110 transition-transform" />
+                            <a href="https://www.facebook.com/share/1Zo7P5Zhc5/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 shadow-lg group">
+                                <Facebook size={20} className="group-hover:scale-110 transition-transform" />
                             </a>
-                            <a href="https://wa.me/819011886491" target="_blank" rel="noreferrer" className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-all duration-300 shadow-lg group">
-                                <MessageCircle size={24} className="group-hover:scale-110 transition-transform" />
+                            <a href="https://wa.me/819011886491" target="_blank" rel="noreferrer" className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 shadow-lg group">
+                                <MessageCircle size={20} className="group-hover:scale-110 transition-transform" />
                             </a>
                         </div>
                     </div>
 
                     {/* 2. Minha Conta (Azul) */}
                     <div className="flex flex-col">
-                        <div className="flex items-center gap-2 mb-6 border-b border-slate-800 pb-4">
-                            <div className="w-8 h-1 bg-brand-blue rounded-full"></div>
-                            <h4 className="font-bold text-white uppercase tracking-wider text-sm">Minha Conta</h4>
+                        <div className="flex items-center gap-2 mb-4 border-b border-slate-800 pb-2">
+                            <div className="w-6 h-1 bg-brand-blue rounded-full"></div>
+                            <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Minha Conta</h4>
                         </div>
-                        <ul className="space-y-4">
+                        <ul className="space-y-3">
                             <li>
-                                <Link to="/login" className="group flex items-center gap-3 text-slate-400 hover:text-white text-sm transition-all hover:translate-x-1 duration-300">
-                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-colors"><LogIn size={14} /></span>
+                                <Link to="/login" className="group flex items-center gap-3 text-slate-400 hover:text-white text-xs transition-all hover:translate-x-1 duration-300">
+                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-colors"><LogIn size={12} /></span>
                                     Fazer Login
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/login" className="group flex items-center gap-3 text-slate-400 hover:text-white text-sm transition-all hover:translate-x-1 duration-300">
-                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-colors"><UserPlus size={14} /></span>
+                                <Link to="/login" className="group flex items-center gap-3 text-slate-400 hover:text-white text-xs transition-all hover:translate-x-1 duration-300">
+                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-colors"><UserPlus size={12} /></span>
                                     Entrar / Cadastro
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/" className="group flex items-center gap-3 text-slate-400 hover:text-white text-sm transition-all hover:translate-x-1 duration-300">
-                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-colors"><ShoppingBag size={14} /></span>
-                                    Ver Loja
                                 </Link>
                             </li>
                         </ul>
@@ -78,37 +72,26 @@ export const Footer: React.FC = () => {
 
                     {/* 3. Explorar (Amarelo) */}
                     <div className="flex flex-col">
-                        <div className="flex items-center gap-2 mb-6 border-b border-slate-800 pb-4">
-                            <div className="w-8 h-1 bg-brand-yellow rounded-full"></div>
-                            <h4 className="font-bold text-white uppercase tracking-wider text-sm">Explorar</h4>
+                        <div className="flex items-center gap-2 mb-4 border-b border-slate-800 pb-2">
+                            <div className="w-6 h-1 bg-brand-yellow rounded-full"></div>
+                            <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Explorar</h4>
                         </div>
-                        <ul className="space-y-4">
+                        <ul className="space-y-3">
                             <li>
                                 <button 
                                     onClick={() => setIsAboutModalOpen(true)}
-                                    className="group flex items-center gap-3 text-slate-400 hover:text-white text-sm transition-all hover:translate-x-1 duration-300 w-full text-left"
+                                    className="group flex items-center gap-3 text-slate-400 hover:text-white text-xs transition-all hover:translate-x-1 duration-300 w-full text-left"
                                 >
-                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-yellow group-hover:bg-brand-yellow group-hover:text-slate-900 transition-colors"><Info size={14} /></span>
+                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-yellow group-hover:bg-brand-yellow group-hover:text-slate-900 transition-colors"><Info size={12} /></span>
                                     Sobre nós
                                 </button>
                             </li>
                             <li>
-                                <a 
-                                    href="https://wa.me/819011886491" 
-                                    target="_blank" 
-                                    rel="noreferrer"
-                                    className="group flex items-center gap-3 text-slate-400 hover:text-white text-sm transition-all hover:translate-x-1 duration-300"
-                                >
-                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-yellow group-hover:bg-brand-yellow group-hover:text-slate-900 transition-colors"><Phone size={14} /></span>
-                                    Falar no WhatsApp
-                                </a>
-                            </li>
-                            <li>
                                 <button 
                                     onClick={() => setIsFAQModalOpen(true)}
-                                    className="group flex items-center gap-3 text-slate-400 hover:text-white text-sm transition-all hover:translate-x-1 duration-300 w-full text-left"
+                                    className="group flex items-center gap-3 text-slate-400 hover:text-white text-xs transition-all hover:translate-x-1 duration-300 w-full text-left"
                                 >
-                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-yellow group-hover:bg-brand-yellow group-hover:text-slate-900 transition-colors"><HelpCircle size={14} /></span>
+                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-yellow group-hover:bg-brand-yellow group-hover:text-slate-900 transition-colors"><HelpCircle size={12} /></span>
                                     FAQ / Dúvidas
                                 </button>
                             </li>
@@ -117,47 +100,40 @@ export const Footer: React.FC = () => {
 
                     {/* 4. Soluções (Rosa) */}
                     <div className="flex flex-col">
-                        <div className="flex items-center gap-2 mb-6 border-b border-slate-800 pb-4">
-                            <div className="w-8 h-1 bg-brand-pink rounded-full"></div>
-                            <h4 className="font-bold text-white uppercase tracking-wider text-sm">Soluções</h4>
+                        <div className="flex items-center gap-2 mb-4 border-b border-slate-800 pb-2">
+                            <div className="w-6 h-1 bg-brand-pink rounded-full"></div>
+                            <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Soluções</h4>
                         </div>
-                        <ul className="space-y-4">
+                        <ul className="space-y-3">
                             <li>
-                                <Link to="/?cat=Impressão 3D" className="group flex items-center gap-3 text-slate-400 hover:text-white text-sm transition-all hover:translate-x-1 duration-300">
-                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-pink group-hover:bg-brand-pink group-hover:text-white transition-colors"><Layers size={14} /></span>
+                                <Link to="/?cat=Impressão 3D" className="group flex items-center gap-3 text-slate-400 hover:text-white text-xs transition-all hover:translate-x-1 duration-300">
+                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-pink group-hover:bg-brand-pink group-hover:text-white transition-colors"><Layers size={12} /></span>
                                     Impressão 3D
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/?cat=Tecnologia NFC" className="group flex items-center gap-3 text-slate-400 hover:text-white text-sm transition-all hover:translate-x-1 duration-300">
-                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-pink group-hover:bg-brand-pink group-hover:text-white transition-colors"><Smartphone size={14} /></span>
+                                <Link to="/?cat=Tecnologia NFC" className="group flex items-center gap-3 text-slate-400 hover:text-white text-xs transition-all hover:translate-x-1 duration-300">
+                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-pink group-hover:bg-brand-pink group-hover:text-white transition-colors"><Smartphone size={12} /></span>
                                     Tecnologia NFC
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/?cat=Soluções Digitais" className="group flex items-center gap-3 text-slate-400 hover:text-white text-sm transition-all hover:translate-x-1 duration-300">
-                                    <span className="p-1.5 rounded-md bg-slate-800 text-brand-pink group-hover:bg-brand-pink group-hover:text-white transition-colors"><Cpu size={14} /></span>
-                                    Soluções Digitais
                                 </Link>
                             </li>
                         </ul>
                     </div>
-
                 </div>
 
-                <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 relative">
-                    <button
-                        onClick={scrollToTop}
-                        className="absolute left-1/2 -translate-x-1/2 -top-5 bg-slate-900 border border-slate-700 text-slate-500 hover:text-white hover:border-brand-blue hover:bg-brand-blue p-2 rounded-full transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)] group z-10"
-                        title="Voltar ao topo"
-                    >
-                        <ArrowUp size={20} className="group-hover:-translate-y-0.5 transition-transform" />
-                    </button>
-
-                    <div className="flex items-center gap-2 text-slate-600 text-xs">
-                        <ShieldCheck size={14} className="text-green-500" />
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-4 border-t border-white/5">
+                    <div className="flex items-center gap-2 text-slate-600 text-[10px] uppercase font-black tracking-widest">
+                        <ShieldCheck size={12} className="text-brand-blue opacity-50" />
                         <p>© {new Date().getFullYear()} Creative Print. Todos os direitos reservados.</p>
                     </div>
+
+                    <button
+                        onClick={scrollToTop}
+                        className="text-slate-500 hover:text-brand-blue transition-all flex items-center gap-2 group text-[10px] font-black uppercase tracking-widest"
+                    >
+                        <span>Voltar ao topo</span>
+                        <ArrowUp size={14} className="group-hover:-translate-y-1 transition-transform" />
+                    </button>
                 </div>
             </div>
 
