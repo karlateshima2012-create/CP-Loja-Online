@@ -136,7 +136,7 @@ export const Products: React.FC = () => {
                                     placeholder="BUSCAR PRODUTO..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full bg-white/10 border border-white/20 rounded-full py-3 pl-11 pr-4 text-[11px] font-black text-white/70 placeholder:text-white/30 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/50 focus:bg-white/15 transition-all uppercase tracking-[0.2em] shadow-lg"
+                                    className="w-full bg-white/10 border border-white/20 rounded-full py-3 pl-11 pr-4 text-[11px] font-black text-white/70 placeholder:text-white/30 focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 focus:bg-white/15 transition-all uppercase tracking-[0.2em] shadow-lg hover:border-brand-blue/50 hover:shadow-[0_0_15px_rgba(56,182,255,0.15)] focus:shadow-[0_0_25px_rgba(56,182,255,0.4)]"
                                 />
                             </div>
                         </div>
