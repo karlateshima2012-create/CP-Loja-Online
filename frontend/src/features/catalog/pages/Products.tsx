@@ -102,7 +102,7 @@ export const Products: React.FC = () => {
                         <p className="text-slate-500 text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] max-w-2xl mx-auto leading-relaxed">
                             Tecnologia NFC & Impressão 3D de Alta Precisão
                         </p>
-                        <div className="w-12 h-[2px] bg-brand-blue mx-auto mt-8 rounded-full shadow-[0_0_10px_rgba(56,182,255,0.5)]"></div>
+                        <div className="w-[80%] max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-brand-blue to-transparent mx-auto mt-12 opacity-40"></div>
                     </div>
 
                     {/* CABEÇALHO DE NAVEGAÇÃO INSPIRADO NO LAYOUT CINEMÁTICO - AGORA NO TOPO */}
