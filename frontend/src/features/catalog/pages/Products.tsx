@@ -98,7 +98,7 @@ export const Products: React.FC = () => {
             </section>
 
             {/* UNIFIED RESULTS SECTION */}
-            <section id="catalog-results" className="relative z-20 pb-32 px-6 overflow-hidden min-h-screen">
+            <section id="catalog-results" className="relative z-20 pb-32 px-4 overflow-hidden min-h-screen">
                 {/* REFERENCE NEBULA GLOW (Unified & Immersive) */}
                 <div className="absolute inset-0 pointer-events-none z-0">
                     <div className="absolute top-0 -left-[20%] w-[1000px] h-[1000px] bg-brand-blue/12 blur-[200px] rounded-full animate-pulse" style={{ animationDuration: '10s' }}></div>
@@ -107,7 +107,7 @@ export const Products: React.FC = () => {
 
                 <div className="container mx-auto relative z-10 pt-10">
                     {/* THREE MAIN CATEGORY CARDS (Slim Version) */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 animate-fade-in">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16 animate-fade-in">
                         {CATEGORIES.filter(c => c.id !== 'Todos').map((cat) => (
                             <button 
                                 key={cat.id}
