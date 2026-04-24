@@ -105,61 +105,12 @@ export const Products: React.FC = () => {
                     />
                     
                     {/* Floating Content Over Banner */}
-                    <div className="absolute inset-0 z-20 flex flex-col items-center">
-                        {/* CATEGORY NAV - COMPACT MOBILE VERSION */}
-                        <nav className="w-full py-8 px-4 md:px-6 animate-fade-in-down">
-                            <div className={`container mx-auto flex items-center justify-between transition-all duration-500 bg-white/[0.05] backdrop-blur-3xl border border-white/10 rounded-full p-1.5 shadow-2xl ${isSearchExpanded ? 'lg:pr-6' : 'pr-4 lg:pr-6'}`}>
-                                
-                                {!isSearchExpanded && (
-                                    <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" style={{ scrollbarWidth: 'none' }}>
-                                        <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
-                                        {CATEGORIES.map(cat => (
-                                            <button 
-                                                key={cat.id} 
-                                                onClick={() => handleCategoryChange(cat.id)}
-                                                className={`px-3 md:px-6 py-2.5 md:py-3 rounded-full text-[9px] md:text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${catParam === cat.id ? 'bg-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]' : 'text-white/80 hover:text-white hover:bg-white/5'}`}
-                                            >
-                                                <span className="md:hidden">{cat.short}</span>
-                                                <span className="hidden md:inline">{cat.label}</span>
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-
-                                <div className={`flex items-center gap-2 ${isSearchExpanded ? 'w-full' : 'w-auto'}`}>
-                                    {isSearchExpanded ? (
-                                        <div className="flex items-center bg-black/60 border border-white/20 rounded-full px-5 py-2.5 w-full animate-fade-in shadow-2xl">
-                                            <Search size={14} className="text-brand-blue" />
-                                            <input 
-                                                autoFocus
-                                                className="bg-transparent border-none text-[10px] md:text-xs text-white outline-none pl-3 w-full font-black placeholder:text-white/40 uppercase tracking-widest" 
-                                                placeholder="BUSCAR PRODUTOS..." 
-                                                value={searchTerm}
-                                                onChange={e => setSearchTerm(e.target.value)}
-                                                onBlur={() => !searchTerm && setIsSearchExpanded(false)}
-                                            />
-                                            <button onClick={() => {setSearchTerm(''); setIsSearchExpanded(false);}} className="text-white/60 hover:text-white"><X size={16}/></button>
-                                        </div>
-                                    ) : (
-                                        <button 
-                                            onClick={() => setIsSearchExpanded(true)}
-                                            className="p-3.5 bg-brand-blue/10 hover:bg-brand-blue/20 rounded-full text-brand-blue transition-all border border-brand-blue/30 shadow-[0_0_15px_rgba(56,182,255,0.2)]"
-                                        >
-                                            <Search size={18} />
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        </nav>
-
-                        {/* Banner Text */}
-                        <div className="flex-1 flex flex-col justify-center items-center text-center px-6">
-                            <span className="text-brand-blue font-black uppercase tracking-[0.5em] text-xs mb-6 animate-fade-in">Inovação & Design</span>
-                            <h2 className="text-4xl md:text-7xl font-black text-white leading-none uppercase tracking-tighter max-w-4xl">
-                                Tecnologia de <span className="bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">Ponta</span><br/>
-                                <span className="text-brand-blue drop-shadow-[0_0_15px_rgba(56,182,255,0.5)]">Para sua Empresa.</span>
-                            </h2>
-                        </div>
+                    <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-center px-6">
+                        <span className="text-brand-blue font-black uppercase tracking-[0.5em] text-xs mb-6 animate-fade-in">Inovação & Design</span>
+                        <h2 className="text-4xl md:text-7xl font-black text-white leading-none uppercase tracking-tighter max-w-4xl">
+                            Tecnologia de <span className="bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">Ponta</span><br/>
+                            <span className="text-brand-blue drop-shadow-[0_0_15px_rgba(56,182,255,0.5)]">Para sua Empresa.</span>
+                        </h2>
                     </div>
                 </div>
             </section>
@@ -211,17 +162,54 @@ export const Products: React.FC = () => {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-40 bg-brand-blue/20 blur-[100px] -z-10"></div>
                 
                 {/* The 'Tray' Layer */}
-                <div className="bg-slate-900/60 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,0.9)] pt-16 pb-32 px-6">
+                <div className="bg-slate-900/60 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,0.9)] pt-8 pb-32 px-6">
                     <div className="container mx-auto">
-                        <div className="flex flex-col items-center text-center mb-16 animate-fade-in">
-                            <div className="w-12 h-1 bg-brand-blue rounded-full mb-6 opacity-50"></div>
-                            <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white">
-                                Coleção <span className="text-brand-blue">Exclusiva</span>
-                            </h2>
-                            <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">
-                                [ {filteredProducts.length} itens ]
-                            </p>
-                        </div>
+                        
+                        {/* DOCK RELOCATED HERE - Replacing Coleção Exclusiva Header */}
+                        <nav className="sticky top-20 z-40 py-4 mb-12 animate-fade-in">
+                            <div className={`flex items-center justify-between transition-all duration-500 bg-white/[0.05] backdrop-blur-3xl border border-white/10 rounded-full p-1.5 shadow-2xl ${isSearchExpanded ? 'pr-6' : 'pr-4'}`}>
+                                
+                                {!isSearchExpanded && (
+                                    <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" style={{ scrollbarWidth: 'none' }}>
+                                        <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
+                                        {CATEGORIES.map(cat => (
+                                            <button 
+                                                key={cat.id} 
+                                                onClick={() => handleCategoryChange(cat.id)}
+                                                className={`px-3 md:px-8 py-2.5 md:py-4 rounded-full text-[9px] md:text-[12px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${catParam === cat.id ? 'bg-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]' : 'text-white/80 hover:text-white hover:bg-white/5'}`}
+                                            >
+                                                <span className="md:hidden">{cat.short}</span>
+                                                <span className="hidden md:inline">{cat.label}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+
+                                <div className={`flex items-center gap-2 ${isSearchExpanded ? 'w-full' : 'w-auto'}`}>
+                                    {isSearchExpanded ? (
+                                        <div className="flex items-center bg-black/60 border border-white/20 rounded-full px-5 py-2.5 w-full animate-fade-in shadow-2xl">
+                                            <Search size={14} className="text-brand-blue" />
+                                            <input 
+                                                autoFocus
+                                                className="bg-transparent border-none text-[10px] md:text-xs text-white outline-none pl-3 w-full font-black placeholder:text-white/40 uppercase tracking-widest" 
+                                                placeholder="BUSCAR PRODUTOS..." 
+                                                value={searchTerm}
+                                                onChange={e => setSearchTerm(e.target.value)}
+                                                onBlur={() => !searchTerm && setIsSearchExpanded(false)}
+                                            />
+                                            <button onClick={() => {setSearchTerm(''); setIsSearchExpanded(false);}} className="text-white/60 hover:text-white"><X size={16}/></button>
+                                        </div>
+                                    ) : (
+                                        <button 
+                                            onClick={() => setIsSearchExpanded(true)}
+                                            className="p-3.5 bg-brand-blue/10 hover:bg-brand-blue/20 rounded-full text-brand-blue transition-all border border-brand-blue/30"
+                                        >
+                                            <Search size={18} />
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </nav>
 
                         {filteredProducts.length > 0 ? (
                             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
