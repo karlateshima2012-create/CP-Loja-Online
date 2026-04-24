@@ -19,9 +19,9 @@ import { ProductCard } from './components/ProductCard';
 import { Starfield } from '../../../components/ui/Starfield';
 const CATEGORIES = [
     { id: 'Todos', label: 'Todos', short: 'Todos' },
-    { id: 'Impressão 3D', label: 'Impressão 3D', short: '3D' },
+    { id: 'Impressão 3D', label: 'Impressão 3D', short: 'IMPRESSÃO 3D' },
     { id: 'Tecnologia NFC', label: 'Tecnologia NFC', short: 'NFC' },
-    { id: 'Soluções Digitais', label: 'Soluções Digitais', short: 'Soluções' }
+    { id: 'Soluções Digitais', label: 'Soluções Digitais', short: 'SOLUÇÕES' }
 ];
 
 export const Products: React.FC = () => {
@@ -38,6 +38,19 @@ export const Products: React.FC = () => {
         window.scrollTo(0, 0);
         setProducts(mockService.getProducts());
     }, []);
+
+    // Auto-scroll to results when searching
+    useEffect(() => {
+        if (searchTerm.length > 0) {
+            const resultsSection = document.getElementById('catalog-results');
+            if (resultsSection) {
+                const rect = resultsSection.getBoundingClientRect();
+                if (rect.top > 150) { 
+                    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }
+    }, [searchTerm]);
 
     const handleCategoryChange = (cat: string) => {
         const p = new URLSearchParams();
@@ -87,7 +100,7 @@ export const Products: React.FC = () => {
                                             <button 
                                                 key={cat.id} 
                                                 onClick={() => handleCategoryChange(cat.id)}
-                                                className={`px-3 md:px-6 py-2.5 md:py-3 rounded-full text-[9px] md:text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${catParam === cat.id ? 'bg-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]' : 'text-white/60 hover:text-white hover:bg-white/5'}`}
+                                                className={`px-3 md:px-6 py-2.5 md:py-3 rounded-full text-[9px] md:text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${catParam === cat.id ? 'bg-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]' : 'text-white/80 hover:text-white hover:bg-white/5'}`}
                                             >
                                                 <span className="md:hidden">{cat.short}</span>
                                                 <span className="hidden md:inline">{cat.label}</span>
@@ -98,24 +111,24 @@ export const Products: React.FC = () => {
 
                                 <div className={`flex items-center gap-2 ${isSearchExpanded ? 'w-full' : 'w-auto'}`}>
                                     {isSearchExpanded ? (
-                                        <div className="flex items-center bg-black/40 border border-white/10 rounded-full px-4 py-2 w-full animate-fade-in">
+                                        <div className="flex items-center bg-black/60 border border-white/20 rounded-full px-5 py-2.5 w-full animate-fade-in shadow-2xl">
                                             <Search size={14} className="text-brand-blue" />
                                             <input 
                                                 autoFocus
-                                                className="bg-transparent border-none text-[10px] md:text-[11px] text-white outline-none pl-3 w-full font-bold placeholder:text-white/20 uppercase tracking-widest" 
-                                                placeholder="Buscar..." 
+                                                className="bg-transparent border-none text-[10px] md:text-xs text-white outline-none pl-3 w-full font-black placeholder:text-white/40 uppercase tracking-widest" 
+                                                placeholder="BUSCAR PRODUTOS..." 
                                                 value={searchTerm}
                                                 onChange={e => setSearchTerm(e.target.value)}
                                                 onBlur={() => !searchTerm && setIsSearchExpanded(false)}
                                             />
-                                            <button onClick={() => {setSearchTerm(''); setIsSearchExpanded(false);}} className="text-white/40 hover:text-white"><X size={14}/></button>
+                                            <button onClick={() => {setSearchTerm(''); setIsSearchExpanded(false);}} className="text-white/60 hover:text-white"><X size={16}/></button>
                                         </div>
                                     ) : (
                                         <button 
                                             onClick={() => setIsSearchExpanded(true)}
-                                            className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-brand-blue transition-all border border-white/5"
+                                            className="p-3.5 bg-brand-blue/10 hover:bg-brand-blue/20 rounded-full text-brand-blue transition-all border border-brand-blue/30 shadow-[0_0_15px_rgba(56,182,255,0.2)]"
                                         >
-                                            <Search size={16} />
+                                            <Search size={18} />
                                         </button>
                                     )}
                                 </div>
@@ -176,7 +189,7 @@ export const Products: React.FC = () => {
             </section>
 
             {/* PRODUCT GRID - DEEP LAYER CONTRAST (More Compact) */}
-            <section className="relative z-20 mt-8">
+            <section id="catalog-results" className="relative z-20 mt-8">
                 {/* STRATEGIC LIGHT POINT BEHIND TRAY */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-40 bg-brand-blue/20 blur-[100px] -z-10"></div>
                 
