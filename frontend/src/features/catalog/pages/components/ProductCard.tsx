@@ -45,17 +45,26 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       <div className="p-4 md:p-6 flex-1 flex flex-col">
-        {/* Category hidden as per request */}
-        <h3 className="font-bold text-slate-200 text-base md:text-lg mb-4 leading-tight md:group-hover:text-brand-blue transition-colors line-clamp-2">{product.name}</h3>
+        {/* NOME DO PRODUTO (BOLD 700) */}
+        <h3 className="font-bold text-slate-200 text-base md:text-lg mb-2 leading-tight md:group-hover:text-brand-blue transition-colors line-clamp-2">
+          {product.name}
+        </h3>
+
+        {/* DESCRIÇÃO/SUBTÍTULO (REGULAR 400 - CINZA) */}
+        <p className="text-slate-400 text-[10px] md:text-xs font-normal mb-4 line-clamp-2">
+          {product.description}
+        </p>
 
         {/* Rodapé — Unificado para vertical em todos os dispositivos */}
         <div className="flex flex-col justify-between mt-auto pt-5 border-t border-white/5 gap-3">
           <div className="flex flex-col">
-            <span className="font-black text-lg md:text-2xl text-white tracking-tight">
-              ¥{price.toLocaleString()}
+            {/* PREÇO (EXTRABOLD 800) - Espaço entre símbolo e valor */}
+            <span className="font-extrabold text-lg md:text-2xl text-white tracking-tight">
+              ¥ {price.toLocaleString()}
             </span>
           </div>
-          <button className="w-full bg-slate-800 md:hover:bg-brand-blue text-slate-300 md:hover:text-slate-950 px-4 py-3 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 transform md:hover:-translate-y-1 shadow-lg md:hover:shadow-brand-blue/30 border border-brand-blue/30 md:border-brand-blue/20">
+          {/* BOTÃO (MEDIUM 500) */}
+          <button className="w-full bg-slate-800 md:hover:bg-brand-blue text-slate-300 md:hover:text-slate-950 px-4 py-3 rounded-xl text-[10px] md:text-xs font-medium uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 transform md:hover:-translate-y-1 shadow-lg md:hover:shadow-brand-blue/30 border border-brand-blue/30 md:border-brand-blue/20">
             <ShoppingCart size={14} /> Adicionar
           </button>
         </div>
