@@ -112,7 +112,7 @@ export const Products: React.FC = () => {
                             <button 
                                 key={cat.id}
                                 onClick={() => handleCategoryChange(cat.id)}
-                                className={`group relative h-24 md:h-40 rounded-[1.5rem] overflow-hidden border transition-all duration-700 ${catParam === cat.id ? 'border-brand-blue ring-2 ring-brand-blue/20 scale-[1.02]' : 'border-white/10 hover:border-white/30'}`}
+                                className={`group relative h-24 md:h-40 rounded-2xl overflow-hidden border transition-all duration-700 ${catParam === cat.id ? 'border-brand-blue ring-2 ring-brand-blue/20 scale-[1.02]' : 'border-white/10 hover:border-white/30'}`}
                             >
                                 <div className={`absolute inset-0 z-10 transition-colors duration-700 ${catParam === cat.id ? 'bg-brand-blue/20' : 'bg-black/50 group-hover:bg-black/30'}`}></div>
                                 <img src={cat.img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={cat.label} />
