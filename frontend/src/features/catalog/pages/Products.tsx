@@ -145,11 +145,11 @@ export const Products: React.FC = () => {
                     
                     {/* REFERENCE NEBULA GLOW (Matching CP Agenda Vibe) */}
                     <div className="absolute inset-0 pointer-events-none z-0">
-                        {/* Primary Nebula - Left Side */}
-                        <div className="absolute top-0 -left-[20%] w-[1000px] h-[1000px] bg-brand-blue/15 blur-[200px] rounded-full animate-pulse" style={{ animationDuration: '15s' }}></div>
+                        {/* Primary Nebula - Left Top */}
+                        <div className="absolute top-0 -left-[20%] w-[1000px] h-[1000px] bg-brand-blue/15 blur-[200px] rounded-full animate-pulse" style={{ animationDuration: '8s' }}></div>
                         
-                        {/* Secondary Support Glow - Right Bottom */}
-                        <div className="absolute bottom-0 -right-[10%] w-[600px] h-[600px] bg-indigo-600/5 blur-[150px] rounded-full"></div>
+                        {/* Secondary Nebula - Right Bottom */}
+                        <div className="absolute bottom-0 -right-[20%] w-[1000px] h-[1000px] bg-indigo-600/15 blur-[200px] rounded-full animate-pulse" style={{ animationDelay: '2s', animationDuration: '8s' }}></div>
                     </div>
                     <div className="container mx-auto">
                         
