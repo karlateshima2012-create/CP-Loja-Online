@@ -175,8 +175,8 @@ export const Products: React.FC = () => {
                             <div className="absolute bottom-[-200px] -right-20 w-80 h-80 bg-brand-blue/20 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                             
                             {/* Premium Badge */}
-                            <div className="bg-brand-blue/10 border border-brand-blue/30 px-4 py-1 rounded-full mb-6 shadow-[0_0_15px_rgba(56,182,255,0.3)]">
-                                <span className="text-brand-blue text-[9px] font-black uppercase tracking-[0.3em]">Exclusivo</span>
+                            <div className="bg-brand-blue/10 border border-brand-blue/30 px-4 h-6 rounded-full mb-6 shadow-[0_0_15px_rgba(56,182,255,0.3)] flex items-center justify-center">
+                                <span className="text-brand-blue text-[9px] font-black uppercase tracking-[0.3em] leading-none">Exclusivo</span>
                             </div>
 
                             <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-white text-center leading-tight">
@@ -186,9 +186,9 @@ export const Products: React.FC = () => {
                             <div className="w-12 h-1 bg-gradient-to-r from-transparent via-brand-blue to-transparent rounded-full mt-6 opacity-80 shadow-[0_0_10px_rgba(56,182,255,0.5)]"></div>
                         </div>
 
-                        {/* DOCK - Now fits perfectly under the header */}
-                        <nav className="sticky top-20 z-40 py-4 mb-12 animate-fade-in">
-                            <div className={`flex items-center justify-between transition-all duration-500 bg-white/[0.05] backdrop-blur-3xl border border-white/10 rounded-full p-1.5 shadow-2xl ${isSearchExpanded ? 'pr-6' : 'pr-4'}`}>
+                        {/* DOCK - Narrower Version */}
+                        <nav className="sticky top-20 z-40 py-2 mb-10 animate-fade-in">
+                            <div className={`flex items-center justify-between transition-all duration-500 bg-white/[0.05] backdrop-blur-3xl border border-white/10 rounded-full p-1 shadow-2xl ${isSearchExpanded ? 'pr-6' : 'pr-4'}`}>
                                 
                                 {!isSearchExpanded && (
                                     <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" style={{ scrollbarWidth: 'none' }}>
@@ -231,6 +231,14 @@ export const Products: React.FC = () => {
                                 </div>
                             </div>
                         </nav>
+
+                        {/* ACTIVE CATEGORY INDICATOR */}
+                        <div className="flex items-center gap-3 mb-6 animate-fade-in">
+                            <div className="h-[2px] w-4 bg-brand-blue"></div>
+                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-brand-blue">
+                                {catParam === 'Todos' ? 'Nossos Produtos' : catParam}
+                            </span>
+                        </div>
 
                         {filteredProducts.length > 0 ? (
                             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
