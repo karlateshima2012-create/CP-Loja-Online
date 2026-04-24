@@ -31,19 +31,19 @@ export const Footer: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
 
                     {/* 1. Marca (Logo e Redes) */}
-                    <div className="flex flex-col items-start gap-6">
-                        <Logo className="h-14 md:h-12" />
+                    <div className="flex flex-col items-start gap-5 pt-1">
+                        <Logo className="h-12 md:h-10" />
 
-                        {/* Redes Sociais */}
-                        <div className="flex gap-3 mt-1">
-                            <a href="https://www.instagram.com/creativeprint.jp" target="_blank" rel="noreferrer" className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 shadow-lg group">
-                                <Instagram size={20} className="group-hover:scale-110 transition-transform" />
+                        {/* Redes Sociais - Alinhadas com os ícones do menu */}
+                        <div className="flex gap-2 mt-2">
+                            <a href="https://www.instagram.com/creativeprint.jp" target="_blank" rel="noreferrer" className="w-9 h-9 bg-slate-800 rounded-lg flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 group">
+                                <Instagram size={18} className="group-hover:scale-110 transition-transform" />
                             </a>
-                            <a href="https://www.facebook.com/share/1Zo7P5Zhc5/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 shadow-lg group">
-                                <Facebook size={20} className="group-hover:scale-110 transition-transform" />
+                            <a href="https://www.facebook.com/share/1Zo7P5Zhc5/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="w-9 h-9 bg-slate-800 rounded-lg flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 group">
+                                <Facebook size={18} className="group-hover:scale-110 transition-transform" />
                             </a>
-                            <a href="https://wa.me/819011886491" target="_blank" rel="noreferrer" className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 shadow-lg group">
-                                <MessageCircle size={20} className="group-hover:scale-110 transition-transform" />
+                            <a href="https://wa.me/819011886491" target="_blank" rel="noreferrer" className="w-9 h-9 bg-slate-800 rounded-lg flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 group">
+                                <MessageCircle size={18} className="group-hover:scale-110 transition-transform" />
                             </a>
                         </div>
                     </div>
