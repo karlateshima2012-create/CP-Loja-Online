@@ -140,8 +140,8 @@ export const Products: React.FC = () => {
                                     onClick={() => handleCategoryChange(cat.id)}
                                     className="w-[180px] md:w-[280px] h-32 md:h-40 bg-white/5 backdrop-blur-md rounded-2xl border border-white/20 relative overflow-hidden flex-shrink-0 group/card transition-all hover:border-brand-blue/50 shadow-xl"
                                 >
-                                    <div className="absolute inset-0 bg-black/30 group-hover/card:bg-black/10 z-10 transition-colors"></div>
-                                    <img src={cat.img} className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover/card:scale-110 transition-transform duration-1000" alt={cat.label} />
+                                    <div className="absolute inset-0 bg-black/10 group-hover/card:bg-black/5 z-10 transition-colors"></div>
+                                    <img src={cat.img} className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover/card:scale-110 transition-transform duration-1000" alt={cat.label} />
                                     <div className="absolute inset-0 z-20 flex items-center justify-center p-4">
                                         <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-white text-center drop-shadow-[0_2px_15px_rgba(0,0,0,1)] leading-tight">
                                             {cat.label}
@@ -162,15 +162,22 @@ export const Products: React.FC = () => {
                 <div className="bg-slate-900/80 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/20 shadow-[0_-30px_80px_rgba(0,0,0,0.8)] pt-12 pb-32 px-6">
                     <div className="container mx-auto">
                         
-                        {/* MINIMALIST SECTION HEADER */}
+                        {/* SHOWROOM SECTION HEADER */}
                         <div className="flex flex-col items-center mb-12 animate-fade-in relative">
-                            {/* Ambient Light Behind Header */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-24 bg-brand-blue/10 blur-[60px] -z-10"></div>
+                            {/* Animated Bio-Lights (Pulsating Blue Spots) */}
+                            <div className="absolute top-0 -left-20 w-40 h-40 bg-brand-blue/15 blur-[80px] rounded-full animate-pulse"></div>
+                            <div className="absolute bottom-0 -right-20 w-40 h-40 bg-brand-blue/10 blur-[80px] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
                             
-                            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">
-                                Nossos <span className="text-white">Produtos</span>
+                            {/* Premium Badge */}
+                            <div className="bg-brand-blue/10 border border-brand-blue/30 px-4 py-1 rounded-full mb-6 shadow-[0_0_15px_rgba(56,182,255,0.2)]">
+                                <span className="text-brand-blue text-[9px] font-black uppercase tracking-[0.3em]">Exclusivo</span>
+                            </div>
+
+                            <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-white text-center leading-tight">
+                                Conheça os <span className="font-light opacity-80">Produtos</span> <br className="md:hidden" />
+                                <span className="text-brand-blue drop-shadow-[0_0_10px_rgba(56,182,255,0.3)]">Creative Print</span>
                             </h2>
-                            <div className="w-12 h-1 bg-brand-blue rounded-full mt-6 opacity-50"></div>
+                            <div className="w-12 h-1 bg-gradient-to-r from-transparent via-brand-blue to-transparent rounded-full mt-6 opacity-60"></div>
                         </div>
 
                         {/* DOCK - Now fits perfectly under the header */}
