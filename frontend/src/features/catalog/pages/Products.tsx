@@ -164,9 +164,15 @@ export const Products: React.FC = () => {
                         
                         {/* SHOWROOM SECTION HEADER */}
                         <div className="flex flex-col items-center mb-12 animate-fade-in relative">
-                            {/* Animated Bio-Lights (Intensified) */}
+                            {/* Animated Bio-Lights (Distributed throughout the section) */}
                             <div className="absolute top-0 -left-32 w-64 h-64 bg-brand-blue/30 blur-[100px] rounded-full animate-pulse"></div>
                             <div className="absolute bottom-0 -right-32 w-64 h-64 bg-brand-blue/20 blur-[100px] rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                            
+                            {/* NEW: Massive Central Light */}
+                            <div className="absolute top-[500px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-brand-blue/15 blur-[160px] rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
+                            
+                            {/* NEW: Bottom Right Anchor Light */}
+                            <div className="absolute bottom-[-200px] -right-20 w-80 h-80 bg-brand-blue/20 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                             
                             {/* Premium Badge */}
                             <div className="bg-brand-blue/10 border border-brand-blue/30 px-4 py-1 rounded-full mb-6 shadow-[0_0_15px_rgba(56,182,255,0.3)]">
