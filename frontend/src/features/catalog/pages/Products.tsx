@@ -11,24 +11,26 @@ import { mockService } from '@/src/services/mockData';
 import { Product, UserRole } from '@/src/types';
 import { useAuth } from '@/src/features/auth/context/AuthContext';
 import {
-    Search, LayoutGrid, ShoppingBag, User as UserIcon, 
-    ChevronRight, Box, Cpu, Monitor, ExternalLink
+    Search, ShoppingCart, Box, X,
+    LayoutGrid, ChevronRight, Cpu, Monitor, ExternalLink
 } from 'lucide-react';
 import { useCart } from '../../cart/CartContext';
 import { ProductCard } from './components/ProductCard';
 import { Starfield } from '../../../components/ui/Starfield';
+import './Products.css';
 
 const CATEGORIES = [
-    { id: 'Todos', label: 'Todos', icon: LayoutGrid },
-    { id: 'Impressão 3D', label: 'Impressão 3D', icon: Box },
-    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', icon: Cpu },
-    { id: 'Soluções Digitais', label: 'Soluções Digitais', icon: Monitor },
+    { id: 'Todos', label: 'Todos', short: 'Todos' },
+    { id: 'Impressão 3D', label: 'Impressão 3D', short: '3D' },
+    { id: 'Tecnologia NFC', label: 'Tecnologia NFC', short: 'NFC' },
+    { id: 'Soluções Digitais', label: 'Soluções Digitais', short: 'Soluções' }
 ];
 
 export const Products: React.FC = () => {
     const { user, role } = useAuth();
     const { cart } = useCart();
     const [products, setProducts] = useState<Product[]>([]);
+    const [isSearchExpanded, setIsSearchExpanded] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
     
     const catParam = searchParams.get('cat') || 'Todos';
@@ -76,33 +78,48 @@ export const Products: React.FC = () => {
                     
                     {/* Floating Content Over Banner */}
                     <div className="absolute inset-0 z-20 flex flex-col items-center">
-                        {/* THE DOCK - NOW FLOATING OVER BANNER */}
-                        <nav className="w-full py-8 px-6 animate-fade-in-down">
-                            <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-6 bg-white/[0.05] backdrop-blur-3xl border border-white/10 rounded-[2rem] p-2 pr-6 shadow-2xl">
-                                <div className="flex items-center gap-1 overflow-x-auto p-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                                    <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
-                                    <div className="flex items-center gap-1 no-scrollbar">
+                        {/* CATEGORY NAV - COMPACT MOBILE VERSION */}
+                        <nav className="w-full py-8 px-4 md:px-6 animate-fade-in-down">
+                            <div className={`container mx-auto flex items-center justify-between transition-all duration-500 bg-white/[0.05] backdrop-blur-3xl border border-white/10 rounded-full p-1.5 shadow-2xl ${isSearchExpanded ? 'lg:pr-6' : 'pr-4 lg:pr-6'}`}>
+                                
+                                {!isSearchExpanded && (
+                                    <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" style={{ scrollbarWidth: 'none' }}>
+                                        <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
                                         {CATEGORIES.map(cat => (
                                             <button 
                                                 key={cat.id} 
                                                 onClick={() => handleCategoryChange(cat.id)}
-                                                className={`px-6 py-3 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${catParam === cat.id ? 'bg-brand-blue text-slate-950 shadow-[0_0_20px_rgba(56,182,255,0.4)]' : 'text-white/70 hover:text-white hover:bg-white/10'}`}
+                                                className={`px-3 md:px-6 py-2.5 md:py-3 rounded-full text-[9px] md:text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${catParam === cat.id ? 'bg-brand-blue text-slate-950 shadow-[0_0_15px_rgba(56,182,255,0.4)]' : 'text-white/60 hover:text-white hover:bg-white/5'}`}
                                             >
-                                                {cat.label}
+                                                <span className="md:hidden">{cat.short}</span>
+                                                <span className="hidden md:inline">{cat.label}</span>
                                             </button>
                                         ))}
                                     </div>
-                                </div>
-                                <div className="flex items-center gap-4 w-full lg:w-auto">
-                                    <div className="flex items-center bg-black/40 border border-white/10 rounded-full px-5 py-2.5 focus-within:border-brand-blue/30 transition-all w-full lg:w-72">
-                                        <Search size={16} className="text-brand-blue" />
-                                        <input 
-                                            className="bg-transparent border-none text-[11px] text-white outline-none pl-3 w-full font-bold placeholder:text-white/20 uppercase tracking-widest" 
-                                            placeholder="Explorar Catálogo..." 
-                                            value={searchTerm}
-                                            onChange={e => setSearchTerm(e.target.value)}
-                                        />
-                                    </div>
+                                )}
+
+                                <div className={`flex items-center gap-2 ${isSearchExpanded ? 'w-full' : 'w-auto'}`}>
+                                    {isSearchExpanded ? (
+                                        <div className="flex items-center bg-black/40 border border-white/10 rounded-full px-4 py-2 w-full animate-fade-in">
+                                            <Search size={14} className="text-brand-blue" />
+                                            <input 
+                                                autoFocus
+                                                className="bg-transparent border-none text-[10px] md:text-[11px] text-white outline-none pl-3 w-full font-bold placeholder:text-white/20 uppercase tracking-widest" 
+                                                placeholder="Buscar..." 
+                                                value={searchTerm}
+                                                onChange={e => setSearchTerm(e.target.value)}
+                                                onBlur={() => !searchTerm && setIsSearchExpanded(false)}
+                                            />
+                                            <button onClick={() => {setSearchTerm(''); setIsSearchExpanded(false);}} className="text-white/40 hover:text-white"><X size={14}/></button>
+                                        </div>
+                                    ) : (
+                                        <button 
+                                            onClick={() => setIsSearchExpanded(true)}
+                                            className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-brand-blue transition-all border border-white/5"
+                                        >
+                                            <Search size={16} />
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </nav>
