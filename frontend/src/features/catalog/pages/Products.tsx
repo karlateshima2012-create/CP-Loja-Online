@@ -153,28 +153,32 @@ export const Products: React.FC = () => {
             </section>
 
             {/* PRODUCT GRID - ILLUMINATED LAYER */}
-            <section id="catalog-results" className="relative z-20 mt-8">
-                {/* POWERFUL RADIANT LIGHT (To brighten the section) */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-white/[0.07] blur-[160px] -z-10 rounded-full"></div>
-                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[60%] h-60 bg-brand-blue/30 blur-[120px] -z-10"></div>
-                
+            <section id="catalog-results" className="relative z-20 mt-8 overflow-hidden">
+                {/* GLOBAL DYNAMIC LIGHTING (Spans entire section height) */}
+                <div className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10">
+                    {/* Top Glows */}
+                    <div className="absolute top-0 -left-20 w-64 md:w-96 h-64 md:h-96 bg-brand-blue/20 blur-[100px] rounded-full animate-pulse"></div>
+                    <div className="absolute top-40 -right-20 w-64 md:w-96 h-64 md:h-96 bg-brand-blue/15 blur-[100px] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                    
+                    {/* Central Column Glows (Repeating for mobile) */}
+                    <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-white/[0.05] blur-[160px] rounded-full"></div>
+                    <div className="absolute top-[50%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-brand-blue/[0.05] blur-[160px] rounded-full animate-pulse"></div>
+                    
+                    {/* Bottom Right Anchor Light (Pinned to the actual bottom) */}
+                    <div className="absolute bottom-40 -right-20 w-64 md:w-96 h-64 md:h-96 bg-brand-blue/25 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-60 bg-brand-blue/10 blur-[100px]"></div>
+                </div>
+
                 {/* The 'Tray' Layer (Lightened) */}
                 <div className="bg-slate-900/80 backdrop-blur-3xl rounded-t-[4rem] border-t-2 border-white/20 shadow-[0_-30px_80px_rgba(0,0,0,0.8)] pt-12 pb-32 px-6">
                     <div className="container mx-auto">
                         
                         {/* SHOWROOM SECTION HEADER */}
                         <div className="flex flex-col items-center mb-12 animate-fade-in relative">
-                            {/* Animated Bio-Lights (Distributed throughout the section) */}
-                            <div className="absolute top-0 -left-32 w-64 h-64 bg-brand-blue/30 blur-[100px] rounded-full animate-pulse"></div>
-                            <div className="absolute bottom-0 -right-32 w-64 h-64 bg-brand-blue/20 blur-[100px] rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-                            
-                            {/* NEW: Massive Central Light */}
-                            <div className="absolute top-[500px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-brand-blue/15 blur-[160px] rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-                            
-                            {/* NEW: Bottom Right Anchor Light */}
-                            <div className="absolute bottom-[-200px] -right-20 w-80 h-80 bg-brand-blue/20 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                            
                             {/* Premium Badge */}
+                            <div className="bg-brand-blue/10 border border-brand-blue/30 px-4 h-6 rounded-full mb-6 shadow-[0_0_15px_rgba(56,182,255,0.3)] flex items-center justify-center">
+                                <span className="text-brand-blue text-[9px] font-black uppercase tracking-[0.3em] leading-none">Exclusivo</span>
+                            </div>
                             <div className="bg-brand-blue/10 border border-brand-blue/30 px-4 h-6 rounded-full mb-6 shadow-[0_0_15px_rgba(56,182,255,0.3)] flex items-center justify-center">
                                 <span className="text-brand-blue text-[9px] font-black uppercase tracking-[0.3em] leading-none">Exclusivo</span>
                             </div>
