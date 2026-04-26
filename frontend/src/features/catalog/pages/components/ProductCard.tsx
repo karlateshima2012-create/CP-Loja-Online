@@ -36,11 +36,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         />
 
 
-        {/* BEST SELLER BADGE */}
+        {/* BEST SELLER BADGE - APENAS ÍCONE AMARELO */}
         {product.isBestSeller && (
-          <span className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-sm text-brand-yellow text-[10px] font-bold px-3 py-1 rounded-full border border-brand-yellow shadow-lg z-20 flex items-center gap-1">
-            <Trophy size={10} fill="currentColor" /> MAIS VENDIDO
-          </span>
+          <div className="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md p-2 rounded-xl border border-brand-yellow/30 shadow-[0_0_15px_rgba(255,242,0,0.2)] z-20 text-brand-yellow animate-pulse-slow">
+            <Trophy size={14} fill="currentColor" />
+          </div>
         )}
       </div>
 

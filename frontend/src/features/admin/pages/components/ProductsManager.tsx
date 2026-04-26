@@ -89,7 +89,7 @@ export const ProductsManager: React.FC = () => {
                             <div className="flex justify-between items-center mt-4 pt-4 border-t border-slate-800">
                                 <span className="text-xl font-black text-white">¥{product.price.toLocaleString()}</span>
                                 <div className="flex gap-2">
-                                    {product.isCustomizable && <PenTool size={14} className="text-brand-pink" title="Personalizável" />}
+                                    {product.isBestSeller && <Trophy size={14} className="text-brand-yellow" title="Mais Vendido" />}
                                     {product.includesFreePage && <Gift size={14} className="text-brand-yellow" title="BÔNUS CONNECT" />}
                                 </div>
                             </div>
@@ -140,6 +140,7 @@ export const ProductsManager: React.FC = () => {
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
                                 <button onClick={() => setEditingProduct({...editingProduct, isCustomizable: !editingProduct.isCustomizable})} className={`p-4 rounded-xl border transition-all flex items-center gap-3 ${editingProduct.isCustomizable ? 'bg-brand-pink/10 border-brand-pink text-brand-pink' : 'bg-slate-950 border-slate-800 text-slate-600'}`}><PenTool size={20} /><span className="font-bold text-sm uppercase">Personalizável</span></button>
+                                <button onClick={() => setEditingProduct({...editingProduct, isBestSeller: !editingProduct.isBestSeller})} className={`p-4 rounded-xl border transition-all flex items-center gap-3 ${editingProduct.isBestSeller ? 'bg-brand-yellow/10 border-brand-yellow text-brand-yellow' : 'bg-slate-950 border-slate-800 text-slate-600'}`}><Trophy size={20} /><span className="font-bold text-sm uppercase">Mais Vendido</span></button>
                                 <button onClick={() => setEditingProduct({...editingProduct, includesFreePage: !editingProduct.includesFreePage})} className={`p-4 rounded-xl border transition-all flex items-center gap-3 ${editingProduct.includesFreePage ? 'bg-brand-yellow/10 border-brand-yellow text-brand-yellow' : 'bg-slate-950 border-slate-800 text-slate-600'}`}><Gift size={20} /><span className="font-bold text-sm uppercase">BÔNUS CONNECT</span></button>
                             </div>
                         </div>

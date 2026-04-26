@@ -108,6 +108,7 @@ let PRODUCTS: Product[] = [
         subcategory: 'Chaveiros 3D',
         isFeatured: true,
         isCustomizable: true,
+        isBestSeller: true,
     },
     {
         id: 'p3d-chaveiro-2',
@@ -118,6 +119,7 @@ let PRODUCTS: Product[] = [
         category: 'Impressão 3D',
         subcategory: 'Chaveiros 3D',
         isCustomizable: true,
+        isBestSeller: true,
     },
     {
         id: 'p3d-display-pix',
@@ -130,6 +132,7 @@ let PRODUCTS: Product[] = [
         isFeatured: true,
         isRecommended: true,
         isCustomizable: true,
+        isBestSeller: true,
     },
     {
         id: 'p3d-suporte-cel',
@@ -140,6 +143,7 @@ let PRODUCTS: Product[] = [
         category: 'Impressão 3D',
         subcategory: 'Displays / Suportes',
         isCustomizable: true,
+        isBestSeller: true,
     },
     {
         id: 'p3d-letreiro-mesa',

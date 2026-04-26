@@ -11,7 +11,7 @@ import { mockService } from '@/src/services/mockData';
 import { Product, UserRole } from '@/src/types';
 import { useAuth } from '@/src/features/auth/context/AuthContext';
 import {
-    Search, ShoppingCart, Box, X,
+    Search, ShoppingCart, Box, X, Trophy,
     LayoutGrid, ChevronRight, Cpu, Monitor, ExternalLink, ArrowUp
 } from 'lucide-react';
 import { useCart } from '../../cart/CartContext';
@@ -144,6 +144,20 @@ export const Products: React.FC = () => {
                     {/* PRODUCT GRID WITH INLINE BANNER */}
                     {filteredProducts.length > 0 ? (
                         <>
+                            {/* SECTION TITLE: MAIS VENDIDOS (Aparece no topo) */}
+                            {catParam === 'Todos' && !searchTerm && (
+                                <div className="flex items-center gap-4 mb-8 animate-fade-in">
+                                    <div className="bg-brand-yellow/10 p-2 rounded-lg border border-brand-yellow/20">
+                                        <Trophy size={18} className="text-brand-yellow" />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-lg font-black text-white uppercase tracking-widest">Mais Vendidos</h2>
+                                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.3em] mt-0.5">Os favoritos da nossa comunidade</p>
+                                    </div>
+                                    <div className="flex-1 h-[1px] bg-gradient-to-r from-brand-yellow/30 to-transparent ml-4"></div>
+                                </div>
+                            )}
+
                             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                                 {filteredProducts.map((product, index) => (
                                     <React.Fragment key={product.id}>
