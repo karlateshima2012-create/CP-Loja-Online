@@ -299,10 +299,61 @@ export const mockService = {
         }
     },
 
+    // CARTS
+    getAbandonedCarts: () => loadFromLS('abandoned_carts', []),
+    syncAbandonedCart: (id: string, items: CartItem[], name?: string, email?: string) => {
+        let carts = loadFromLS('abandoned_carts', []);
+        const idx = carts.findIndex((c: any) => c.id === id);
+        const total = items.reduce((acc, i) => acc + (i.price * i.quantity), 0);
+        
+        if (items.length === 0) {
+            carts = carts.filter((c: any) => c.id !== id);
+        } else if (idx !== -1) {
+            carts[idx] = { ...carts[idx], items, totalValue: total, updatedAt: new Date().toISOString() };
+        } else {
+            carts.push({ id, items, totalValue: total, updatedAt: new Date().toISOString(), customerName: name, customerEmail: email });
+        }
+        saveToLS('abandoned_carts', carts);
+    },
+
     // TESTIMONIALS
-    getTestimonials: () => [],
-    saveTestimonial: (t: Testimonial) => {},
-    deleteTestimonial: (id: string) => {},
+    getTestimonials: () => loadFromLS('testimonials', []),
+    saveTestimonial: (t: Testimonial) => {
+        const tests = loadFromLS('testimonials', []);
+        const idx = tests.findIndex((x: any) => x.id === t.id);
+        if (idx !== -1) tests[idx] = t; else tests.push(t);
+        saveToLS('testimonials', tests);
+    },
+    deleteTestimonial: (id: string) => {
+        const tests = loadFromLS('testimonials', []).filter((t: any) => t.id !== id);
+        saveToLS('testimonials', tests);
+    },
+
+    // COUPONS
+    getCoupons: () => loadFromLS('coupons', []),
+    getCouponsForCustomer: (cid: string) => {
+        const cpns = loadFromLS('coupons', []);
+        return cpns.filter((c: any) => (!c.customerId || c.customerId === cid) && c.active && !c.used);
+    },
+    validateCoupon: (code: string, cid?: string) => {
+        const cpns = loadFromLS('coupons', []);
+        return cpns.find((c: any) => c.code === code && c.active && !c.used && (!c.customerId || c.customerId === cid));
+    },
+    saveCoupon: (c: Coupon) => {
+        const cpns = loadFromLS('coupons', []);
+        if (c.id) { 
+            const idx = cpns.findIndex((x: any) => x.id === c.id); 
+            if (idx !== -1) cpns[idx] = c; 
+        } else { 
+            c.id = `cpn-${Date.now()}`; 
+            cpns.push(c); 
+        }
+        saveToLS('coupons', cpns);
+    },
+    deleteCoupon: (id: string) => { 
+        const cpns = loadFromLS('coupons', []).filter((c: any) => c.id !== id);
+        saveToLS('coupons', cpns);
+    },
 
     // MATERIALS
     getMaterials: () => MATERIALS,
@@ -333,6 +384,12 @@ export const mockService = {
         customerGrowth: 15,
         activeCustomers: CUSTOMERS.length
     }),
+    getDigitalProductStats: () => ({ flix: { totalVisits: 15400 } }),
+
+    getPartnerRanking: () => [],
+    getPartnerById: (id: string) => undefined,
+    getPartners: () => [],
+    getCommissionsByOrderId: (id: string) => [],
     
     // FLIX
     getFlixProfiles: () => FLIX_PROFILES,
@@ -356,6 +413,4 @@ export const mockService = {
 
     // UTILS
     testTelegramNotification: async () => true,
-    getCoupons: () => [],
-    getAbandonedCarts: () => [],
 };
