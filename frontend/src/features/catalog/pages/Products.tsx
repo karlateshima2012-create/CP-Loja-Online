@@ -152,7 +152,6 @@ export const Products: React.FC = () => {
                                     </div>
                                     <div>
                                         <h2 className="text-lg font-black text-white uppercase tracking-widest">Mais Vendidos</h2>
-                                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.3em] mt-0.5">Os favoritos da nossa comunidade</p>
                                     </div>
                                     <div className="flex-1 h-[1px] bg-gradient-to-r from-brand-yellow/30 to-transparent ml-4"></div>
                                 </div>
