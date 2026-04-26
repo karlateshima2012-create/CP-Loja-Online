@@ -1,3 +1,11 @@
+import {
+    Product, Order, OrderStatus, Customer,
+    Testimonial, TestimonialSource, Coupon,
+    RawMaterial, SystemSettings, SiteTexts,
+    PaymentMethod, AbandonedCart, CartItem,
+    FlixProfile, StoreBanner
+} from '../types';
+
 // --- MOCK DATA STORAGE (In-Memory with LocalStorage Persistence) ---
 
 // Helper function to load from LocalStorage
