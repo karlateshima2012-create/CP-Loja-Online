@@ -116,10 +116,10 @@ export const Products: React.FC = () => {
                                     <button
                                         key={cat.id}
                                         onClick={() => handleCategoryChange(cat.id)}
-                                        className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 border ${
-                                            catParam === cat.id 
-                                            ? 'bg-brand-blue/10 border-brand-blue text-brand-blue shadow-[0_0_15px_rgba(56,182,255,0.2)]' 
-                                            : 'bg-brand-blue/5 border-brand-blue/30 text-white/70 hover:text-white hover:border-brand-blue/60 hover:bg-brand-blue/10'
+                                        className={`px-6 py-3 rounded-full border transition-all uppercase text-[10px] font-black tracking-widest whitespace-nowrap ${
+                                            catParam === cat.id && cat.id !== 'Todos'
+                                            ? 'bg-brand-blue/20 border-brand-blue text-brand-blue shadow-[0_0_25px_rgba(56,182,255,0.5)]' 
+                                            : 'bg-brand-blue/5 border-brand-blue/60 text-slate-400 hover:bg-brand-blue hover:text-slate-950 hover:border-brand-blue hover:shadow-[0_0_25px_rgba(56,182,255,0.6)] shadow-[0_0_15px_rgba(56,182,255,0.15)]'
                                         }`}
                                     >
                                         {cat.label}
