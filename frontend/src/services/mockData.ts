@@ -254,7 +254,7 @@ let ORDERS: Order[] = [
         customerPhone: '080-9999-8888',
         shippingAddress: 'Aichi-ken, Nagoya-shi',
         items: [
-            { ...PRODUCTS[0], cartId: 'c2', quantity: 1, name: 'Chaveiro NFC Personalizado (Bônus Página)' }
+            { ...PRODUCTS[0], cartId: 'c2', quantity: 1, name: 'Chaveiro NFC Personalizado (BÔNUS CONNECT)' }
         ],
         totalAmount: 4500,
         paymentMethod: PaymentMethod.TRANSFER,

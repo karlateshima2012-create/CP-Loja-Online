@@ -89,7 +89,7 @@ export const OrderDetail: React.FC = () => {
             mockService.updateOrderDetails(order.id, { freePageCreated: true });
             setOrder({ ...order, freePageCreated: true });
             setIsSaving(false);
-            alert("Página Provisionada com Sucesso! O cliente Ricardo Honda agora possui um perfil CreativeFlix vinculado.");
+            alert("Página Provisionada com Sucesso! O cliente Ricardo Honda agora possui um perfil CONNECT vinculado.");
         }, 1000);
     };
 
@@ -568,7 +568,7 @@ export const OrderDetail: React.FC = () => {
                     {order.status === OrderStatus.PAID && order.items.some(i => i.includesFreePage) && (
                         <div className="bg-slate-900 rounded-2xl border border-brand-yellow/30 shadow-xl overflow-hidden animate-pulse-slow">
                             <div className="p-4 border-b border-brand-yellow/20 bg-brand-yellow/5">
-                                <h3 className="font-bold text-brand-yellow flex items-center gap-2"><Star size={18} /> Gestão Digital (Bônus)</h3>
+                                <h3 className="font-bold text-brand-yellow flex items-center gap-2"><Star size={18} /> BÔNUS CONNECT</h3>
                             </div>
                             <div className="p-5">
                                 <p className="text-xs text-slate-400 mb-4">Este pedido contém itens com <strong>Página Free inclusa</strong> ou <strong>Plano Premium</strong>. Libere o acesso digital abaixo.</p>
@@ -587,7 +587,7 @@ export const OrderDetail: React.FC = () => {
                                         disabled={isSaving}
                                         className="w-full bg-brand-yellow hover:bg-yellow-400 text-slate-950 px-4 py-3 rounded-xl font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all"
                                     >
-                                        <PenTool size={18} /> CRIAR PÁGINA CREATIVEFLIX
+                                        <PenTool size={18} /> CRIAR PÁGINA CONNECT
                                     </button>
                                 )}
 

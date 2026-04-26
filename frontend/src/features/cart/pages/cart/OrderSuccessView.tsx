@@ -122,11 +122,11 @@ export const OrderSuccessView: React.FC<OrderSuccessViewProps> = ({ order }) => 
                             {hasBonusItem && (
                                 <div>
                                     <h4 className="text-brand-yellow font-bold text-lg mb-2 flex items-center gap-2 border-b border-slate-800 pb-2">
-                                        <Gift size={20} /> Bônus Liberado
+                                        <Gift size={20} /> BÔNUS CONNECT
                                     </h4>
                                     <div className="bg-brand-yellow/5 border border-brand-yellow/20 rounded-lg p-4">
                                         <p className="text-base text-slate-300 leading-relaxed">
-                                            Parabéns! Você ganhou 1 Página de links exclusiva e acesso à plataforma <strong>CreativeFlix</strong>.
+                                            Parabéns! Você ganhou 1 Página de links exclusiva e acesso à plataforma <strong>CONNECT</strong>.
                                             Enviaremos mais detalhes pelo Whatsapp: <strong className="text-white">{order.customerPhone}</strong> e no seu e-mail: <strong className="text-white">{order.customerEmail}</strong>.
                                         </p>
                                     </div>

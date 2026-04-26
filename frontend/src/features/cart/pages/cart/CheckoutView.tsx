@@ -389,7 +389,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onSuccess, s
                                     )}
                                     {item.includesFreePage && (
                                         <span className="bg-brand-yellow/10 text-brand-yellow border border-brand-yellow/30 px-2 py-0.5 rounded text-[9px] font-bold uppercase flex items-center gap-1">
-                                            <Gift size={10} /> Página Free Inclusa
+                                            <Gift size={10} /> BÔNUS CONNECT
                                         </span>
                                     )}
                                 </div>
