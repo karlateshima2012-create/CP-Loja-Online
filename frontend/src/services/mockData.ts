@@ -1,16 +1,22 @@
+// --- MOCK DATA STORAGE (In-Memory with LocalStorage Persistence) ---
 
-import {
-    Product, Order, OrderStatus, Customer,
-    Testimonial, TestimonialSource, Coupon,
-    RawMaterial, SystemSettings, SiteTexts,
-    PaymentMethod, AbandonedCart, CartItem,
-    FlixProfile, StoreBanner
-} from '../types';
+// Helper function to load from LocalStorage
+const loadFromLS = (key: string, defaultValue: any) => {
+    try {
+        const saved = localStorage.getItem(`cp_store_${key}`);
+        return saved ? JSON.parse(saved) : defaultValue;
+    } catch (e) {
+        return defaultValue;
+    }
+};
 
-// --- MOCK DATA STORAGE (In-Memory) ---
+// Helper function to save to LocalStorage
+const saveToLS = (key: string, data: any) => {
+    localStorage.setItem(`cp_store_${key}`, JSON.stringify(data));
+};
 
-// --- CREATIVE FLIX DATA ---
-let FLIX_PROFILES: FlixProfile[] = [
+// --- INITIAL DATA (Originals) ---
+const INITIAL_FLIX_PROFILES: FlixProfile[] = [
     {
         id: 'flix-cp-free',
         slug: 'cp-free',
@@ -48,56 +54,10 @@ let FLIX_PROFILES: FlixProfile[] = [
             { id: 'l4', type: 'header', label: 'Localização', active: true, order: 4 },
             { id: 'l5', type: 'link', label: 'Como Chegar', url: '#', icon: 'maps', active: true, order: 5 }
         ]
-    },
-    {
-        id: 'flix-cp-premium',
-        slug: 'cp-premium',
-        displayName: 'Creative Design Studio',
-        template_key: 'business_card',
-        profileImageUrl: 'https://images.unsplash.com/photo-1508921234172-b68ed335b3e6?w=400&q=80',
-        style: {
-            backgroundType: 'color', backgroundColor: '#f8fafc',
-            buttonStyle: 'soft-shadow', buttonShape: 'rounded',
-            buttonColor: '#ffffff', buttonTextColor: '#000000',
-            effectColor: '#38b6ff', textColor: '#1e293b',
-            fontFamily: 'sans', layoutMode: 'stack'
-        },
-        category: 'Design', city: 'Tóquio', prefecture: 'Tokyo',
-        tags: ['Premium', 'Studio'], active: true, views: 120,
-        createdAt: '2023-12-01T10:00:00Z', isPremium: true,
-        planType: 'PREMIUM', pageType: 'SERVICES',
-        links: [
-            { id: 'p1', type: 'link', label: 'Behance Portfolio', url: '#', icon: 'globe', active: true, order: 1 },
-            { id: 'p2', type: 'link', label: 'Agendar Reunião', url: '#', icon: 'calendar', active: true, order: 2 }
-        ]
-    },
-    {
-        id: 'flix-cp-store',
-        slug: 'cp-store',
-        displayName: 'Creative Print Official',
-        template_key: 'storefront',
-        profileImageUrl: 'https://images.unsplash.com/photo-1556761175-5973bc0f22b8?w=400&q=80',
-        style: {
-            backgroundType: 'color', backgroundColor: '#ffffff',
-            buttonStyle: 'soft-shadow', buttonShape: 'rounded',
-            buttonColor: '#ffffff', buttonTextColor: '#000000',
-            effectColor: '#000000', textColor: '#000000',
-            fontFamily: 'sans', layoutMode: 'stack'
-        },
-        category: 'E-commerce', city: 'Nagoya', prefecture: 'Aichi',
-        tags: ['Store', 'Official'], active: true, views: 350,
-        createdAt: '2024-01-01T10:00:00Z', isPremium: true,
-        planType: 'PREMIUM', pageType: 'STORE',
-        planStatus: 'active',
-        planExpirationDate: '2025-01-01T10:00:00Z',
-        links: []
     }
 ];
 
-let PRODUCTS: Product[] = [
-    // =============================================
-    // IMPRESSÃO 3D
-    // =============================================
+const INITIAL_PRODUCTS: Product[] = [
     {
         id: 'p3d-chaveiro-1',
         name: 'Chaveiro Personalizado 3D',
@@ -166,9 +126,6 @@ let PRODUCTS: Product[] = [
         subcategory: 'Letreiros personalizados',
         isCustomizable: true,
     },
-    // =============================================
-    // TECNOLOGIA NFC
-    // =============================================
     {
         id: 'pnfc-chaveiro',
         name: 'Chaveiro Smart NFC',
@@ -206,9 +163,6 @@ let PRODUCTS: Product[] = [
         includesFreePage: true,
         isCustomizable: true,
     },
-    // =============================================
-    // SISTEMAS / SAAS
-    // =============================================
     {
         id: 'sys-landing-page',
         name: 'Landing Page Profissional',
@@ -232,73 +186,23 @@ let PRODUCTS: Product[] = [
     },
 ];
 
-let ORDERS: Order[] = [
-    {
-        id: 'ORD-1001',
-        createdAt: new Date().toISOString(),
-        customerId: 'c1',
-        customerName: 'Maria Silva',
-        customerEmail: 'maria@email.com',
-        customerPhone: '090-1111-2222',
-        shippingAddress: 'Tokyo-to, Minato-ku, 1-1-1',
-        items: [
-            { ...PRODUCTS[0], cartId: 'c1', quantity: 1 }
-        ],
-        totalAmount: 3500,
-        paymentMethod: PaymentMethod.SQUARE,
-        status: OrderStatus.PAID,
-        trackingCode: '1234-5678-9012'
-    },
-    {
-        id: 'ORD-2024-NFC',
-        createdAt: new Date().toISOString(),
-        customerId: 'c2',
-        customerName: 'Ricardo Honda',
-        customerEmail: 'ricardo@email.com',
-        customerPhone: '080-9999-8888',
-        shippingAddress: 'Aichi-ken, Nagoya-shi',
-        items: [
-            { ...PRODUCTS[0], cartId: 'c2', quantity: 1, name: 'Chaveiro NFC Personalizado (BÔNUS CONNECT)' }
-        ],
-        totalAmount: 4500,
-        paymentMethod: PaymentMethod.TRANSFER,
-        status: OrderStatus.PAID,
-        freePageCreated: false
-    }
-];
+const INITIAL_STORE_BANNER: StoreBanner = {
+    imageUrl: 'https://midias.creativeprintjp.com/wp-content/uploads/2026/04/Preto-Azul-e-Branco-Moderno-Mes-dos-Pais-Banner.png',
+    tagline: 'Campanha Oficial',
+    title: 'Mês dos Pais',
+    subtitle: 'Creative Print',
+    description: 'Presentes exclusivos com tecnologia NFC e Impressão 3D de alta precisão.',
+    active: true
+};
 
-let CUSTOMERS: Customer[] = [
-    {
-        id: 'c1',
-        name: 'Maria Silva',
-        email: 'maria@email.com',
-        ordersCount: 1,
-        createdAt: '2023-01-15',
-        phone: '090-1111-2222',
-        address: 'Tokyo-to, Minato-ku, 1-1-1',
-        plan: 'FREE',
-        planStatus: 'active'
-    },
-    {
-        id: 'c2',
-        name: 'Ricardo Honda',
-        email: 'ricardo@email.com',
-        ordersCount: 1,
-        createdAt: '2024-01-20',
-        phone: '080-9999-8888',
-        address: 'Aichi-ken, Nagoya-shi',
-        plan: 'PREMIUM',
-        planStatus: 'active',
-        planExpirationDate: '2025-01-20T00:00:00Z'
-    }
-];
-
-let MATERIALS: RawMaterial[] = [
-    { id: 'm1', name: 'Filamento PLA Preto', unit: 'kg', currentStock: 2, minStock: 1 },
-    { id: 'm2', name: 'Chip NFC NTAG215', unit: 'un', currentStock: 50, minStock: 20 }
-];
-
-let SETTINGS: SystemSettings = {
+// --- RUN-TIME DATA (Loaded from LS or INITIAL) ---
+let FLIX_PROFILES: FlixProfile[] = loadFromLS('flix', INITIAL_FLIX_PROFILES);
+let PRODUCTS: Product[] = loadFromLS('products', INITIAL_PRODUCTS);
+let ORDERS: Order[] = loadFromLS('orders', []);
+let CUSTOMERS: Customer[] = loadFromLS('customers', []);
+let MATERIALS: RawMaterial[] = loadFromLS('materials', []);
+let STORE_BANNER: StoreBanner = loadFromLS('banner', INITIAL_STORE_BANNER);
+let SETTINGS: SystemSettings = loadFromLS('settings', {
     payment: {
         jpBankName: 'Japan Post Bank',
         jpAccountNumber: '12345678',
@@ -315,24 +219,7 @@ let SETTINGS: SystemSettings = {
     branding: { logoUrl: '', bannerUrl: '', primaryColor: '#38b6ff', secondaryColor: '#e5157a' },
     telegram: { botToken: '', chatId: '', enabled: false },
     admins: []
-};
-
-let SITE_TEXTS: SiteTexts = {};
-let TESTIMONIALS: Testimonial[] = [
-    {
-        id: 't1', name: 'João Santos', role: 'Empreendedor', content: 'Excelente qualidade, meus clientes adoraram os brindes!', rating: 5, source: TestimonialSource.GOOGLE, date: '2023-10-10', approved: true
-    }
-];
-let COUPONS: Coupon[] = [];
-let ABANDONED_CARTS: AbandonedCart[] = [];
-let STORE_BANNER: StoreBanner = {
-    imageUrl: 'https://midias.creativeprintjp.com/wp-content/uploads/2026/04/Preto-Azul-e-Branco-Moderno-Mes-dos-Pais-Banner.png',
-    tagline: 'Campanha Oficial',
-    title: 'Mês dos Pais',
-    subtitle: 'Creative Print',
-    description: 'Presentes exclusivos com tecnologia NFC e Impressão 3D de alta precisão.',
-    active: true
-};
+});
 
 // --- SERVICE IMPLEMENTATION ---
 
@@ -348,9 +235,11 @@ export const mockService = {
             product.id = `prod-${Date.now()}`;
             PRODUCTS.push(product);
         }
+        saveToLS('products', PRODUCTS);
     },
     deleteProduct: (id: string) => {
         PRODUCTS = PRODUCTS.filter(p => p.id !== id);
+        saveToLS('products', PRODUCTS);
     },
     getVirtualStock: (id: string) => 999,
 
@@ -360,18 +249,28 @@ export const mockService = {
     getCustomerOrders: (customerId: string) => ORDERS.filter(o => o.customerId === customerId),
     createOrder: (order: Order) => {
         ORDERS.push(order);
+        saveToLS('orders', ORDERS);
         if (order.customerId) {
             const cust = CUSTOMERS.find(c => c.id === order.customerId);
-            if (cust) cust.ordersCount++;
+            if (cust) {
+                cust.ordersCount++;
+                saveToLS('customers', CUSTOMERS);
+            }
         }
     },
     updateOrderDetails: (id: string, updates: Partial<Order>) => {
         const order = ORDERS.find(o => o.id === id);
-        if (order) Object.assign(order, updates);
+        if (order) {
+            Object.assign(order, updates);
+            saveToLS('orders', ORDERS);
+        }
     },
     updateOrderStatus: (id: string, status: OrderStatus) => {
         const order = ORDERS.find(o => o.id === id);
-        if (order) order.status = status;
+        if (order) {
+            order.status = status;
+            saveToLS('orders', ORDERS);
+        }
     },
 
     // CUSTOMERS
@@ -380,65 +279,43 @@ export const mockService = {
     registerCustomer: (data: any) => {
         const newC = { ...data, id: `c-${Date.now()}`, createdAt: new Date().toISOString() };
         CUSTOMERS.push(newC);
+        saveToLS('customers', CUSTOMERS);
         return newC;
     },
     loginCustomer: (email: string, pass: string) => CUSTOMERS.find(c => c.email === email && c.password === pass),
     updateCustomer: (id: string, data: Partial<Customer>) => {
         const c = CUSTOMERS.find(x => x.id === id);
-        if (c) Object.assign(c, data);
-    },
-
-    // CARTS
-    getAbandonedCarts: () => ABANDONED_CARTS,
-    syncAbandonedCart: (id: string, items: CartItem[], name?: string, email?: string) => {
-        const existing = ABANDONED_CARTS.find(c => c.id === id);
-        if (items.length === 0) {
-            if (existing) ABANDONED_CARTS = ABANDONED_CARTS.filter(c => c.id !== id);
-        } else {
-            const total = items.reduce((acc, i) => acc + (i.price * i.quantity), 0);
-            if (existing) {
-                existing.items = items; existing.totalValue = total; existing.updatedAt = new Date().toISOString();
-            } else {
-                ABANDONED_CARTS.push({ id, items, totalValue: total, updatedAt: new Date().toISOString(), customerName: name, customerEmail: email });
-            }
+        if (c) {
+            Object.assign(c, data);
+            saveToLS('customers', CUSTOMERS);
         }
     },
 
     // TESTIMONIALS
-    getTestimonials: () => TESTIMONIALS,
-    saveTestimonial: (t: Testimonial) => {
-        const idx = TESTIMONIALS.findIndex(x => x.id === t.id);
-        if (idx !== -1) TESTIMONIALS[idx] = t; else TESTIMONIALS.push(t);
-    },
-    deleteTestimonial: (id: string) => {
-        TESTIMONIALS = TESTIMONIALS.filter(t => t.id !== id);
-    },
-
-    // COUPONS
-    getCoupons: () => COUPONS,
-    getCouponsForCustomer: (cid: string) => COUPONS.filter(c => (!c.customerId || c.customerId === cid) && c.active && !c.used),
-    validateCoupon: (code: string, cid?: string) => {
-        return COUPONS.find(c => c.code === code && c.active && !c.used && (!c.customerId || c.customerId === cid));
-    },
-    saveCoupon: (c: Coupon) => {
-        if (c.id) { const idx = COUPONS.findIndex(x => x.id === c.id); if (idx !== -1) COUPONS[idx] = c; }
-        else { c.id = `cpn-${Date.now()}`; COUPONS.push(c); }
-    },
-    deleteCoupon: (id: string) => { COUPONS = COUPONS.filter(c => c.id !== id); },
+    getTestimonials: () => [],
+    saveTestimonial: (t: Testimonial) => {},
+    deleteTestimonial: (id: string) => {},
 
     // MATERIALS
     getMaterials: () => MATERIALS,
     saveMaterial: (m: RawMaterial) => {
         if (m.id) { const idx = MATERIALS.findIndex(x => x.id === m.id); if (idx !== -1) MATERIALS[idx] = m; }
         else { m.id = `mat-${Date.now()}`; MATERIALS.push(m); }
+        saveToLS('materials', MATERIALS);
     },
-    deleteMaterial: (id: string) => { MATERIALS = MATERIALS.filter(m => m.id !== id); },
+    deleteMaterial: (id: string) => { 
+        MATERIALS = MATERIALS.filter(m => m.id !== id); 
+        saveToLS('materials', MATERIALS);
+    },
 
     // SETTINGS & TEXTS
     getSettings: () => SETTINGS,
-    updateSettings: (s: SystemSettings) => { SETTINGS = s; },
-    getSiteTexts: async () => SITE_TEXTS,
-    updateSiteTexts: (t: SiteTexts) => { SITE_TEXTS = t; },
+    updateSettings: (s: SystemSettings) => { 
+        SETTINGS = s; 
+        saveToLS('settings', SETTINGS);
+    },
+    getSiteTexts: async () => ({}),
+    updateSiteTexts: (t: SiteTexts) => {},
 
     // DASHBOARD STATS
     getDashboardStats: () => ({
@@ -448,26 +325,29 @@ export const mockService = {
         customerGrowth: 15,
         activeCustomers: CUSTOMERS.length
     }),
-    getDigitalProductStats: () => ({ flix: { totalVisits: 15400 } }),
-
-    getPartnerRanking: () => [], // Empty ranking for safety
-    getPartnerById: (id: string) => undefined,
-    getPartners: () => [],
-    getCommissionsByOrderId: (id: string) => [],
-
+    
     // FLIX
     getFlixProfiles: () => FLIX_PROFILES,
     getFlixProfileBySlug: (slug: string) => FLIX_PROFILES.find(p => p.slug === slug),
     saveFlixProfile: (p: FlixProfile) => {
         if (p.id) { const idx = FLIX_PROFILES.findIndex(x => x.id === p.id); if (idx !== -1) FLIX_PROFILES[idx] = p; }
         else { p.id = `flix-${Date.now()}`; FLIX_PROFILES.push(p); }
+        saveToLS('flix', FLIX_PROFILES);
     },
-    deleteFlixProfile: (id: string) => { FLIX_PROFILES = FLIX_PROFILES.filter(p => p.id !== id); },
+    deleteFlixProfile: (id: string) => { 
+        FLIX_PROFILES = FLIX_PROFILES.filter(p => p.id !== id); 
+        saveToLS('flix', FLIX_PROFILES);
+    },
 
     // BANNER
     getStoreBanner: () => STORE_BANNER,
-    updateStoreBanner: (banner: StoreBanner) => { STORE_BANNER = banner; },
+    updateStoreBanner: (banner: StoreBanner) => { 
+        STORE_BANNER = banner; 
+        saveToLS('banner', STORE_BANNER);
+    },
 
     // UTILS
-    testTelegramNotification: async () => true
+    testTelegramNotification: async () => true,
+    getCoupons: () => [],
+    getAbandonedCarts: () => [],
 };
