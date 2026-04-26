@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { mockService } from '@/src/services/mockData';
 import { Product } from '@/src/types';
-import { Plus, Search, Edit2, Trash2, X, Save, Image as ImageIcon, Layout, Box, Cpu, Monitor, PenTool, Gift, Layers, Calendar } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, X, Save, Image as ImageIcon, Layout, Box, Cpu, Monitor, PenTool, Gift, Layers, Calendar, Trophy } from 'lucide-react';
 
 export const ProductsManager: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
