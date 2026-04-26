@@ -112,7 +112,7 @@ export const AdminOverview: React.FC = () => {
                         <div className="p-2 bg-blue-900/30 rounded-lg text-blue-400"><Globe size={20} /></div>
                         <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total de Clientes (Tenants)</h3>
                     </div>
-                    <div className="text-3xl font-black text-white">{isLoading ? '...' : realStats?.total_tenants.toLocaleString()}</div>
+                    <div className="text-3xl font-black text-white">{isLoading ? '...' : realStats?.total_tenants?.toLocaleString() || '0'}</div>
                     <p className="text-xs text-slate-500 mt-1">Empresas na plataforma</p>
                 </div>
 
@@ -122,7 +122,7 @@ export const AdminOverview: React.FC = () => {
                         <div className="p-2 bg-emerald-900/30 rounded-lg text-emerald-400"><Users size={20} /></div>
                         <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total de Usuários</h3>
                     </div>
-                    <div className="text-3xl font-black text-white">{isLoading ? '...' : realStats?.total_users.toLocaleString()}</div>
+                    <div className="text-3xl font-black text-white">{isLoading ? '...' : realStats?.total_users?.toLocaleString() || '0'}</div>
                     <p className="text-xs text-slate-500 mt-1">Contas de acesso ativas</p>
                 </div>
 
@@ -132,7 +132,7 @@ export const AdminOverview: React.FC = () => {
                         <div className="p-2 bg-yellow-900/30 rounded-lg text-yellow-400"><FileText size={20} /></div>
                         <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Páginas Criadas</h3>
                     </div>
-                    <div className="text-3xl font-black text-white">{isLoading ? '...' : realStats?.total_pages.toLocaleString()}</div>
+                    <div className="text-3xl font-black text-white">{isLoading ? '...' : realStats?.total_pages?.toLocaleString() || '0'}</div>
                     <p className="text-xs text-slate-500 mt-1">Total de perfis/links</p>
                 </div>
 
@@ -142,7 +142,7 @@ export const AdminOverview: React.FC = () => {
                         <div className="p-2 bg-indigo-900/30 rounded-lg text-indigo-400"><MousePointerClick size={20} /></div>
                         <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Publicadas no Flix</h3>
                     </div>
-                    <div className="text-3xl font-black text-white">{isLoading ? '...' : realStats?.published_pages.toLocaleString()}</div>
+                    <div className="text-3xl font-black text-white">{isLoading ? '...' : realStats?.published_pages?.toLocaleString() || '0'}</div>
                     <p className="text-xs text-slate-500 mt-1">Ficando visíveis ao público</p>
                 </div>
             </div>
