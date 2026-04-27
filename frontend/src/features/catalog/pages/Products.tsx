@@ -127,16 +127,17 @@ export const Products: React.FC = () => {
                                 ))}
                             </div>
 
-                            {/* BARRA DE BUSCA COM FUNDO AZUL NAVBAR */}
+                            {/* BARRA DE BUSCA COM EFEITO NEON */}
                             <div className="relative group w-full md:w-80">
-                                <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-blue/60 group-focus-within:text-brand-blue transition-colors" />
+                                <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-blue group-focus-within:scale-110 transition-transform duration-300" />
                                 <input 
                                     type="text"
                                     placeholder="BUSCAR PRODUTO..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full bg-brand-blue/10 border border-brand-blue/30 rounded-full py-3 pl-11 pr-4 text-[11px] font-black text-white/70 placeholder:text-white/30 focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 focus:bg-brand-blue/20 transition-all uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(56,182,255,0.15)] focus:shadow-[0_0_25px_rgba(56,182,255,0.4)]"
+                                    className="w-full bg-brand-blue/10 border border-brand-blue/50 rounded-full py-3 pl-11 pr-4 text-[11px] font-black text-white placeholder:text-white/40 focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 focus:bg-brand-blue/20 transition-all uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(56,182,255,0.2)] focus:shadow-[0_0_30px_rgba(56,182,255,0.5)] border-brand-blue/60 group-hover:border-brand-blue"
                                 />
+                                <div className="absolute inset-0 rounded-full bg-brand-blue/5 blur-md -z-10 group-hover:bg-brand-blue/10 transition-colors"></div>
                             </div>
                         </div>
                     </div>
