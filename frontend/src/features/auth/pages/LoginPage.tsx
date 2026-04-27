@@ -9,41 +9,25 @@ import { useAuth } from '../context/AuthContext';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const { role, devLogin } = useAuth();
+  const { role } = useAuth();
   const [searchParams] = useSearchParams();
   const redirect = searchParams.get('redirect');
-
-  const [activeTab, setActiveTab] = useState<'customer' | 'admin'>('customer');
-
-  const handleQuickAccess = (role: UserRole) => {
-    devLogin(role);
-    if (role === UserRole.ADMIN) {
-      navigate('/admin/dashboard');
-    } else {
-      navigate('/customer/dashboard');
-    }
-  };
 
   const handleLoginSuccess = () => {
     if (redirect) {
       navigate(redirect);
     } else {
-      switch (role) {
-        case UserRole.ADMIN:
-          navigate('/admin/dashboard');
-          break;
-        default:
-          navigate('/customer/dashboard');
+      // O sistema detecta o role automaticamente do AuthContext após o login
+      if (role === UserRole.ADMIN) {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/customer/dashboard');
       }
     }
   };
 
-  const handleForgotPassword = (type: string) => {
-    if (type === 'customer') {
-      alert('Um link para redefinir sua senha foi enviado para seu email.');
-    } else {
-      alert('Entre em contato com o suporte: suporte@creativeprint.jp');
-    }
+  const handleForgotPassword = () => {
+    alert('Um link para redefinir sua senha foi enviado para seu email: suporte@creativeprintjp.com');
   };
 
   return (
@@ -59,82 +43,25 @@ export const LoginPage: React.FC = () => {
             <Logo className="h-12" withText={true} />
           </div>
           <h2 className="text-xl font-bold text-white mb-2">Acesso</h2>
-          <p className="text-brand-gray text-sm">Selecione seu perfil para continuar</p>
-        </div>
-
-        <div className="p-2 bg-slate-950 flex">
-          <TabButton
-            active={activeTab === 'customer'}
-            onClick={() => setActiveTab('customer')}
-            icon={<User size={16} />}
-            label="Cliente"
-            activeColor="text-white bg-slate-800"
-          />
-          <TabButton
-            active={activeTab === 'admin'}
-            onClick={() => setActiveTab('admin')}
-            icon={<ShieldCheck size={16} />}
-            label="Admin"
-            activeColor="text-brand-blue bg-slate-800"
-          />
         </div>
 
         <div className="p-8">
-          {activeTab === 'customer' && (
-            <>
-              <CustomerLoginForm
-                onSuccess={handleLoginSuccess}
-                onForgotPassword={() => handleForgotPassword('customer')}
-              />
-              <div className="text-center pt-4 border-t border-slate-800 mt-6">
-                <p className="text-sm text-slate-500">Ainda não tem conta?</p>
-                <Link
-                  to={`/register${redirect ? `?redirect=${redirect}` : ''}`}
-                  className="text-brand-blue hover:text-white font-bold text-sm"
-                >
-                  Criar conta grátis
-                </Link>
-              </div>
-            </>
-          )}
-
-
-          {activeTab === 'admin' && (
-            <AdminLoginForm onSuccess={handleLoginSuccess} />
-          )}
-
-          {/* QUICK ACCESS BUTTON (DEV ONLY) */}
-          <div className="mt-8 pt-4 border-t border-slate-800/50">
-            <button
-              onClick={() => handleQuickAccess(activeTab === 'admin' ? UserRole.ADMIN : UserRole.CUSTOMER)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-800 text-white font-bold hover:bg-slate-700 transition-all border border-slate-700 group"
+          <CustomerLoginForm
+            onSuccess={handleLoginSuccess}
+            onForgotPassword={handleForgotPassword}
+          />
+          
+          <div className="text-center pt-4 border-t border-slate-800 mt-6">
+            <p className="text-sm text-slate-500">Ainda não tem conta?</p>
+            <Link
+              to={`/register${redirect ? `?redirect=${redirect}` : ''}`}
+              className="text-brand-blue hover:text-white font-bold text-sm"
             >
-              Entrada Rápida <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </button>
-            <p className="text-[10px] text-center text-slate-500 mt-2 uppercase tracking-tighter">Bypass para Desenvolvimento</p>
+              Criar conta grátis
+            </Link>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
-interface TabButtonProps {
-  active: boolean;
-  onClick: () => void;
-  icon: React.ReactNode;
-  label: string;
-  activeColor: string;
-}
-
-const TabButton: React.FC<TabButtonProps> = ({ active, onClick, icon, label, activeColor }) => (
-  <button
-    onClick={onClick}
-    className={`flex-1 py-3 text-xs md:text-sm font-bold uppercase tracking-wide rounded-xl transition-all flex items-center justify-center gap-2 ${active
-      ? `${activeColor} shadow-lg border border-slate-700`
-      : 'text-brand-gray hover:text-white'
-      }`}
-  >
-    {icon} {label}
-  </button>
-);

@@ -253,7 +253,7 @@ let SETTINGS: SystemSettings = loadFromLS('settings', {
         otherAccountType: 'Futsu',
         otherHolderName: 'CREATIVE PRINT KK'
     },
-    email: { senderName: 'Creative Print', senderEmail: 'no-reply@cp.jp', smtpHost: '', smtpPort: '' },
+    email: { senderName: 'Creative Print', senderEmail: 'suporte@creativeprintjp.com', smtpHost: 'smtp.creativeprintjp.com', smtpPort: '587', smtpUser: 'suporte@creativeprintjp.com', smtpPass: 'K!=DHdv23' },
     store: { storeName: 'Creative Print', description: '', supportPhone: '090-1188-6491' },
     branding: { logoUrl: '', bannerUrl: '', primaryColor: '#38b6ff', secondaryColor: '#e5157a' },
     telegram: { botToken: '', chatId: '', enabled: false },
