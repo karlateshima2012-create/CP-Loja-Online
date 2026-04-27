@@ -124,7 +124,7 @@ export const ProductDetail: React.FC = () => {
               
               <button 
                 onClick={() => navigate(-1)} 
-                className="w-full bg-transparent border border-slate-800 hover:border-brand-blue/40 text-slate-500 hover:text-brand-blue font-bold h-12 rounded-xl flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] transition-all"
+                className="w-full bg-transparent border border-brand-blue/40 text-slate-400 hover:text-brand-blue hover:border-brand-blue font-bold h-12 rounded-xl flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] transition-all shadow-[0_0_10px_rgba(56,182,255,0.1)]"
               >
                 Continuar Comprando
               </button>
