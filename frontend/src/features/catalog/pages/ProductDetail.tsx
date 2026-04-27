@@ -121,6 +121,13 @@ export const ProductDetail: React.FC = () => {
               <button onClick={handleAddToCart} className="w-full bg-brand-blue hover:bg-brand-blue/90 text-slate-950 font-black h-14 rounded-xl flex items-center justify-center gap-3 uppercase tracking-widest text-sm shadow-lg transition-all">
                 <ShoppingCart size={20} /> Adicionar ao Carrinho
               </button>
+              
+              <button 
+                onClick={() => navigate(-1)} 
+                className="w-full bg-transparent border border-slate-800 hover:border-brand-blue/40 text-slate-500 hover:text-brand-blue font-bold h-12 rounded-xl flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] transition-all"
+              >
+                Continuar Comprando
+              </button>
               <div className="flex items-center gap-2 text-xs text-brand-gray justify-center pt-2">
                 <ShieldCheck size={14} className="text-green-500" />
                 <span>Compra Segura</span>
