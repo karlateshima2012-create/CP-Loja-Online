@@ -42,7 +42,7 @@ export const LoginPage: React.FC = () => {
           <div className="flex justify-center mb-6">
             <Logo className="h-12" withText={true} />
           </div>
-          <h2 className="text-xl font-bold text-white mb-2">Acesso</h2>
+          <h2 className="text-xl font-bold text-white mb-2">Bem-vindo de volta</h2>
         </div>
 
         <div className="p-8">
