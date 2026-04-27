@@ -203,11 +203,42 @@ const INITIAL_STORE_BANNER: StoreBanner = {
     active: true
 };
 
+const INITIAL_CUSTOMERS: Customer[] = [
+    {
+        id: 'c-1',
+        name: 'Cliente Exemplo',
+        email: 'cliente@exemplo.com',
+        phone: '090-0000-0000',
+        ordersCount: 1,
+        totalSpent: 4500,
+        createdAt: new Date().toISOString(),
+        password: '123'
+    }
+];
+
+const INITIAL_ORDERS: Order[] = [
+    {
+        id: 'ORD-12345',
+        createdAt: new Date().toISOString(),
+        customerId: 'c-1',
+        customerName: 'Cliente Exemplo',
+        customerEmail: 'cliente@exemplo.com',
+        customerPhone: '090-0000-0000',
+        shippingAddress: '〒520-0000 Shiga-ken, Otsu-shi, Exemplo 1-2-3',
+        items: [
+            { id: 'pnfc-cartao-black', name: 'Cartão NFC Black Premium', price: 4500, quantity: 1, imageUrl: 'https://images.unsplash.com/photo-1616423640778-28d1b53229bd?w=500', category: 'Tecnologia NFC' }
+        ],
+        totalAmount: 4500,
+        paymentMethod: PaymentMethod.SQUARE,
+        status: 'PAID',
+    }
+];
+
 // --- RUN-TIME DATA (Loaded from LS or INITIAL) ---
 let FLIX_PROFILES: FlixProfile[] = loadFromLS('flix', INITIAL_FLIX_PROFILES);
 let PRODUCTS: Product[] = loadFromLS('products', INITIAL_PRODUCTS);
-let ORDERS: Order[] = loadFromLS('orders', []);
-let CUSTOMERS: Customer[] = loadFromLS('customers', []);
+let ORDERS: Order[] = loadFromLS('orders', INITIAL_ORDERS);
+let CUSTOMERS: Customer[] = loadFromLS('customers', INITIAL_CUSTOMERS);
 let MATERIALS: RawMaterial[] = loadFromLS('materials', []);
 let STORE_BANNER: StoreBanner = loadFromLS('banner', INITIAL_STORE_BANNER);
 let SETTINGS: SystemSettings = loadFromLS('settings', {
@@ -377,13 +408,18 @@ export const mockService = {
     updateSiteTexts: (t: SiteTexts) => {},
 
     // DASHBOARD STATS
-    getDashboardStats: () => ({
-        totalRevenue: 1250000,
-        totalOrders: 45,
-        pendingOrders: 12,
-        customerGrowth: 15,
-        activeCustomers: CUSTOMERS.length
-    }),
+    getDashboardStats: () => {
+        const totalRevenue = ORDERS.reduce((acc, o) => acc + o.totalAmount, 0);
+        const pendingOrders = ORDERS.filter(o => o.status === 'Pendente').length;
+        
+        return {
+            totalRevenue,
+            totalOrders: ORDERS.length,
+            pendingOrders,
+            customerGrowth: 0,
+            activeCustomers: CUSTOMERS.length
+        };
+    },
     getDigitalProductStats: () => ({ flix: { totalVisits: 15400 } }),
 
     getPartnerRanking: () => [],
