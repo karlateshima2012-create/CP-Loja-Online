@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { loginSchema, LoginCredentials } from '@/src/features/auth/types';
 import { useAuth } from '../context/AuthContext';
 
@@ -12,6 +12,7 @@ interface Props {
 
 export const CustomerLoginForm: React.FC<Props> = ({ onSuccess, onForgotPassword }) => {
     const { login, error: authError } = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,
@@ -46,12 +47,21 @@ export const CustomerLoginForm: React.FC<Props> = ({ onSuccess, onForgotPassword
 
                 <div>
                     <label className="block text-xs font-bold text-brand-gray uppercase mb-2">Senha</label>
-                    <input
-                        {...register('password')}
-                        type="password"
-                        className={`w-full bg-slate-950 border ${errors.password ? 'border-red-500' : 'border-slate-800'} rounded-xl py-3 px-4 text-white text-sm focus:border-brand-blue outline-none transition-colors`}
-                        placeholder="********"
-                    />
+                    <div className="relative">
+                        <input
+                            {...register('password')}
+                            type={showPassword ? 'text' : 'password'}
+                            className={`w-full bg-slate-950 border ${errors.password ? 'border-red-500' : 'border-slate-800'} rounded-xl py-3 px-4 pr-12 text-white text-sm focus:border-brand-blue outline-none transition-colors`}
+                            placeholder="********"
+                        />
+                        <button 
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-brand-blue transition-colors"
+                        >
+                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                    </div>
                     {errors.password && <p className="text-red-500 text-[10px] mt-1">{errors.password.message}</p>}
 
                     <div className="flex justify-end mt-2">
